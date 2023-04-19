@@ -33,7 +33,7 @@ void showServices() {
 
     puts("Hello\nThis program is created by \"Yasin Gourkani\"\tStudent ID:\"9974359\"\nShiraz University\n");
     puts("E-Mail: yassingourkani@hotmail.com\n");
-    puts("Enter the number of service in order to run: \n");
+    puts("Application Menu: \n");
 
     for (int i = 0; i < SERVICES_LEN; i++)
         printf("\t%d- %s\n", i + 1, servicesName[i]);
@@ -41,6 +41,8 @@ void showServices() {
 
 int getService() {
     int serviceNum = 0;
+
+    printf("\nEnter the number of service in order to run: ");
 
     while (serviceNum < 1 || serviceNum > SERVICES_LEN) {
 
@@ -51,6 +53,8 @@ int getService() {
         if (serviceNum < 1 || serviceNum > SERVICES_LEN)
             puts("\nEnter valid service number, Please!");
     }
+
+    puts("");
 
     return serviceNum;
 }
