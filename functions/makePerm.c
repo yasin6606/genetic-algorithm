@@ -1,14 +1,11 @@
 #include "../headers/mainHeaders.h"
 #include "time.h"
 
-int x = 0;
-
 int *makePerm(int n) {
-    srand(x);
-    x += 2;
-
     int num, j;
     int *arr = (int *) calloc(n * n, sizeof(int));
+
+    srand(time(NULL));
 
     for (int i = 0; i < n; i++) {
         do {
