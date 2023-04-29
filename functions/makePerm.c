@@ -2,22 +2,29 @@
 #include "time.h"
 
 int *makePerm(int n) {
-    int num, j;
+    int num, j = 0;
     int *arr = (int *) calloc(n * n, sizeof(int));
+    int *flag;
 
     srand(time(NULL));
 
     for (int i = 0; i < n; i++) {
+        // re-empty flags
+        flag = (int *) calloc(n * n, sizeof(int));
+
         do {
             num = rand() % n;
 
-            // check if the number is already in the arr
-            for (j = 0; j < n; j++)
-                if (arr[j] == num)
-                    break;
-        } while (j < i);
+            if (flag[num] == 1) continue;
 
-        arr[i] = num;
+            arr[j] = num;
+            flag[num] = 1;
+
+            j++;
+        } while (j < n);
+
+        // free last used space for flag array
+        free(flag);
     }
 
     return arr;
