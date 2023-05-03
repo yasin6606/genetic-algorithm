@@ -1,21 +1,15 @@
 #include "../../headers/mainHeaders.h"
 #include "../../functions/makeBin.c"
-
-struct knapsackInitValues {
-    int n;
-    int wMax;
-    int *wArr;
-    int *vArr;
-};
+#include "../../structs/knapsackStruct.c"
 
 // get the number of cities to initiate the problem
-struct knapsackInitValues getKnapsackInitValues();
+struct KnapsackInitValues getKnapsackInitValues();
 
 // set data structure
-void setKnapsackSol(struct knapsackInitValues initValues);
+int *setKnapsackSol(struct KnapsackInitValues initValues);
 
-struct knapsackInitValues getKnapsackInitValues() {
-    struct knapsackInitValues knapsackStruct;
+struct KnapsackInitValues getKnapsackInitValues() {
+    struct KnapsackInitValues knapsackStruct;
 
     // get the number of products (n)
     printf("Enter the number of products: ");
@@ -34,20 +28,16 @@ struct knapsackInitValues getKnapsackInitValues() {
     return knapsackStruct;
 }
 
-void setKnapsackSol(struct knapsackInitValues initValues) {
-    int *row, n = initValues.n;
-    int *sol = (int *) calloc(n * n, sizeof(int));
+int *setKnapsackSol(struct KnapsackInitValues initValues) {
+    int *sol, n = initValues.n;
+    int *solMatrix = (int *) calloc(n * n, sizeof(int));
 
     for (int i = 0; i < n; i++) {
-        row = makeBin(n);
+        sol = makeBin(n);
 
-        for (int j = 0; j < n; j++) {
-            sol[i * n + j] = row[j];
-        }
+        for (int j = 0; j < n; j++)
+            solMatrix[i * n + j] = sol[j];
     }
 
-    printArray(n, initValues.wArr, "Weight: ");
-    printArray(n, initValues.vArr, "Value: ");
-
-    printMatrix(n, sol);
+    return solMatrix;
 }
