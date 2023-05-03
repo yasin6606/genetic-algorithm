@@ -4,6 +4,8 @@
 struct knapsackInitValues {
     int n;
     int wMax;
+    int *wArr;
+    int *vArr;
 };
 
 // get the number of cities to initiate the problem
@@ -15,8 +17,11 @@ void setKnapsackSol(struct knapsackInitValues initValues);
 struct knapsackInitValues getKnapsackInitValues() {
     struct knapsackInitValues knapsackStruct;
 
-    int *wArr = (int *) calloc(knapsackStruct.n, sizeof(int));
-    int *vArr = (int *) calloc(knapsackStruct.n, sizeof(int));
+    // fill wArr (Weight Array) randomly
+    knapsackStruct.wArr = makePerm(knapsackStruct.n);
+
+    // fill vArr (Value Array) randomly
+    knapsackStruct.vArr = makePerm(knapsackStruct.n);
 
     // get the number of products (n)
     printf("Enter the number of products: ");
