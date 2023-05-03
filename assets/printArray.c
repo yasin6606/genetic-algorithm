@@ -1,6 +1,6 @@
 #include "stdio.h"
 
-void printArray(int size, int *arr, char *text) {
+void printArray(int size, const int *arr, char *text) {
     puts("");
     printf("%s", text);
     for (int i = 0; i < size; i++) {
