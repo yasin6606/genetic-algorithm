@@ -17,12 +17,6 @@ void setKnapsackSol(struct knapsackInitValues initValues);
 struct knapsackInitValues getKnapsackInitValues() {
     struct knapsackInitValues knapsackStruct;
 
-    // fill wArr (Weight Array) randomly
-    knapsackStruct.wArr = makePerm(knapsackStruct.n);
-
-    // fill vArr (Value Array) randomly
-    knapsackStruct.vArr = makePerm(knapsackStruct.n);
-
     // get the number of products (n)
     printf("Enter the number of products: ");
     scanf("%d", &knapsackStruct.n);
@@ -30,6 +24,12 @@ struct knapsackInitValues getKnapsackInitValues() {
     // get maximum weight of backpack (wMax)
     printf("Enter the maximum weight of backpack (KG): ");
     scanf("%d", &knapsackStruct.wMax);
+
+    // fill wArr (Weight Array) randomly
+    knapsackStruct.wArr = makePerm(knapsackStruct.wMax);
+
+    // fill vArr (Value Array) randomly. To be more realistic, divide values.
+    knapsackStruct.vArr = makePerm(knapsackStruct.wMax / 2);
 
     return knapsackStruct;
 }
@@ -45,6 +45,9 @@ void setKnapsackSol(struct knapsackInitValues initValues) {
             sol[i * n + j] = row[j];
         }
     }
+
+    printArray(n, initValues.wArr, "Weight: ");
+    printArray(n, initValues.vArr, "Value: ");
 
     printMatrix(n, sol);
 }

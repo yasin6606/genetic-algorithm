@@ -9,5 +9,6 @@
 #include "stdlib.h"
 
 #include "./../assets/printMatrix.c"
+#include "./../assets/printArray.c"
 
 #endif //C_MAINHEADERS_H

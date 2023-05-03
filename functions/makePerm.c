@@ -2,13 +2,14 @@
 #include "time.h"
 
 int *makePerm(int n) {
-    int num, j = 0;
+    int num, j;
     int *arr = (int *) calloc(n * n, sizeof(int));
     int *flag;
 
     for (int i = 0; i < n; i++) {
         // re-empty flags
         flag = (int *) calloc(n * n, sizeof(int));
+        j = 0;
 
         do {
             num = rand() % n;
