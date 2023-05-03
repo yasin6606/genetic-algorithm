@@ -17,6 +17,9 @@ void setService(int serviceNum);
 int main() {
     int serviceSelected;
 
+    // To use rand(), it is the most important in order to use srand() JUST ONCE. (! NOT in functions since it calls again and again so JUST use it in main function to call ONCE)
+    srand(time(NULL));
+
     system("cls || clear");
 
     showServices();

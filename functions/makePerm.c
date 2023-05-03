@@ -6,8 +6,6 @@ int *makePerm(int n) {
     int *arr = (int *) calloc(n * n, sizeof(int));
     int *flag;
 
-    srand(time(NULL));
-
     for (int i = 0; i < n; i++) {
         // re-empty flags
         flag = (int *) calloc(n * n, sizeof(int));
