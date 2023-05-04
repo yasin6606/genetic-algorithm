@@ -5,7 +5,7 @@
 int getTSPInitValues();
 
 // set DIS matrix
-void setDisSol(int n);
+int *setDisSol(int n);
 
 int getTSPInitValues() {
     int citiesNum = 0;
@@ -16,7 +16,7 @@ int getTSPInitValues() {
     return citiesNum;
 }
 
-void setDisSol(int n) {
+int *setDisSol(int n) {
     int *disArr = (int *) calloc(n * n, sizeof(int));
     int *randArr;
 
@@ -40,5 +40,5 @@ void setDisSol(int n) {
         }
     }
 
-    printMatrix(n, disArr);
+    return disArr;
 }

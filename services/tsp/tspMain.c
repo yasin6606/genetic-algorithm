@@ -1,9 +1,11 @@
 #include "../../services/tsp/initTSP.c"
 
 void tspMain() {
-    int citiesSize = 0;
+    int citiesSize, *disMatrix;
 
     citiesSize = getTSPInitValues();
 
-    setDisSol(citiesSize);
+    disMatrix = setDisSol(citiesSize);
+
+    printMatrix(citiesSize, disMatrix);
 }
