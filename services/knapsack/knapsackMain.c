@@ -9,7 +9,7 @@ void knapsackMain() {
 
     matrixResult = setKnapsackSol(init);
 
-    evalResults = eval(matrixResult, init);
+    evalResults = evalKnapsack(matrixResult, init);
 
     printArray(init.n, init.wArr, "Weight: ");
     printArray(init.n, init.vArr, "Value: ");
