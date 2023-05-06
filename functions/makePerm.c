@@ -4,7 +4,7 @@
 int *makePerm(int n) {
     int num, j;
     int *arr = (int *) calloc(n * n, sizeof(int));
-    int *flag;
+    int *flag = NULL;
 
     for (int i = 0; i < n; i++) {
         // re-empty flags
