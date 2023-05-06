@@ -18,7 +18,7 @@ int getTSPInitValues() {
 
 int *setDisSol(int n) {
     int *disArr = (int *) calloc(n * n, sizeof(int));
-    int *randArr;
+    int *randArr = NULL;
 
     for (int i = 0; i < n; i++) {
         randArr = makePerm(n);

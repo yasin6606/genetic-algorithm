@@ -2,7 +2,7 @@
 #include "./evalTSP.c"
 
 void tspMain() {
-    int citiesSize, *disMatrix, *evalDisMatrix;
+    int citiesSize, *disMatrix = NULL, *evalDisMatrix = NULL;
 
     citiesSize = getTSPInitValues();
 
@@ -12,5 +12,5 @@ void tspMain() {
 
     printMatrix(citiesSize, disMatrix);
 
-    printArray(citiesSize, evalDisMatrix, "Evaluation: ");
+    printArray(citiesSize, evalDisMatrix, "Evaluation (Distances): ");
 }

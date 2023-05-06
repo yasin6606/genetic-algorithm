@@ -3,7 +3,7 @@
 
 void knapsackMain() {
     struct KnapsackInitValues init;
-    int *matrixResult, *evalResults;
+    int *matrixResult = NULL, *evalResults = NULL;
 
     init = getKnapsackInitValues();
 
@@ -16,5 +16,5 @@ void knapsackMain() {
 
     printMatrix(init.n, matrixResult);
 
-    printArray(init.n, evalResults, "Evaluation: ");
+    printArray(init.n, evalResults, "Evaluation (Values): ");
 }

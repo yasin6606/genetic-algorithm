@@ -1,7 +1,7 @@
 #include "./initQueens.c"
 
 void queensMain() {
-    int n;
+    int n, *queensMatrix = NULL, *e = NULL;
 
     n = getQueensInitValues();
 
