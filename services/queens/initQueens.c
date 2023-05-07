@@ -4,7 +4,7 @@
 int getQueensInitValues();
 
 // set matrix for queens (arrays of solutions)
-int *setQueensSol(int nQueens);
+int *setQueensSol(size_t nQueens);
 
 int getQueensInitValues() {
     int n;
@@ -16,7 +16,7 @@ int getQueensInitValues() {
     return n;
 }
 
-int *setQueensSol(int nQueens) {
+int *setQueensSol(size_t nQueens) {
     int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int)), i = 0, j = 0;
 
     while (i < nQueens) {
@@ -35,7 +35,7 @@ int *setQueensSol(int nQueens) {
 }
 
 //// O(n^2) Old method
-//int *setQueensSol(int nQueens) {
+//int *setQueensSol(size_t nQueens) {
 //    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int));
 //    int *row = NULL;
 //

@@ -1,7 +1,7 @@
 #include "../headers/mainHeaders.h"
 #include "time.h"
 
-int *makePerm(int n) {
+int *makePerm(size_t n) {
     int num, j;
     int *arr = (int *) calloc(n * n, sizeof(int));
     int *flag = NULL;

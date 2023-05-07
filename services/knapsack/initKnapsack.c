@@ -29,7 +29,8 @@ struct KnapsackInitValues getKnapsackInitValues() {
 }
 
 int *setKnapsackSol(struct KnapsackInitValues initValues) {
-    int *sol = NULL, n = initValues.n;
+    int *sol = NULL;
+    size_t n = initValues.n;
     int *solMatrix = (int *) calloc(n * n, sizeof(int));
 
     for (int i = 0; i < n; i++) {

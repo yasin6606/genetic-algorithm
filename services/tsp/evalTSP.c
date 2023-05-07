@@ -1,7 +1,7 @@
 #include "../../headers/mainHeaders.h"
 
 // make array of evaluation of DIS matrix
-int *evalTSP(const int *matrix, int size) {
+int *evalTSP(const int *matrix, size_t size) {
     int row, col, sum, *tempArr = (int *) calloc(size, sizeof(int));
 
     for (int i = 0; i < size; i++) {
