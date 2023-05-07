@@ -11,5 +11,6 @@
 #include "./../assets/printMatrix.c"
 #include "./../assets/printArray.c"
 #include "./../assets/max.c"
+#include "./../assets/swap.c"
 
 #endif //C_MAINHEADERS_H

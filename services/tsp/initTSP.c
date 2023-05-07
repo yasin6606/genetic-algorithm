@@ -28,16 +28,13 @@ int *setDisSol(size_t n) {
             if (randArr[i] == 0) continue;
 
             // randArr[i] == element on main diameter | randArr[j] == zero element
-            if (randArr[j] == 0) {
-                randArr[j] = randArr[i];
-                randArr[i] = 0;
-            }
+            if (randArr[j] == 0)
+                swap(randArr, j, i);
         }
 
         // make DIS matrix
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++)
             disArr[i * n + j] = randArr[j];
-        }
     }
 
     return disArr;
