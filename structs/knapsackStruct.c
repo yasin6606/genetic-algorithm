@@ -1,6 +1,6 @@
 struct KnapsackInitValues {
-    size_t n;
-    size_t wMax;
+    int n;
+    int wMax;
     int *wArr;
     int *vArr;
 };
