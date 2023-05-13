@@ -17,16 +17,20 @@ int getQueensInitValues() {
 }
 
 int *setQueensSol(size_t nQueens) {
-    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int)), i = 0, j = 0;
+    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int)), *permArr = makePerm(nQueens), i = 0, j = 0;
 
     while (i < nQueens) {
         if (j == nQueens) {
+
+            // ! ! ! Per each row creation, start making new permutation array ! ! !
+            permArr = makePerm(nQueens);
+
             i++;
             j = 0;
         }
 
         // add each element to each sol
-        queensArr[i * nQueens + j] = makePerm(nQueens)[j];
+        queensArr[i * nQueens + j] = permArr[j];
 
         j++;
     }
