@@ -39,6 +39,7 @@ void showServices() {
 
     puts("Hello\nThis program is created by \"Yasin Gourkani\"\tStudent ID:\"9974359\"\nShiraz University\n");
     puts("E-Mail: yassingourkani@outlook.com\n");
+    puts("(ATTENTION) The program is running on multi-processes mode.\n");
     puts("Application Menu: \n");
 
     for (int i = 0; i < SERVICES_LEN; i++)
