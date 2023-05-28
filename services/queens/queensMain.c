@@ -11,12 +11,19 @@ void queensMain() {
         return;
     }
 
+    // start to get duration
+    clock_t begin = clock();
+
     // make initial population
     queensMatrix = setQueensSol(n);
 
     // evaluating made population
     e = evalQueens(queensMatrix, n);
 
-    printMatrix(n, queensMatrix);
+    // end duration
+    clock_t end = clock();
+
     printArray(n, e, "Evaluation (Collisions are counted): ");
+
+    printf("\n\nDuration: %f seconds\n\n", ((double) (end - begin)) / CLOCKS_PER_SEC);
 }
