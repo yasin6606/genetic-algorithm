@@ -7,8 +7,10 @@
 void tspMain() {
     int citiesSize, *disMatrix = NULL, *evalDisMatrix = NULL;
 
+    // Get the number of cities
     citiesSize = getTSPInitValues();
 
+    // Produce population by multi processes
     disMatrix = chromosomeMP(citiesSize, &makePerm);
 
     // Make elements on main diameter zero
