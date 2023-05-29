@@ -1,5 +1,6 @@
 #include "../../headers/sharedLib.h"
-#include "../../functions/makePerm.c"
+//#include "../../functions/makePerm.c"
+#include "../../headers/makers.h"
 #include "../../headers/assets.h"
 
 // get the number of cities to initiate the problem

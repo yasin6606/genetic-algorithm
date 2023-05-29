@@ -1,5 +1,5 @@
 #include "../../headers/sharedLib.h"
-#include "../../functions/makeBin.c"
+#include "../../headers/makers.h"
 #include "../../structs/knapsackStruct.h"
 
 // get the number of cities to initiate the problem

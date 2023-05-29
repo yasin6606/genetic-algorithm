@@ -1,11 +1,15 @@
 #include "./initKnapsack.c"
 #include "./evalKnapsack.c"
+#include "../../headers/printing.h"
+#include "../../headers/multiproseccing/chromosomeMP.h"
 
 void knapsackMain() {
     struct KnapsackInitValues init;
     int *matrixResult = NULL, *evalResults = NULL;
 
     init = getKnapsackInitValues();
+
+    chromosomeMP(init.n, makeBin);
 
     matrixResult = setKnapsackSol(init);
 
