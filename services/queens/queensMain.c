@@ -13,14 +13,13 @@ void queensMain() {
         return;
     }
 
-    chromosomeMP(n, &makePerm);
-
-    // make initial population
-    queensMatrix = setQueensSol(n);
+    // Produce population by multi processes for N-Queens
+    queensMatrix = chromosomeMP(n, &makePerm);
 
     // evaluating made population
     e = evalQueens(queensMatrix, n);
 
     printMatrix(n, queensMatrix);
+
     printArray(n, e, "Evaluation (Collisions are counted): ");
 }
