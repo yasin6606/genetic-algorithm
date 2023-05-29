@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include "../headers/sharedLib.h"
 
 void printArray(size_t size, const int *arr, char *text) {
     puts("");

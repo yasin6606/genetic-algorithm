@@ -1,3 +1,5 @@
+#include "../headers/sharedLib.h"
+
 int max(const int *arr, size_t size) {
     int temp = arr[0];
 

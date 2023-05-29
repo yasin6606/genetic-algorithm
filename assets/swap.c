@@ -1,3 +1,5 @@
+#include "../headers/sharedLib.h"
+
 void swap(int *arr, size_t firstIdx, size_t secondIdx) {
     int temp = arr[firstIdx];
 
