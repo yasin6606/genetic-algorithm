@@ -1,4 +1,4 @@
-#include "../../headers/mainHeaders.h"
+#include "../../headers/sharedLib.h"
 #include "../../functions/makeBin.c"
 #include "../../structs/knapsackStruct.h"
 

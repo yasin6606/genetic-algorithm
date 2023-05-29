@@ -1,4 +1,4 @@
-#include "../headers/mainHeaders.h"
+#include "../headers/sharedLib.h"
 #include "time.h"
 
 int *makePerm(size_t n) {

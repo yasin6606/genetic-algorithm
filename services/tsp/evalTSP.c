@@ -1,4 +1,4 @@
-#include "../../headers/mainHeaders.h"
+#include "../../headers/sharedLib.h"
 
 // make array of evaluation of DIS matrix
 int *evalTSP(const int *matrix, size_t size) {

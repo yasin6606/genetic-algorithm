@@ -1,5 +1,6 @@
 #include "../../services/tsp/initTSP.c"
 #include "./evalTSP.c"
+#include "../../headers/printing.h"
 
 void tspMain() {
     int citiesSize, *disMatrix = NULL, *evalDisMatrix = NULL;

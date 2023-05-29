@@ -1,4 +1,4 @@
-#include "../../headers/mainHeaders.h"
+#include "../../headers/sharedLib.h"
 
 int *evalQueens(const int *matrix, size_t size);
 

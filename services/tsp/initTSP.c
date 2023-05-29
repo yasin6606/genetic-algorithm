@@ -1,5 +1,6 @@
-#include "../../headers/mainHeaders.h"
+#include "../../headers/sharedLib.h"
 #include "../../functions/makePerm.c"
+#include "../../headers/assets.h"
 
 // get the number of cities to initiate the problem
 int getTSPInitValues();
