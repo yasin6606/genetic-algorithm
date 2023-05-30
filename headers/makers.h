@@ -5,13 +5,10 @@
 #ifndef GENETIC_ALGORITHM_MAKERS_H
 #define GENETIC_ALGORITHM_MAKERS_H
 
-#include "./../functions/makePerm.c"
-#include "./../functions/makeBin.c"
+#include "./../functions/chromosomeMaker.c"
 #include "./../functions/tweak.c"
 
-int *makeBin(size_t n);
-
-int *makePerm(size_t n);
+int *chromosomeMaker(size_t n, bool isBin, bool isPerm);
 
 void tweak(int *sol, size_t size);
 
