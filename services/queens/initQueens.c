@@ -1,10 +1,10 @@
 #include "../../headers/sharedLib.h"
+#include "../../headers/makers.h"
 
 // get the number of queens to initiate the problem
 int getQueensInitValues();
 
-// set matrix for queens (arrays of solutions)
-int *setQueensSol(size_t nQueens);
+void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
 
 int getQueensInitValues() {
     int n;
@@ -16,39 +16,20 @@ int getQueensInitValues() {
     return n;
 }
 
-int *setQueensSol(size_t nQueens) {
-    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int)), *permArr = makePerm(nQueens), i = 0, j = 0;
+void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx) {
+    int *tempChromosome;
 
-    while (i < nQueens) {
-        if (j == nQueens) {
+    for (int i = 0; i < childShare; i++) {
 
-            // ! ! ! Per each row creation, start making new permutation array ! ! !
-            permArr = makePerm(nQueens);
+        // Produce a chromosome
+        tempChromosome = chromosomeMaker(populationNum, false, true);
 
-            i++;
-            j = 0;
-        }
+        // Add chromosome to shared memory
+        for (int j = 0; j < populationNum; j++)
+            sharedMem[startIdx + j] = tempChromosome[j];
 
-        // add each element to each sol
-        queensArr[i * nQueens + j] = permArr[j];
+        startIdx = startIdx + populationNum;
 
-        j++;
+        free(tempChromosome);
     }
-
-    return queensArr;
 }
-
-//// O(n^2) Old method
-//int *setQueensSol(size_t nQueens) {
-//    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int));
-//    int *row = NULL;
-//
-//    for (int i = 0; i < nQueens; i++) {
-//        row = makePerm(nQueens);
-//
-//        for (int j = 0; j < nQueens; j++)
-//            queensArr[i * nQueens + j] = row[j];
-//    }
-//
-//    return queensArr;
-//}

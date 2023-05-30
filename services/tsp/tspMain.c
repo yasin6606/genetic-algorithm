@@ -2,7 +2,6 @@
 #include "./evalTSP.c"
 #include "../../headers/printing.h"
 #include "../../headers/multiproseccing/chromosomeMP.h"
-#include "diameterZeroMaker.c"
 
 void tspMain() {
     int citiesSize, *disMatrix = NULL, *evalDisMatrix = NULL;
@@ -11,10 +10,7 @@ void tspMain() {
     citiesSize = getTSPInitValues();
 
     // Produce population by multi processes for TSP
-    disMatrix = chromosomeMP(citiesSize, &makePerm);
-
-    // Make elements on main diameter zero
-    diameterZeroMaker(disMatrix, citiesSize);
+    disMatrix = chromosomeMP(citiesSize, &tspPopulationMaker);
 
     evalDisMatrix = evalTSP(disMatrix, citiesSize);
 

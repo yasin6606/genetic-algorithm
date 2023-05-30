@@ -9,4 +9,8 @@
 
 typedef int *(*chromosome_producer_t)(size_t n);
 
+typedef int *(*chromosome_evaluator_t)(size_t n);
+
+typedef void (*sub_process_t)(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
+
 #endif //GENETIC_ALGORITHM_TYPEDEF_H

@@ -10,7 +10,7 @@ void knapsackMain() {
     init = getKnapsackInitValues();
 
     // Produce population by multi processes for Knapsack
-    matrixResult = chromosomeMP(init.n, makeBin);
+    matrixResult = chromosomeMP(init.n, &knapsackPopulationMaker);
 
     evalResults = evalKnapsack(matrixResult, init);
 

@@ -14,7 +14,7 @@ void queensMain() {
     }
 
     // Produce population by multi processes for N-Queens
-    queensMatrix = chromosomeMP(n, &makePerm);
+    queensMatrix = chromosomeMP(n, &queensPopulationMaker);
 
     // evaluating made population
     e = evalQueens(queensMatrix, n);

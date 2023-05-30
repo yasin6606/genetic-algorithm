@@ -5,8 +5,7 @@
 // get the number of cities to initiate the problem
 struct KnapsackInitValues getKnapsackInitValues();
 
-// set data structure
-int *setKnapsackSol(struct KnapsackInitValues initValues);
+void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
 
 struct KnapsackInitValues getKnapsackInitValues() {
     struct KnapsackInitValues knapsackStruct;
@@ -20,25 +19,28 @@ struct KnapsackInitValues getKnapsackInitValues() {
     scanf("%d", &knapsackStruct.wMax);
 
     // fill wArr (Weight Array) randomly
-    knapsackStruct.wArr = makePerm(knapsackStruct.wMax / 2);
+    knapsackStruct.wArr = chromosomeMaker(knapsackStruct.n, false, false);
 
     // fill vArr (Value Array) randomly. To be more realistic, divide values.
-    knapsackStruct.vArr = makePerm(knapsackStruct.wMax / 2);
+    knapsackStruct.vArr = chromosomeMaker(knapsackStruct.n, false, false);
 
     return knapsackStruct;
 }
 
-int *setKnapsackSol(struct KnapsackInitValues initValues) {
-    int *sol = NULL;
-    size_t n = initValues.n;
-    int *solMatrix = (int *) calloc(n * n, sizeof(int));
+void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx) {
+    int *tempChromosome;
 
-    for (int i = 0; i < n; i++) {
-        sol = makeBin(n);
+    for (int i = 0; i < childShare; i++) {
 
-        for (int j = 0; j < n; j++)
-            solMatrix[i * n + j] = sol[j];
+        // Produce a chromosome
+        tempChromosome = chromosomeMaker(populationNum, true, false);
+
+        // Add chromosome to shared memory
+        for (int j = 0; j < populationNum; j++)
+            sharedMem[startIdx + j] = tempChromosome[j];
+
+        startIdx = startIdx + populationNum;
+
+        free(tempChromosome);
     }
-
-    return solMatrix;
 }

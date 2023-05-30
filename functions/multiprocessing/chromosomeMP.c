@@ -2,26 +2,7 @@
 #include "../../types/typedef.h"
 #include "../../headers/sharedMemory.h"
 
-void
-subProcess(size_t populationNum, size_t childShare, int *sharedMem, chromosome_producer_t producer, int startIdx) {
-    int *tempChromosome;
-
-    for (int i = 0; i < childShare; i++) {
-
-        // Produce a chromosome
-        tempChromosome = (*producer)(populationNum);
-
-        // Add chromosome to shared memory
-        for (int j = 0; j < populationNum; j++)
-            sharedMem[startIdx + j] = tempChromosome[j];
-
-        startIdx = startIdx + populationNum;
-
-        free(tempChromosome);
-    }
-}
-
-void *chromosomeMP(size_t populationNum, chromosome_producer_t producer) {
+void *chromosomeMP(size_t populationNum, sub_process_t subProcess) {
     void *sharedMem = arraySharedMemory(populationNum * populationNum, sizeof(void *));
     int cores = get_nprocs(), childShare = floor(populationNum / cores), remained = populationNum % cores,
             *defineStartIdx = (int *) calloc(cores, sizeof(int));
@@ -42,13 +23,18 @@ void *chromosomeMP(size_t populationNum, chromosome_producer_t producer) {
         // Make new process
         pid = fork();
 
+        if (pid == -1) {
+            printf("\nCreating new process has ERROR!\n");
+            exit(1);
+        }
+
         if (pid == 0) {
 
             // Current child process
             if (i < remained)
-                subProcess(populationNum, childShare + 1, sharedMem, producer, defineStartIdx[i]);
+                (*subProcess)(populationNum, childShare + 1, sharedMem, defineStartIdx[i]);
             else // Current child's parent process
-                subProcess(populationNum, childShare, sharedMem, producer, defineStartIdx[i]);
+                (*subProcess)(populationNum, childShare, sharedMem, defineStartIdx[i]);
 
             // Exit each child process which finished their task
             exit(0);
