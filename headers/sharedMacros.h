@@ -1,0 +1,11 @@
+//
+// Created by yasin on 5/31/23.
+//
+
+#ifndef GENETIC_ALGORITHM_SHAREDMACROS_H
+#define GENETIC_ALGORITHM_SHAREDMACROS_H
+
+#define K 3
+#define PARENTS_NUM 2
+
+#endif //GENETIC_ALGORITHM_SHAREDMACROS_H

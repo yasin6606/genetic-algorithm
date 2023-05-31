@@ -9,5 +9,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <stdbool.h>
 
 #endif //GENETIC_ALGORITHM_SHAREDLIB_H

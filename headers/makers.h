@@ -9,11 +9,14 @@
 #include "../functions/makeBin.c"
 #include "../functions/makePerm.c"
 #include "../functions/tweak.c"
+#include "../functions/parentSelection.c"
 
 int *makeBin(size_t n);
 
 int *makePerm(size_t n);
 
 void tweak(int *sol, size_t size);
+
+void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H

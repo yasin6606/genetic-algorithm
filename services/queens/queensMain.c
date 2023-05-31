@@ -3,7 +3,7 @@
 #include "../../headers/printing.h"
 
 void queensMain() {
-    int n, *queensMatrix = NULL, *e = NULL;
+    int n, *queensMatrix = NULL, *evaluatedArr = NULL;
 
     n = getQueensInitValues();
 
@@ -18,7 +18,10 @@ void queensMain() {
     printMatrix(n, queensMatrix);
 
     // evaluating made population
-    e = evalQueens(queensMatrix, n);
+    evaluatedArr = evalQueens(queensMatrix, n);
 
-    printArray(n, e, "Evaluation (Collisions are counted): ");
+    // The best parent selection
+    parentSelection(evaluatedArr, n, false);
+
+    printArray(n, evaluatedArr, "Evaluation (Collisions are counted): ");
 }
