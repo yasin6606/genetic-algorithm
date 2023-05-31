@@ -1,4 +1,4 @@
-#include "headers/mainHeaders.h"
+#include "headers/sharedLib.h"
 #include "services/tsp/tspMain.c"
 #include "services/knapsack/knapsackMain.c"
 #include "services/queens/queensMain.c"

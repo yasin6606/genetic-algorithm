@@ -1,4 +1,4 @@
-#include "../headers/mainHeaders.h"
+#include "../headers/sharedLib.h"
 
 void printMatrix(size_t dimension, int *matrix) {
     puts("");

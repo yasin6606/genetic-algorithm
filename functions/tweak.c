@@ -1,4 +1,4 @@
-#include "../assets/swap.c"
+#include "../headers/assistant.h"
 
 void tweak(int *sol, size_t size) {
     int rand1 = rand() % size, rand2 = rand() % size;

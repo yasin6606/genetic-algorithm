@@ -1,4 +1,4 @@
-#include "../headers/mainHeaders.h"
+#include "../headers/sharedLib.h"
 
 int *makeBin(size_t n) {
     int *arr = (int *) calloc(n, sizeof(int));

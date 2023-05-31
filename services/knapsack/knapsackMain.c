@@ -1,5 +1,6 @@
 #include "./initKnapsack.c"
 #include "./evalKnapsack.c"
+#include "../../headers/printing.h"
 
 void knapsackMain() {
     struct KnapsackInitValues init;

@@ -1,6 +1,6 @@
-#include "../../headers/mainHeaders.h"
-#include "../../functions/makeBin.c"
-#include "../../structs/knapsackStruct.c"
+#include "../../headers/sharedLib.h"
+#include "../../headers/makers.h"
+#include "../../structs/knapsackStruct.h"
 
 // get the number of cities to initiate the problem
 struct KnapsackInitValues getKnapsackInitValues();

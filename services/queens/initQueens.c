@@ -1,4 +1,5 @@
-#include "../../headers/mainHeaders.h"
+#include "../../headers/sharedLib.h"
+#include "../../headers/makers.h"
 
 // get the number of queens to initiate the problem
 int getQueensInitValues();
