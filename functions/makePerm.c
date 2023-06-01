@@ -1,9 +1,7 @@
 #include "../headers/sharedLib.h"
-#include "../headers/printing.h"
 
 int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoreNumsCount, ...) {
-    int num, j, len, *arr = (int *) calloc(n, sizeof(int)), *flag = NULL,
-            *ignoredNumsArr = (int *) calloc(ignoreNumsCount, sizeof(int));
+    int temp, num, j, len, *arr = (int *) calloc(n, sizeof(int)), *flag = NULL, *ignoredNumsFlag = NULL;
 
     len = n;
 
@@ -14,16 +12,19 @@ int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoreNumsCount
 
     // Attention ! Using this condition in order to avoid reading this scope of code when ignoredNumsCount is zero.
     if (ignoreNumsCount > 0) {
+        ignoredNumsFlag = (int *) calloc(len, sizeof(int));
+
         // Variadic ! These number must be ignored on generated chromosome
         va_list ignoredNumsArgs;
 
         va_start(ignoredNumsArgs, ignoreNumsCount);
 
-        for (int i = 0; i < ignoreNumsCount; i++)
-            ignoredNumsArr[i] = va_arg(ignoredNumsArgs,
-        int);
+        for (int i = 0; i < ignoreNumsCount; i++) {
+            temp = va_arg(ignoredNumsArgs,
+            int);
 
-        printArray(ignoreNumsCount, ignoredNumsArr, "A ");
+            ignoredNumsFlag[temp] = 1;
+        }
 
         va_end(ignoredNumsArgs);
     }
@@ -37,6 +38,9 @@ int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoreNumsCount
             num = rand() % n;
 
             if (!ignorePerm && flag[num] == 1) continue;
+
+            // Prevent adding ignored numbers if they are existed
+            if (ignoreNumsCount > 0 && ignoredNumsFlag[num] == 1) continue;
 
             arr[j] = num;
             flag[num] = 1;
