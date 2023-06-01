@@ -1,6 +1,6 @@
 #include "../headers/sharedLib.h"
 
-void *childGenerator(size_t populationNum, int *breakPoints, int *oneParent, int *anotherParent) {
+int *childGenerator(size_t populationNum, int *breakPoints, int *oneParent, int *anotherParent) {
     int i, *child = (int *) calloc(populationNum, sizeof(int));
 
     // Fill first child's part
