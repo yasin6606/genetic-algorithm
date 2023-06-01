@@ -22,7 +22,7 @@ int *setDisSol(size_t n) {
     int *randArr = NULL;
 
     for (int i = 0; i < n; i++) {
-        randArr = makePerm(n, false, -1);
+        randArr = makePerm(n, false, -1, 0);
 
         // make main diameter zero (moving non-zero elements on main diameter to zero element)
         for (int j = 0; j < n; j++) {

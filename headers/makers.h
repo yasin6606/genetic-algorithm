@@ -10,13 +10,22 @@
 #include "../functions/makePerm.c"
 #include "../functions/tweak.c"
 #include "../functions/parentSelection.c"
+#include "../functions/crossover.c"
 
 int *makeBin(size_t n);
 
-int *makePerm(size_t n, bool ignorePerm, size_t limitLen);
+int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoredNumsCount, ...);
 
 void tweak(int *sol, size_t size);
 
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
+
+void *crossoverBin2P(void *firstParent, void *secondParent, size_t populationNum);
+
+void *crossoverPerm2P(void *firstParent, void *secondParent, size_t populationNum);
+
+void *crossoverBinUni(void *firstParent, void *secondParent, size_t populationNum);
+
+void *crossoverPermUni(void *firstParent, void *secondParent, size_t populationNum);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H
