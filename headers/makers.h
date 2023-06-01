@@ -10,7 +10,8 @@
 #include "../functions/makePerm.c"
 #include "../functions/tweak.c"
 #include "../functions/parentSelection.c"
-#include "../functions/crossover.c"
+#include "../functions/breakPointGenerator.c"
+#include "../functions/childGenerator.c"
 
 int *makeBin(size_t n);
 
@@ -20,12 +21,8 @@ void tweak(int *sol, size_t size);
 
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
 
-void *crossoverBin2P(void *firstParent, void *secondParent, size_t populationNum);
+int *breakPointGenerator(size_t populationNum);
 
-void *crossoverPerm2P(void *firstParent, void *secondParent, size_t populationNum);
-
-void *crossoverBinUni(void *firstParent, void *secondParent, size_t populationNum);
-
-void *crossoverPermUni(void *firstParent, void *secondParent, size_t populationNum);
+void *childGenerator(size_t populationNum, int *breakPoints, int *oneParent, int *anotherParent);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H
