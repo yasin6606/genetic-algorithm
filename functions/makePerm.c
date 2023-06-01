@@ -1,25 +1,32 @@
 #include "../headers/sharedLib.h"
 
-int *makePerm(size_t n) {
-    int num, j;
-    int *arr = (int *) calloc(n * n, sizeof(int));
+int *makePerm(size_t n, bool ignorePerm, size_t limitLen) {
+    int num, j, len;
+    int *arr = (int *) calloc(n, sizeof(int));
     int *flag = NULL;
 
-    for (int i = 0; i < n; i++) {
+    len = n;
+
+    if (limitLen != -1) {
+        len = limitLen;
+        arr = (int *) reallocarray(arr, limitLen, sizeof(int));
+    }
+
+    for (int i = 0; i < len; i++) {
         // re-empty flags
-        flag = (int *) calloc(n * n, sizeof(int));
+        flag = (int *) calloc(n, sizeof(int));
         j = 0;
 
         do {
             num = rand() % n;
 
-            if (flag[num] == 1) continue;
+            if (!ignorePerm && flag[num] == 1) continue;
 
             arr[j] = num;
             flag[num] = 1;
 
             j++;
-        } while (j < n);
+        } while (j < len);
 
         // free last used space for flag array
         free(flag);

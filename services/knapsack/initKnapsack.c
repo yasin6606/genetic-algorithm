@@ -20,10 +20,10 @@ struct KnapsackInitValues getKnapsackInitValues() {
     scanf("%d", &knapsackStruct.wMax);
 
     // fill wArr (Weight Array) randomly
-    knapsackStruct.wArr = makePerm(knapsackStruct.wMax / 2);
+    knapsackStruct.wArr = makePerm(knapsackStruct.wMax / 2, true, knapsackStruct.n);
 
     // fill vArr (Value Array) randomly. To be more realistic, divide values.
-    knapsackStruct.vArr = makePerm(knapsackStruct.wMax / 2);
+    knapsackStruct.vArr = makePerm(knapsackStruct.wMax / 2, true, knapsackStruct.n);
 
     return knapsackStruct;
 }

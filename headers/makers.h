@@ -13,7 +13,7 @@
 
 int *makeBin(size_t n);
 
-int *makePerm(size_t n);
+int *makePerm(size_t n, bool ignorePerm, size_t limitLen);
 
 void tweak(int *sol, size_t size);
 
