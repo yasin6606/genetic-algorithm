@@ -12,7 +12,7 @@ int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoreNumsCount
 
     // Attention ! Using this condition in order to avoid reading this scope of code when ignoredNumsCount is zero.
     if (ignoreNumsCount > 0) {
-        ignoredNumsFlag = (int *) calloc(len, sizeof(int));
+        ignoredNumsFlag = (int *) calloc(n, sizeof(int));
 
         // Variadic ! These number must be ignored on generated chromosome
         va_list ignoredNumsArgs;
