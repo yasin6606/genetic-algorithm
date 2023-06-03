@@ -41,6 +41,7 @@ int *childGenerator(size_t populationNum, int *breakPoints, bool ignorePerm, int
             flag[temp] = 1;
             continue;
         } else {
+            // Save empty gens indexes so as to fill them in next section.
             permEmptyIdx[k] = i;
             k++;
         }
@@ -53,6 +54,7 @@ int *childGenerator(size_t populationNum, int *breakPoints, bool ignorePerm, int
 
             if (flag[temp] == 1) continue;
 
+            // Fill empty gens based on being permutation.
             child[permEmptyIdx[j]] = temp;
             flag[temp] = 1;
 
