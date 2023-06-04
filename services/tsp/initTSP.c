@@ -2,21 +2,6 @@
 #include "../../headers/assistant.h"
 #include "../../headers/makers.h"
 
-// get the number of cities to initiate the problem
-int getTSPInitValues();
-
-// set DIS matrix
-int *setDisSol(size_t n);
-
-int getTSPInitValues() {
-    int citiesNum = 0;
-
-    printf("Enter the number of cities: ");
-    scanf("%d", &citiesNum);
-
-    return citiesNum;
-}
-
 int *setDisSol(size_t n) {
     int *disArr = (int *) calloc(n * n, sizeof(int));
     int *randArr = NULL;

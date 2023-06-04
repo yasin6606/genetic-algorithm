@@ -2,22 +2,17 @@
 #include "../../headers/makers.h"
 #include "../../structs/knapsackStruct.h"
 
-// get the number of cities to initiate the problem
-struct KnapsackInitValues getKnapsackInitValues();
+// set full information struct
+struct KnapsackInitValues getKnapsackStructInfo(size_t productsNum, size_t wMax);
 
 // set data structure
-int *setKnapsackSol(struct KnapsackInitValues initValues);
+int *setKnapsackSol(size_t productsNum);
 
-struct KnapsackInitValues getKnapsackInitValues() {
+struct KnapsackInitValues getKnapsackStructInfo(size_t productsNum, size_t wMax) {
     struct KnapsackInitValues knapsackStruct;
 
-    // get the number of products (n)
-    printf("Enter the number of products: ");
-    scanf("%d", &knapsackStruct.n);
-
-    // get maximum weight of backpack (wMax)
-    printf("Enter the maximum weight of backpack (KG): ");
-    scanf("%d", &knapsackStruct.wMax);
+    knapsackStruct.n = productsNum;
+    knapsackStruct.wMax = wMax;
 
     // fill wArr (Weight Array) randomly
     knapsackStruct.wArr = makePerm(knapsackStruct.wMax / 2, true, knapsackStruct.n, 1, 0);
@@ -28,16 +23,15 @@ struct KnapsackInitValues getKnapsackInitValues() {
     return knapsackStruct;
 }
 
-int *setKnapsackSol(struct KnapsackInitValues initValues) {
+int *setKnapsackSol(size_t productsNum) {
     int *sol = NULL;
-    size_t n = initValues.n;
-    int *solMatrix = (int *) calloc(n * n, sizeof(int));
+    int *solMatrix = (int *) calloc(productsNum * productsNum, sizeof(int));
 
-    for (int i = 0; i < n; i++) {
-        sol = makeBin(n);
+    for (int i = 0; i < productsNum; i++) {
+        sol = makeBin(productsNum);
 
-        for (int j = 0; j < n; j++)
-            solMatrix[i * n + j] = sol[j];
+        for (int j = 0; j < productsNum; j++)
+            solMatrix[i * productsNum + j] = sol[j];
     }
 
     return solMatrix;

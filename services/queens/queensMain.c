@@ -1,44 +1,59 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
+#include "../../headers/sharedMenu.h"
 #include "../../headers/crossover.h"
 
 void queensMain() {
-    int n, *queensMatrix = NULL, *evaluatedArr = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL;
+    int queensNum, *queensMatrix = NULL, *evaluatedArr = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
+            crossoverType;
 
-    n = getQueensInitValues();
+    // Get initial values
+    queensNum = intInput("Enter the number of queens: ");
+    crossoverType = crossoverMenu();
 
-    if (n < 4) {
+    if (queensNum < 4) {
         printf("\nMinimum queens must be 4 or upper\n");
         return;
     }
 
     // make initial population
-    queensMatrix = setQueensSol(n);
+    queensMatrix = setQueensSol(queensNum);
 
     // evaluating made population
-    evaluatedArr = evalQueens(queensMatrix, n);
+    evaluatedArr = evalQueens(queensMatrix, queensNum);
 
     // The best parent selection
-    bestParentsIdx = parentSelection(evaluatedArr, n, false);
+    bestParentsIdx = parentSelection(evaluatedArr, queensNum, false);
 
     // Re-allocate memory to children based on population size
-    firstChild = reallocarray(firstChild, n, sizeof(int));
-    secondChild = reallocarray(secondChild, n, sizeof(int));
+    firstChild = reallocarray(firstChild, queensNum, sizeof(int));
+    secondChild = reallocarray(secondChild, queensNum, sizeof(int));
 
-    // Crossover based on two breaking points
-    crossover2P(
-            &queensMatrix[bestParentsIdx[0] * n],
-            &queensMatrix[bestParentsIdx[1] * n],
-            n,
-            false,
-            firstChild,
-            secondChild
-    );
+    if (crossoverType == 1) {
+        // Crossover based on two breaking points
+        crossover2P(
+                &queensMatrix[bestParentsIdx[0] * queensNum],
+                &queensMatrix[bestParentsIdx[1] * queensNum],
+                queensNum,
+                false,
+                firstChild,
+                secondChild
+        );
+    } else {
+        crossoverUni(
+                &queensMatrix[bestParentsIdx[0] * queensNum],
+                &queensMatrix[bestParentsIdx[1] * queensNum],
+                queensNum,
+                false,
+                firstChild,
+                secondChild
+        );
+    }
 
-    printArray(n, firstChild, "First Child: ");
-    printArray(n, secondChild, "Second Child: ");
+    printArray(queensNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
+    printArray(queensNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
 
-    printMatrix(n, queensMatrix);
+    printMatrix(queensNum, queensMatrix, true);
 
-    printArray(n, evaluatedArr, "Evaluation (Collisions are counted): ");
+    printArray(queensNum, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 }
