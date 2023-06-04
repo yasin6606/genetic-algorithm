@@ -14,7 +14,7 @@ void tspMain() {
 
     evalDisMatrix = evalTSP(disMatrix, citiesSize);
 
-    printMatrix(citiesSize, disMatrix);
+    printMatrix(citiesSize, disMatrix, true);
 
-    printArray(citiesSize, evalDisMatrix, "Evaluation (Distances): ");
+    printArray(citiesSize, evalDisMatrix, "Evaluation (Distances): ", ANSI_COLOR_RESET);
 }

@@ -19,7 +19,7 @@ void queensMain() {
     // evaluating made population
     e = evalQueens(queensMatrix, n);
 
-    printMatrix(n, queensMatrix);
+    printMatrix(n, queensMatrix, true);
 
-    printArray(n, e, "Evaluation (Collisions are counted): ");
+    printArray(n, e, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 }

@@ -2,6 +2,7 @@
 #include "./evalKnapsack.c"
 #include "../../headers/printing.h"
 #include "../../headers/multiproseccing/chromosomeMP.h"
+#include "../../headers/sharedMacros.h"
 
 void knapsackMain() {
     struct KnapsackInitValues init;
@@ -14,10 +15,10 @@ void knapsackMain() {
 
     evalResults = evalKnapsack(matrixResult, init);
 
-    printArray(init.n, init.wArr, "Weight: ");
-    printArray(init.n, init.vArr, "Value: ");
+    printArray(init.n, init.wArr, "Weight: ", ANSI_COLOR_RESET);
+    printArray(init.n, init.vArr, "Value: ", ANSI_COLOR_RESET);
 
-    printMatrix(init.n, matrixResult);
+    printMatrix(init.n, matrixResult, true);
 
-    printArray(init.n, evalResults, "Evaluation (Values): ");
+    printArray(init.n, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
 }

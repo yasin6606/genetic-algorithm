@@ -9,8 +9,8 @@
 #include "./../assets/printMatrix.c"
 
 
-void printArray(size_t size, const int *arr, char *text);
+void printArray(size_t size, const int *arr, char *text, char *color);
 
-void printMatrix(size_t dimension, int *matrix);
+void printMatrix(size_t dimension, int *matrix, bool showRowIdx);
 
 #endif //GENETIC_ALGORITHM_PRINTING_H
