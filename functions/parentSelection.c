@@ -8,7 +8,7 @@ int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
     int temp, bestParent = evaluationArr[randIdxArr[0]], bestParentIdx = randIdxArr[0];
 
     /*
-     * Select the best parent (the best chromosome), based on type (minimum or maximum).
+     * type: Select the best parent (the best chromosome), based on type (minimum or maximum).
      * true: select maximum
      * false: select minimum
      */
@@ -43,7 +43,7 @@ void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
         parentIdx[i] = selectionHandler(evaluationArr, type, tempArr);
     }
 
-    printArray(PARENTS_NUM, parentIdx, "Best Parents: ");
+    printArray(PARENTS_NUM, parentIdx, "Best Parents: ", ANSI_COLOR_CYAN);
 
     return parentIdx;
 }

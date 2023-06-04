@@ -13,6 +13,8 @@ void crossover2P(int *firstParent, int *secondParent, size_t populationNum, bool
     // Get break points
     breakPoints = breakPointGenerator(populationNum);
 
+    printArray(PARENTS_NUM, breakPoints, "Breaking points: ", ANSI_COLOR_RED);
+
     // Generate first child (chromosome)
     temp = childGenerator2P(populationNum, breakPoints, ignorePerm, firstParent, secondParent);
     for (int i = 0; i < populationNum; i++)
@@ -28,7 +30,7 @@ void crossoverUni(int *firstParent, int *secondParent, size_t populationNum, boo
                   int *secondChild) {
     int *temp = NULL, *mask = makeBin(populationNum);
 
-    printArray(populationNum, mask, "Mask: ");
+    printArray(populationNum, mask, "Mask: ", ANSI_COLOR_MAGENTA);
 
     // Generate first child (chromosome)
     temp = childGeneratorUni(populationNum, ignorePerm, mask, firstParent, secondParent);
