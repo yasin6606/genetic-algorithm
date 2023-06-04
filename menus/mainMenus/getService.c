@@ -1,4 +1,4 @@
-#include "../headers/sharedLib.h"
+#include "../../headers/sharedLib.h"
 
 int getService() {
     int serviceNum = 0;
