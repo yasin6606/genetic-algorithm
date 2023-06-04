@@ -14,12 +14,29 @@ void crossover2P(int *firstParent, int *secondParent, size_t populationNum, bool
     breakPoints = breakPointGenerator(populationNum);
 
     // Generate first child (chromosome)
-    temp = childGenerator(populationNum, breakPoints, ignorePerm, firstParent, secondParent);
+    temp = childGenerator2P(populationNum, breakPoints, ignorePerm, firstParent, secondParent);
     for (int i = 0; i < populationNum; i++)
         firstChild[i] = temp[i];
 
     // Generate second child (chromosome)
-    temp = childGenerator(populationNum, breakPoints, ignorePerm, secondParent, firstParent);
+    temp = childGenerator2P(populationNum, breakPoints, ignorePerm, secondParent, firstParent);
+    for (int i = 0; i < populationNum; i++)
+        secondChild[i] = temp[i];
+}
+
+void crossoverUni(int *firstParent, int *secondParent, size_t populationNum, bool ignorePerm, int *firstChild,
+                  int *secondChild) {
+    int *temp = NULL, *mask = makeBin(populationNum);
+
+    printArray(populationNum, mask, "Mask: ");
+
+    // Generate first child (chromosome)
+    temp = childGeneratorUni(populationNum, ignorePerm, mask, firstParent, secondParent);
+    for (int i = 0; i < populationNum; i++)
+        firstChild[i] = temp[i];
+
+    // Generate second child (chromosome)
+    temp = childGeneratorUni(populationNum, ignorePerm, mask, secondParent, firstParent);
     for (int i = 0; i < populationNum; i++)
         secondChild[i] = temp[i];
 }

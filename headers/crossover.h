@@ -10,4 +10,7 @@
 void crossover2P(int *firstParent, int *secondParent, size_t populationNum, bool ignorePerm, int *firstChild,
                  int *secondChild);
 
+void crossoverUni(int *firstParent, int *secondParent, size_t populationNum, bool ignorePerm, int *firstChild,
+                  int *secondChild);
+
 #endif //GENETIC_ALGORITHM_CROSSOVER_H
