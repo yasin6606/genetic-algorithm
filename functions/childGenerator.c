@@ -1,7 +1,6 @@
 #include "../headers/sharedLib.h"
-#include "../headers/printing.h"
 
-int *childGenerator(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent) {
+int *childGenerator2P(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent) {
     int i, j = 0, k = 0, temp, breakFirst = breakPoints[0], breakLast = breakPoints[1],
             *child = (int *) calloc(populationNum, sizeof(int)),
             *flag = (int *) calloc(populationNum, sizeof(int)),
@@ -60,6 +59,70 @@ int *childGenerator(size_t populationNum, int *breakPoints, bool ignorePerm, int
 
             j++;
         }
+
+    return child;
+}
+
+int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *oneParent, int *anotherParent) {
+    int i, k = 0, temp,
+            *child = (int *) calloc(populationNum, sizeof(int)),
+            *flag = (int *) calloc(populationNum, sizeof(int)),
+            *permEmptyIdx = (int *) calloc(populationNum, sizeof(int));
+
+    for (i = 0; i < populationNum; i++) {
+
+        // Select from first parent. ! Without consider ignorePerm.
+        if (mask[i] == 0) {
+            temp = oneParent[i];
+            child[i] = temp;
+
+            if (!ignorePerm)
+                flag[temp] = 1;
+
+            continue;
+        }
+
+        // Select from second parent. Just when permutation is ignored.
+        if (ignorePerm && mask[i] == 1)
+            child[i] = anotherParent[i];
+    }
+
+    // Make current child permutation if ignoredPerm is false.
+    if (!ignorePerm) {
+
+        // Select from another parent.
+        for (i = 0; i < populationNum; i++) {
+            if (mask[i] == 0) continue;
+
+            temp = anotherParent[i];
+
+            // Save empty index
+            if (flag[temp] == 1) {
+                permEmptyIdx[k] = i;
+                k++;
+
+                continue;
+            }
+
+            child[i] = temp;
+            flag[temp] = 1;
+        }
+
+        // To reuse of k in order to read from permEmptyIdx, re-initialize it to 0.
+        k = 0;
+
+        // Fill empty indexes based permutation.
+        for (i = 0; i < populationNum; i++) {
+            temp = oneParent[i];
+
+            if (mask[i] == 0 || flag[temp] == 1) continue;
+
+            child[permEmptyIdx[k]] = temp;
+            k++;
+
+            flag[temp] = 1;
+        }
+    }
 
     return child;
 }

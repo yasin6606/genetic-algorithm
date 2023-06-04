@@ -23,6 +23,8 @@ void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
 
 int *breakPointGenerator(size_t populationNum);
 
-int *childGenerator(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent);
+int *childGenerator2P(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent);
+
+int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *oneParent, int *anotherParent);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H
