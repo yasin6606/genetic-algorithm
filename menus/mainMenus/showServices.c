@@ -15,7 +15,7 @@ void showServices() {
             ANSI_COLOR_RESET
     );
     printf("E-Mail: %syassingourkani@outlook.com%s\n\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
-    printf("%sApplication Menu:%s \n\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("Application Menu: \n\n");
 
     for (int i = 0; i < SERVICES_LEN; i++)
         printf("\t%s%d%s- %s\n", ANSI_COLOR_BLUE, i + 1, ANSI_COLOR_RESET, servicesName[i]);

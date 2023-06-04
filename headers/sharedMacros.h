@@ -8,6 +8,7 @@
 #define SERVICES_LEN 4
 #define K 3
 #define PARENTS_NUM 2
+#define CROSSOVER_TYPE_LEN 2
 
 // String colors
 #define ANSI_COLOR_RED     "\x1b[31m"
