@@ -1,28 +1,14 @@
 #include "../../headers/sharedLib.h"
 #include "../../headers/makers.h"
 
-// get the number of queens to initiate the problem
-int getQueensInitValues();
-
-void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
-
-int getQueensInitValues() {
-    int n;
-
-    // get the number of products (n)
-    printf("Enter the number of queens: ");
-    scanf("%d", &n);
-
-    return n;
-}
-
-void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx) {
+void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
+                           va_list args) {
     int *tempChromosome;
 
     for (int i = 0; i < childShare; i++) {
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(populationNum, false, true);
+        tempChromosome = chromosomeMaker(populationNum, false, true, -1, 0);
 
         // Add chromosome to shared memory
         for (int j = 0; j < populationNum; j++)
@@ -32,4 +18,6 @@ void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedM
 
         free(tempChromosome);
     }
+
+    va_end(args);
 }

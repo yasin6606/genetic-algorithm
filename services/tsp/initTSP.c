@@ -1,21 +1,8 @@
 #include "../../headers/sharedLib.h"
 #include "../../headers/makers.h"
 
-// get the number of cities to initiate the problem
-int getTSPInitValues();
-
-void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
-
-int getTSPInitValues() {
-    int citiesNum = 0;
-
-    printf("Enter the number of cities: ");
-    scanf("%d", &citiesNum);
-
-    return citiesNum;
-}
-
-void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx) {
+void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
+                        va_list args) {
     int *tempChromosome, elemIdx;
 
     for (int i = 0; i < childShare; i++) {
@@ -24,7 +11,7 @@ void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem,
         elemIdx = startIdx / populationNum;
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(populationNum, false, true);
+        tempChromosome = chromosomeMaker(populationNum, false, true, -1, 0);
 
         // make main diameter zero (moving non-zero elements on main diameter to zero element)
         for (int j = 0; j < populationNum; j++) {
@@ -44,4 +31,6 @@ void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem,
 
         free(tempChromosome);
     }
+
+    va_end(args);
 }

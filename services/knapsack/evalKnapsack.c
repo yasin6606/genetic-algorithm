@@ -1,4 +1,5 @@
 #include "../../headers/sharedLib.h"
+#include "../../structs/knapsackStruct.h"
 
 // make array of evaluation of Sol matrix
 int *evalKnapsack(const int *matrix, struct KnapsackInitValues knapsackStruct);

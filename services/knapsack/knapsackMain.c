@@ -1,24 +1,26 @@
 #include "./initKnapsack.c"
 #include "./evalKnapsack.c"
 #include "../../headers/printing.h"
-#include "../../headers/multiproseccing/chromosomeMP.h"
-#include "../../headers/sharedMacros.h"
+#include "../../headers/multiproseccing/multiprocessor.h"
+#include "../../headers/sharedMenu.h"
 
 void knapsackMain() {
     struct KnapsackInitValues init;
-    int *matrixResult = NULL, *evalResults = NULL;
+    int productsNum, wMax, *matrixResult = NULL, *evalResults = NULL;
 
-    init = getKnapsackInitValues();
+    productsNum = intInput("Enter the number of products: ");
+    wMax = intInput("Enter the maximum weight of knapsack: ");
+    init = getKnapsackStructInfo(productsNum, wMax);
 
     // Produce population by multi processes for Knapsack
-    matrixResult = chromosomeMP(init.n, &knapsackPopulationMaker);
+    matrixResult = multiprocessor(productsNum, productsNum * productsNum, &knapsackPopulationMaker, 0);
 
     evalResults = evalKnapsack(matrixResult, init);
 
-    printArray(init.n, init.wArr, "Weight: ", ANSI_COLOR_RESET);
-    printArray(init.n, init.vArr, "Value: ", ANSI_COLOR_RESET);
+    printArray(productsNum, init.wArr, "Weight: ", ANSI_COLOR_RESET);
+    printArray(productsNum, init.vArr, "Value: ", ANSI_COLOR_RESET);
 
-    printMatrix(init.n, matrixResult, true);
+    printMatrix(productsNum, matrixResult, true);
 
-    printArray(init.n, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
+    printArray(productsNum, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
 }

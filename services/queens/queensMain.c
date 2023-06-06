@@ -1,25 +1,27 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
 #include "../../headers/printing.h"
-#include "../../headers/multiproseccing/chromosomeMP.h"
+#include "../../headers/sharedMenu.h"
+#include "../../headers/multiproseccing/multiprocessor.h"
 
 void queensMain() {
-    int n, *queensMatrix = NULL, *e = NULL;
+    int queensNum, *queensMatrix = NULL, *e = NULL;
 
-    n = getQueensInitValues();
+    // Get the number of queens
+    queensNum = intInput("Enter the number of Queens: ");
 
-    if (n < 4) {
+    if (queensNum < 4) {
         printf("\nMinimum queens must be 4 or upper\n");
         return;
     }
 
     // Produce population by multi processes for N-Queens
-    queensMatrix = chromosomeMP(n, &queensPopulationMaker);
+    queensMatrix = multiprocessor(queensNum, queensNum * queensNum, &queensPopulationMaker, 0);
 
     // evaluating made population
-    e = evalQueens(queensMatrix, n);
+    e = evalQueens(queensMatrix, queensNum);
 
-    printMatrix(n, queensMatrix, true);
+    printMatrix(queensNum, queensMatrix, true);
 
-    printArray(n, e, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
+    printArray(queensNum, e, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 }

@@ -2,38 +2,30 @@
 #include "../../headers/makers.h"
 #include "../../structs/knapsackStruct.h"
 
-// get the number of cities to initiate the problem
-struct KnapsackInitValues getKnapsackInitValues();
-
-void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx);
-
-struct KnapsackInitValues getKnapsackInitValues() {
+// set full information struct
+struct KnapsackInitValues getKnapsackStructInfo(size_t productsNum, size_t wMax) {
     struct KnapsackInitValues knapsackStruct;
 
-    // get the number of products (n)
-    printf("Enter the number of products: ");
-    scanf("%d", &knapsackStruct.n);
-
-    // get maximum weight of backpack (wMax)
-    printf("Enter the maximum weight of backpack (KG): ");
-    scanf("%d", &knapsackStruct.wMax);
+    knapsackStruct.n = productsNum;
+    knapsackStruct.wMax = wMax;
 
     // fill wArr (Weight Array) randomly
-    knapsackStruct.wArr = chromosomeMaker(knapsackStruct.n, false, false);
+    knapsackStruct.wArr = chromosomeMaker(knapsackStruct.wMax / 2, false, false, knapsackStruct.n, 1, 0);
 
     // fill vArr (Value Array) randomly. To be more realistic, divide values.
-    knapsackStruct.vArr = chromosomeMaker(knapsackStruct.n, false, false);
+    knapsackStruct.vArr = chromosomeMaker(knapsackStruct.wMax / 2, false, false, knapsackStruct.n, 0);
 
     return knapsackStruct;
 }
 
-void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx) {
+void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
+                             va_list args) {
     int *tempChromosome;
 
     for (int i = 0; i < childShare; i++) {
 
-        // Produce a chromosome
-        tempChromosome = chromosomeMaker(populationNum, true, false);
+        // Produce a BINARY chromosome
+        tempChromosome = chromosomeMaker(populationNum, true, false, -1, 0);
 
         // Add chromosome to shared memory
         for (int j = 0; j < populationNum; j++)
@@ -43,4 +35,6 @@ void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *share
 
         free(tempChromosome);
     }
+
+    va_end(args);
 }
