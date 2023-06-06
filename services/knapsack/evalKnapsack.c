@@ -1,38 +1,58 @@
 #include "../../headers/sharedLib.h"
-#include "../../structs/knapsackStruct.h"
 
 // make array of evaluation of Sol matrix
-int *evalKnapsack(const int *matrix, struct KnapsackInitValues knapsackStruct);
+void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args);
 
 // evaluate each Sol
-int eval(const int *sol, struct KnapsackInitValues knapsackStruct);
+int evalSolKnapsack(const int *sol, size_t populationNum, size_t wMax, int *wArr, int *vArr);
 
-int *evalKnapsack(const int *matrix, struct KnapsackInitValues knapsackStruct) {
-    size_t size = knapsackStruct.n;
-    int *tempArr = (int *) calloc(size, sizeof(int));
+void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
+    int wMax, *wArr, *vArr, *populationMatrix;
 
-    for (int i = 0; i < size; i++)
-        tempArr[i] = eval(&matrix[i * size], knapsackStruct);
+    // ! ! ! (Attention) The order of getting data from variadic is highly IMPORTANT. The order MUST BE same as sending.
 
-    return tempArr;
+    // Get maximum weight of knapsack
+    wMax = va_arg(args,
+    int);
+
+    // TODO: Incoming pointers should be packed by a Loop.
+    // Get array of product's weights
+    wArr = va_arg(args,
+    int*);
+
+    // Get array of product's values
+    vArr = va_arg(args,
+    int*);
+
+    // Get array of product's values
+    populationMatrix = va_arg(args,
+    int*);
+
+    for (int i = 0; i < childShare; i++)
+        sharedMem[i + (startIdx / populationNum)] = evalSolKnapsack(
+                &populationMatrix[startIdx + (i * populationNum)],
+                populationNum,
+                wMax,
+                wArr,
+                vArr
+        );
 }
 
-int eval(const int *sol, struct KnapsackInitValues knapsackStruct) {
-    size_t size = knapsackStruct.n;
+int evalSolKnapsack(const int *sol, size_t populationNum, size_t wMax, int *wArr, int *vArr) {
     int tempWeight = 0, tempValue = 0;
 
-    // find elements that are 1 and mask it on each sol array
-    for (int i = 0; i < size; i++) {
+    // Find elements that are 1 and mask it on each sol array
+    for (int i = 0; i < populationNum; i++) {
         if (sol[i] == 0) continue;
 
         // Make the sum of each sol weights
-        tempWeight += knapsackStruct.wArr[i];
+        tempWeight += wArr[i];
 
         // Make the sum of each sol values
-        tempValue += knapsackStruct.vArr[i];
+        tempValue += vArr[i];
 
         // Throw out each sol which has more weight than knapsack's maximum weight and make its value 0
-        if (tempWeight > knapsackStruct.wMax) {
+        if (tempWeight > wMax) {
             tempValue = 0;
 
             break;

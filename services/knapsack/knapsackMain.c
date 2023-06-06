@@ -5,22 +5,36 @@
 #include "../../headers/sharedMenu.h"
 
 void knapsackMain() {
-    struct KnapsackInitValues init;
-    int productsNum, wMax, *matrixResult = NULL, *evalResults = NULL;
+    int productsNum, wMax, *wArr, *vArr, *population = NULL, *evalResults = NULL;
 
     productsNum = intInput("Enter the number of products: ");
     wMax = intInput("Enter the maximum weight of knapsack: ");
-    init = getKnapsackStructInfo(productsNum, wMax);
+
+    // Fill wArr (Weight Array) randomly
+    wArr = chromosomeMaker(productsNum, false, false, productsNum, 1, 0);
+
+    // Fill vArr (Value Array) randomly. To be more realistic, divide values.
+    vArr = chromosomeMaker(productsNum, false, false, productsNum, 0);
 
     // Produce population by multi processes for Knapsack
-    matrixResult = multiprocessor(productsNum, productsNum * productsNum, &knapsackPopulationMaker, 0);
+    population = multiprocessor(productsNum, productsNum * productsNum, &knapsackPopulationMaker, 0);
 
-    evalResults = evalKnapsack(matrixResult, init);
+    // Evaluate generated population by multi processes for Knapsack
+    evalResults = multiprocessor(
+            productsNum,
+            productsNum,
+            &evalKnapsack,
+            4,
+            wMax,
+            wArr,
+            vArr,
+            population
+    );
 
-    printArray(productsNum, init.wArr, "Weight: ", ANSI_COLOR_RESET);
-    printArray(productsNum, init.vArr, "Value: ", ANSI_COLOR_RESET);
+    printArray(productsNum, wArr, "Weight: ", ANSI_COLOR_RESET);
+    printArray(productsNum, vArr, "Value: ", ANSI_COLOR_RESET);
 
-    printMatrix(productsNum, matrixResult, true);
+    printMatrix(productsNum, population, true);
 
     printArray(productsNum, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
 }
