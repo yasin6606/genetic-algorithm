@@ -32,5 +32,6 @@
 
 // Debugger
 #define SHOW_NUM(X) printf("\n%d \n", X);
+#define SLEEP_TESTER(X) printf("Start\n"); sleep(X); printf("End\n");
 
 #endif //GENETIC_ALGORITHM_SHAREDMACROS_H
