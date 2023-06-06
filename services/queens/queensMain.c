@@ -5,7 +5,7 @@
 #include "../../headers/multiproseccing/multiprocessor.h"
 
 void queensMain() {
-    int queensNum, *queensMatrix = NULL, *e = NULL;
+    int queensNum, *queensMatrix = NULL, *evalResult = NULL;
 
     // Get the number of queens
     queensNum = intInput("Enter the number of Queens: ");
@@ -19,9 +19,9 @@ void queensMain() {
     queensMatrix = multiprocessor(queensNum, queensNum * queensNum, &queensPopulationMaker, 0);
 
     // evaluating made population
-    e = evalQueens(queensMatrix, queensNum);
+    evalResult = multiprocessor(queensNum, queensNum, &evalQueens, 1, queensMatrix);
 
     printMatrix(queensNum, queensMatrix, true);
 
-    printArray(queensNum, e, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
+    printArray(queensNum, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 }
