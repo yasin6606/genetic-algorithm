@@ -8,7 +8,7 @@
 #include "./../functions/chromosomeMaker.c"
 #include "./../functions/tweak.c"
 
-int *chromosomeMaker(size_t n, bool isBin, bool isPerm);
+int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumsCount, ...);
 
 void tweak(int *sol, size_t size);
 
