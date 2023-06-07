@@ -6,7 +6,7 @@
 #define GENETIC_ALGORITHM_SHAREDMACROS_H
 
 #define SERVICES_LEN 4
-#define K 3
+#define K_COMPETITION 3
 #define PARENTS_NUM 2
 #define CROSSOVER_TYPE_LEN 2
 
@@ -33,5 +33,8 @@
 // Debugger
 #define SHOW_NUM(X) printf("\n%d \n", X);
 #define SLEEP_TESTER(X) printf("Start\n"); sleep(X); printf("End\n");
+
+// Errors
+#define SHOW_ERROR(TEXT) printf("%s(Error)%s %s\n\n", ANSI_COLOR_RED, TEXT, ANSI_COLOR_RESET);
 
 #endif //GENETIC_ALGORITHM_SHAREDMACROS_H
