@@ -1,20 +1,17 @@
 #include "../headers/sharedLib.h"
 
 int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumsCount, ...) {
-    int len, num, j, temp,
-            *arr = (int *) calloc(maxGenNum, sizeof(int)), *flag = NULL, *ignoredNumsFlag = NULL;
-
-    len = maxGenNum;
+    int len = maxGenNum, num, j, temp, *arr = NULL, *flag = NULL, *ignoredNumsFlag = NULL;
 
     // Check so as to generate Binary chromosomes
     if (isBin)
         isPerm = false;
 
     // Check chromosome length limitation
-    if (limitLen != -1) {
+    if (limitLen != -1)
         len = limitLen;
-        arr = (int *) reallocarray(arr, limitLen, sizeof(int));
-    }
+
+    arr = (int *) calloc(len, sizeof(int));
 
     /*
      * Check if some numbers must be ignored.
@@ -41,8 +38,7 @@ int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, si
 
     for (int i = 0; i < len; i++) {
         // re-empty flags
-        if (isPerm)
-            flag = (int *) calloc(len, sizeof(int));
+        flag = (int *) calloc(maxGenNum, sizeof(int));
 
         j = 0;
 
@@ -66,10 +62,12 @@ int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, si
             j++;
         } while (j < len);
 
-        // free last used space for flag array
-        if (isPerm)
-            free(flag);
+        // free last used space for flags array (! It is IMPORTANT to avoid Memory Leak)
+        free(flag);
     }
+
+    // free last used space for flags array (! It is IMPORTANT to avoid Memory Leak)
+    free(ignoredNumsFlag);
 
     return arr;
 }
