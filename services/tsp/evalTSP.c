@@ -1,26 +1,32 @@
 #include "../../headers/sharedLib.h"
 
-// make array of evaluation of DIS matrix
-int *evalTSP(const int *matrix, size_t size) {
-    int row, col, sum, *tempArr = (int *) calloc(size, sizeof(int));
+// Make array of evaluation of population
+void
+evalTSPPopulation(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
+    int *population = NULL, *dis = NULL, sum, row, col;
 
-    for (int i = 0; i < size; i++) {
+    // Get Population matrix
+    population = va_arg(args,
+    int*);
+
+    // Get dis matrix
+    dis = va_arg(args,
+    int*);
+
+    for (int i = 0; i < childShare; i++) {
         sum = 0;
 
-        for (int j = 0; j < size - 1; j++) {
-            // get row of each sol
-            row = matrix[i * size + j];
+        // Map on each sol
+        for (int j = 0; j < populationNum - 1; j++) {
+            row = population[(startIdx + (i * populationNum)) + j] * populationNum;
+            col = population[((startIdx + (i * populationNum)) + j) + 1];
 
-            // get col of each sol
-            col = matrix[i * size + j + 1];
-
-            sum += matrix[row * size + col];
+            sum += dis[row + col];
         }
 
-        sum += matrix[(size - 1) * size];
+        // Finally, add first gen (element) of last chromosome. (Element of Last Row and First Column)
+        sum += dis[(populationNum - 1) * populationNum];
 
-        tempArr[i] = sum;
+        sharedMem[(startIdx / populationNum) + i] = sum;
     }
-
-    return tempArr;
 }
