@@ -1,9 +1,8 @@
 #include "../headers/assets.h"
+#include "../headers/makers.h"
 
-void tweak(int *sol, size_t size) {
-    int rand1 = rand() % size, rand2 = rand() % size;
+void tweak(int *sol, size_t populationNum) {
+    int *rands = chromosomeMaker(populationNum, false, true, 2, 0);
 
-    //// Maybe here we need to use sleep() to make a different random numbers when tweak() calls continually
-
-    swap(sol, rand1, rand2);
+    swap(sol, rands[0], rands[1]);
 }
