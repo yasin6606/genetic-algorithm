@@ -6,7 +6,7 @@ int *breakPointGenerator(size_t populationNum) {
     int *breakPoints = NULL;
 
     while (1) {
-        breakPoints = chromosomeMaker(populationNum, false, true, 2, 0, populationNum - 1);
+        breakPoints = chromosomeMaker(populationNum, false, true, 2, 2, 0, populationNum - 1);
 
         if (abs(breakPoints[0] - breakPoints[1]) > 1) break;
     }
