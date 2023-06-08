@@ -28,8 +28,8 @@ void knapsackMain() {
     bestParentsIdx = parentSelection(evalResults, productsNum, true);
 
     // Re-allocate memory to children based on population size
-    firstChild = (int *) reallocarray(firstChild, productsNum, sizeof(int));
-    secondChild = (int *) reallocarray(secondChild, productsNum, sizeof(int));
+    firstChild = (int *) calloc(firstChild, productsNum, sizeof(int));
+    secondChild = (int *) calloc(secondChild, productsNum, sizeof(int));
 
     if (crossoverType == 1) {
         // Crossover based on two breaking point algorithm
