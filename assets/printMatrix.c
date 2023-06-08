@@ -14,5 +14,6 @@ void printMatrix(size_t dimension, int *matrix, bool showRowIdx) {
         puts("");
     }
 
+    fflush(stdout);
     puts("");
 }
