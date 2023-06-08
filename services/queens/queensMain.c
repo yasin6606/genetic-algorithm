@@ -26,8 +26,8 @@ void queensMain() {
     bestParentsIdx = parentSelection(evaluatedArr, queensNum, false);
 
     // Re-allocate memory to children based on population size
-    firstChild = calloc(firstChild, queensNum, sizeof(int));
-    secondChild = calloc(secondChild, queensNum, sizeof(int));
+    firstChild = calloc(queensNum, sizeof(int));
+    secondChild = calloc(queensNum, sizeof(int));
 
     if (crossoverType == 1) {
         // Crossover based on two breaking points

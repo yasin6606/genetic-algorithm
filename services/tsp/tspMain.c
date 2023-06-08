@@ -24,8 +24,8 @@ void tspMain() {
     bestParentsIdx = parentSelection(evalDisMatrix, citiesSize, false);
 
     // Re-allocate memory to children based on population size
-    firstChild = (int *) calloc(firstChild, citiesSize, sizeof(int));
-    secondChild = (int *) calloc(secondChild, citiesSize, sizeof(int));
+    firstChild = (int *) calloc(citiesSize, sizeof(int));
+    secondChild = (int *) calloc(citiesSize, sizeof(int));
 
     if (crossoverType == 1) {
         // Crossover based on two breaking point algorithm
