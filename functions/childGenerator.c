@@ -1,55 +1,55 @@
 #include "../headers/sharedLib.h"
 
+void sideFilling2P(size_t start, size_t end, bool ignorePerm, int *parent, int *flag, int *permEmptyIdx, int *k,
+                   int *child) {
+    int i, temp;
+
+    for (i = start; i < end; i++) {
+        temp = parent[i];
+
+        // Check to be permutation
+        if (!ignorePerm && flag[temp] == 1) {
+            // Save empty gens indexes so as to fill them in next section.
+            permEmptyIdx[(*k)] = i;
+            (*k)++;
+
+            continue;
+        }
+
+        child[i] = temp;
+
+        // Be permutation
+        if (!ignorePerm)
+            flag[temp] = 1;
+    }
+}
+
 int *childGenerator2P(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent) {
-    int i, j = 0, k = 0, temp, breakFirst = breakPoints[0], breakLast = breakPoints[1],
+    int i, j = 0, k = 0, temp, firstBreak = breakPoints[0], lastBreak = breakPoints[1],
             *child = (int *) calloc(populationNum, sizeof(int)),
             *flag = (int *) calloc(populationNum, sizeof(int)),
-            *permEmptyIdx = (int *) calloc(breakLast - breakFirst, sizeof(int));
+            *permEmptyIdx = (int *) calloc(lastBreak - firstBreak, sizeof(int));
 
-    // Fill first the child's part (first side)
-    for (i = 0; i < breakFirst; i++) {
+    // Fill first the child's part (middle part)
+    for (i = firstBreak; i < lastBreak; i++) {
         temp = oneParent[i];
         child[i] = temp;
 
+        // Be permutation
         if (!ignorePerm)
             flag[temp] = 1;
     }
 
     // Fill second the child's part (last side)
-    for (i = breakLast; i < populationNum; i++) {
-        temp = oneParent[i];
-        child[i] = temp;
+    sideFilling2P(0, firstBreak, ignorePerm, anotherParent, flag, permEmptyIdx, &k, child);
 
-        if (!ignorePerm)
-            flag[temp] = 1;
-    }
-
-    // Fill third the child's part (middle part)
-    for (i = breakFirst; i < breakLast; i++) {
-        temp = anotherParent[i];
-
-        if (ignorePerm) {
-            child[i] = temp;
-
-            continue;
-        }
-
-        if (flag[temp] == 0) {
-            child[i] = temp;
-
-            flag[temp] = 1;
-            continue;
-        } else {
-            // Save empty gens indexes so as to fill them in next section.
-            permEmptyIdx[k] = i;
-            k++;
-        }
-    }
+    // Fill third the child's part (last part)
+    sideFilling2P(lastBreak, populationNum, ignorePerm, anotherParent, flag, permEmptyIdx, &k, child);
 
     // Make generated child (child chromosome) permutation. (! Based on middle part)
     if (!ignorePerm)
-        for (i = breakFirst; i < breakLast; i++) {
-            temp = oneParent[i];
+        for (i = firstBreak; i < lastBreak; i++) {
+            temp = anotherParent[i];
 
             if (flag[temp] == 1) continue;
 
