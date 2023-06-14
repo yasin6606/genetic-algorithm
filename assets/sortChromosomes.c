@@ -18,6 +18,7 @@ EvalType *bubbleSort(EvalType *arr, size_t len) {
 
 void *sortChromosomes(int *evalArr, size_t len) {
     EvalType *eval = (EvalType *) calloc(len, sizeof(EvalType));
+    int *evalSorted = (int *) calloc(len, sizeof(int));
 
     for (int i = 0; i < len; i++) {
         eval[i].idx = i;
@@ -27,5 +28,8 @@ void *sortChromosomes(int *evalArr, size_t len) {
     // Sorting
     eval = bubbleSort(eval, len);
 
-    return eval;
+    for (int i = 0; i < len; i++)
+        evalSorted[i] = eval[i].idx;
+
+    return evalSorted;
 }
