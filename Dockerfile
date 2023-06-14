@@ -5,5 +5,6 @@ RUN apk add build-base
 WORKDIR /home/
 RUN git clone https://github.com/yasin6606/genetic-algorithm.git
 WORKDIR /home/genetic-algorithm
+RUN git checkout multiprocess
 RUN gcc main.c -o runner
-ENTRYPOINT ./runner
+#ENTRYPOINT ./runner
