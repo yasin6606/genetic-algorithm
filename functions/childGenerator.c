@@ -24,7 +24,7 @@ void sideFilling2P(size_t start, size_t end, bool ignorePerm, int *parent, int *
     }
 }
 
-int *childGenerator2P(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent) {
+int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, int *oneParent, int *anotherParent) {
     int i, j = 0, k = 0, temp, firstBreak = breakPoints[0], lastBreak = breakPoints[1],
             *child = (int *) calloc(populationNum, sizeof(int)),
             *flag = (int *) calloc(populationNum, sizeof(int)),

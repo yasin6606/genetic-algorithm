@@ -28,7 +28,7 @@
 #define RM_CURRENT_LINE "\33[2K\r"
 
 // Lines
-#define DASHED_LINE puts("\n---------------------------------------------------------------------")
+#define DASHED_LINE puts("\n---------------------------------------------------------------------");
 
 // Debugger
 #define SHOW_NUM(X) printf("\n%d \n", X);

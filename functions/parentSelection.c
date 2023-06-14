@@ -1,7 +1,6 @@
 #include "../headers/sharedLib.h"
 #include "../headers/sharedMacros.h"
 #include "../headers/makers.h"
-#include "../headers/printing.h"
 
 int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
     int temp, bestParent = evaluationArr[randIdxArr[0]], bestParentIdx = randIdxArr[0];
@@ -44,8 +43,6 @@ void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
         // Save the row number of each parent.
         parentIdx[i] = selectionHandler(evaluationArr, type, tempArr);
     }
-
-    printArray(PARENTS_NUM, parentIdx, "Best Parents: ", ANSI_COLOR_CYAN);
 
     free(randIdxArr);
 
