@@ -23,6 +23,8 @@ void queensMain() {
     // Produce population by multi processes for N-Queens
     queensMatrix = multiprocessor(queensNum, queensNum * queensNum, &queensPopulationMaker, 0);
 
+//    for (int i = 0; i < ; ++i)
+
     // evaluating made population
     evalResult = multiprocessor(queensNum, queensNum, &evalQueens, 1, queensMatrix);
 
@@ -43,8 +45,8 @@ void queensMain() {
             elitePercent
     );
 
-    printArray(queensNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(queensNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
+    // Tweak (Mutation)
+    tweak(queensMatrix, queensNum);
 
     printMatrix(queensNum, queensMatrix, true);
 
