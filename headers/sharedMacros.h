@@ -9,6 +9,8 @@
 #define K_COMPETITION 3
 #define PARENTS_NUM 2
 #define CROSSOVER_TYPE_LEN 2
+#define ELITE_PERCENT 0.04
+#define MUTATION_PERCENT 0.3
 
 #define N_TIMES(X, Y) (X * Y)
 
