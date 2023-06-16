@@ -10,7 +10,7 @@ int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
      * true: select maximum
      * false: select minimum
      */
-    for (int i = 0; i < K_COMPETITION; i++) {
+    for (int i = 1; i < K_COMPETITION; i++) {
 
         // Select a parent (chromosome)
         temp = evaluationArr[randIdxArr[i]];
@@ -31,17 +31,13 @@ int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
 
 // Find the best parent's indexes based on (Random K Competition Algorithm).
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
-    int *parentIdx = (int *) calloc(PARENTS_NUM, sizeof(int)), *randIdxArr, tempArr[K_COMPETITION];
-
-    // Generate (PARENTS_NUM * K_COMPETITION) random indexes so as to select PARENTS_NUM parents on K Competition mode.
-    randIdxArr = chromosomeMaker(populationNum, false, true, PARENTS_NUM * K_COMPETITION, 0);
+    int *parentIdx = (int *) calloc(PARENTS_NUM, sizeof(int)), *randIdxArr = NULL, tempArr[K_COMPETITION];
 
     for (int i = 0; i < PARENTS_NUM; i++) {
-        for (int j = 0; j < K_COMPETITION; j++)
-            tempArr[j] = randIdxArr[(i * K_COMPETITION) + j];
+        randIdxArr = chromosomeMaker(populationNum, false, true, K_COMPETITION, i, parentIdx[i - 1]);
 
         // Save the row number of each parent.
-        parentIdx[i] = selectionHandler(evaluationArr, type, tempArr);
+        parentIdx[i] = selectionHandler(evaluationArr, type, randIdxArr);
     }
 
     free(randIdxArr);
