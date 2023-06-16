@@ -31,7 +31,7 @@ int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
 
 // Find the best parent's indexes based on (Random K Competition Algorithm).
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
-    int *parentIdx = (int *) calloc(PARENTS_NUM, sizeof(int)), *randIdxArr = NULL, tempArr[K_COMPETITION];
+    int *parentIdx = (int *) calloc(PARENTS_NUM, sizeof(int)), *randIdxArr = NULL;
 
     for (int i = 0; i < PARENTS_NUM; i++) {
         randIdxArr = chromosomeMaker(populationNum, false, true, K_COMPETITION, i, parentIdx[i - 1]);
