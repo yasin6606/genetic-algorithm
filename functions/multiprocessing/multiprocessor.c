@@ -49,7 +49,7 @@ void *multiprocessor(size_t populationNum, size_t sharedMemLen, sub_process_t su
             exit(0);
         } else {
             // Use srand() for each process in order to produce random numbers per each process
-            srand(clock());
+            srand(clock() * getpid());
         }
     }
 

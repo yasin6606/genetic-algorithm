@@ -8,7 +8,7 @@ int main() {
      * ! NOT in functions since it calls again and again so JUST use it in main function to call ONCE.
      * ! ATTENTION: To use parallel programming (multi-processes) it needs to call srand per each process.
      */
-    srand(time(NULL));
+    srand(time(NULL) * getpid());
 
     system("cls || clear");
 
