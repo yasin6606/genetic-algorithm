@@ -1,10 +1,12 @@
 #include "../../headers/sharedLib.h"
 #include "../../types/functionTypedef.h"
 #include "../../headers/sharedMemory.h"
+#include "../../headers/sharedMacros.h"
 
-void *multiprocessor(size_t populationNum, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...) {
+void *
+multiprocessor(size_t tasks, size_t populationNum, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...) {
     void *sharedMem = arraySharedMemory(sharedMemLen, sizeof(void *));
-    int cores = get_nprocs(), childShare = floor(populationNum / cores), remained = populationNum % cores,
+    int cores = get_nprocs(), childShare = floor(tasks / cores), remained = tasks % cores,
             *defineStartIdx = (int *) calloc(cores, sizeof(int));
     pid_t pid;
     va_list args;
