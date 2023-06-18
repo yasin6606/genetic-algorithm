@@ -7,57 +7,66 @@
 #include "../../plot/plot.h"
 
 void queensMain() {
-    int queensNum, populationLen, stop, crossoverType, elitePercent, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
-            *newPop = NULL;
-
-    int f = 0, r = -1, c = -1;
+    int chromosomeLen, populationLen, stop, crossoverType, eliteNum, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
+            *newPop = NULL, plotLen, *bestSolves = NULL;
 
     // Get the number of queens
-    queensNum = intInput("Enter the number of Queens (Each chromosome's gens): ");
+    chromosomeLen = intInput("Enter the number of Queens (Each chromosome's gens): ");
+
+    if (chromosomeLen < 4) {
+        SHOW_WARNING("Minimum queens must be 4 or upper");
+
+        return;
+    }
+
     populationLen = intInput("Enter the length of population: ");
     stop = intInput("Enter the number of loops: ");
     crossoverType = crossoverMenu();
 
+    // Set default value for plot X axios
+    plotLen = stop;
+
+    // Best solutions array
+    bestSolves = (int *) calloc(stop, sizeof(int));
+
     // Get the number of chromosomes which must move to new population directly
-    elitePercent = ceil(populationLen * ELITE_PERCENT);
+    eliteNum = ceil(populationLen * ELITE_PERCENT);
 
-    if (queensNum < 4) {
-        printf("\nMinimum queens must be 4 or upper\n");
-        return;
-    }
-
-    // Produce population by multi processes for N-Queens
+    // Produce init population by multi processes for N-Queens
     population = multiprocessor(
             populationLen,
-            queensNum,
-            populationLen * queensNum,
+            chromosomeLen,
+            populationLen * chromosomeLen,
             &queensPopulationMaker,
             0
     );
 
-    // Init evaluation
-    evalResult = (int *) multiprocessor(populationLen, queensNum, queensNum, &evalQueens, 1, population);
-
-    // Init sorting evaluation
-    evalSortedIdx = sortChromosomes(evalResult, populationLen);
-
     for (int i = 0; i < stop; i++) {
 
-//        DASHED_LINE
-//        printf("i: %d\n", i);
-//        printCustomMatrix(populationLen, queensNum, population, true);
-//        printArray(elitePercent, evalSortedIdx, "S: ", ANSI_COLOR_RESET);
-//        for (int j = 0; j < elitePercent; j++) {
-//            printArray(queensNum, &population[evalSortedIdx[j] * queensNum], "", ANSI_COLOR_RESET);
-//        }
+        // Evaluation
+        evalResult = (int *) multiprocessor(populationLen, chromosomeLen, chromosomeLen, &evalQueens, 1, population);
 
-        if (evalResult[evalSortedIdx[0]] == 0) break;
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evalResult, populationLen);
+
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evalResult[evalSortedIdx[0]];
+
+        // Stop Condition if zero collision found
+        if (bestSolves[i] == 0) {
+            plotLen = i;
+
+            // Print answer
+            printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+
+            break;
+        }
 
         // Crossover
         newPop = (int *) multiprocessor(
                 populationLen,
-                queensNum,
-                populationLen * queensNum,
+                chromosomeLen,
+                populationLen * chromosomeLen,
                 &crossover,
                 6,
                 population,
@@ -65,24 +74,19 @@ void queensMain() {
                 evalSortedIdx,
                 false,
                 crossoverType,
-                elitePercent
+                eliteNum
         );
 
         // Tweak (Mutation)
-        tweak(newPop, queensNum, populationLen);
+        tweak(newPop, chromosomeLen, populationLen);
 
-        // evaluating made population
-        evalResult = (int *) multiprocessor(populationLen, queensNum, queensNum, &evalQueens, 1, population);
-
-        // Sort evaluation result in order to direct send 4% of the best chromosomes
-        evalSortedIdx = sortChromosomes(evalResult, populationLen);
-
+        // Re-Take the new population
         population = newPop;
     }
 
-//    printCustomMatrix(populationLen, queensNum, population, false);
-    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
+//    printCustomMatrix(populationLen, chromosomeLen, population, false);
+//    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 //    printArray(populationLen, evalSortedIdx, "Evaluation Sorted Indexes (Collisions are counted): ", ANSI_COLOR_RESET);
 
-    plotPY(evalResult, populationLen);
+    plotPY(bestSolves, plotLen + 1);
 }
