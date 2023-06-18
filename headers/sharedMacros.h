@@ -38,5 +38,6 @@
 
 // Errors
 #define SHOW_ERROR(TEXT) printf("%s(Error)%s %s\n\n", ANSI_COLOR_RED, TEXT, ANSI_COLOR_RESET);
+#define SHOW_WARNING(TEXT) printf("\n\n%s(Wrong) %s %s\n\n", FONT_COL_CUSTOM(255,204,0), TEXT, ANSI_COLOR_RESET);
 
 #endif //GENETIC_ALGORITHM_SHAREDMACROS_H
