@@ -13,7 +13,7 @@
 
 void crossover(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
     int row, *bestParentsIdx = NULL, *breakPoints = NULL, *mask = NULL, *newChild = NULL, *population = NULL,
-            *evalResult = NULL, *evalSortedIdx = NULL, ignorePerm, crossoverType, elitesNum;
+            *evalResult = NULL, *evalSortedIdx = NULL, ignorePerm, crossoverType, elitesNum, *parent1 = NULL, *parent2 = NULL;
 
     // Last population
     population = va_arg(args,
@@ -51,7 +51,11 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
         }
 
         // Selection parents based on K-Competition algorithm
-        bestParentsIdx = parentSelection(evalResult, populationNum, true);
+        bestParentsIdx = parentSelection(evalResult, populationNum, false);
+
+        // Parents
+        parent1 = &population[bestParentsIdx[0] * populationNum];
+        parent2 = &population[bestParentsIdx[1] * populationNum];
 
         // Crossover
         if (crossoverType == 1) { // Two breaking points
@@ -60,30 +64,24 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
             breakPoints = breakPointGenerator(populationNum);
 
             // Generate a new child (chromosome)
-            newChild = childGenerator2P(
-                    populationNum,
-                    ignorePerm,
-                    breakPoints,
-                    &population[bestParentsIdx[0] * populationNum],
-                    &population[bestParentsIdx[1] * populationNum]
-            );
+            newChild = childGenerator2P(populationNum, ignorePerm, breakPoints, parent1, parent2);
+
+            free(breakPoints);
         } else { // Uniform
 
             // Generate a mask array so as to produce a new child
             mask = chromosomeMaker(populationNum, true, false, -1, 0);
 
             // Generate a new child (chromosome)
-            newChild = childGeneratorUni(
-                    populationNum,
-                    ignorePerm,
-                    mask,
-                    &population[bestParentsIdx[0] * populationNum],
-                    &population[bestParentsIdx[1] * populationNum]
-            );
+            newChild = childGeneratorUni(populationNum, ignorePerm, mask, parent1, parent2);
+
+            free(mask);
         }
 
         // Add a new generated child to new population
         for (int j = 0; j < populationNum; j++)
             sharedMem[row + j] = newChild[j];
+
+        free(newChild);
     }
 }
