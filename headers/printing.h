@@ -11,6 +11,8 @@
 
 void printArray(size_t size, const int *arr, char *text, char *color);
 
+void printCustomMatrix(size_t row, size_t col, int *matrix, bool showRowIdx);
+
 void printMatrix(size_t dimension, int *matrix, bool showRowIdx);
 
 #endif //GENETIC_ALGORITHM_PRINTING_H
