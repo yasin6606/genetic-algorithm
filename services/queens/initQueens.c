@@ -1,25 +1,22 @@
 #include "../../headers/sharedLib.h"
 #include "../../headers/makers.h"
 
-int *setQueensSol(size_t nQueens) {
-    int *queensArr = (int *) calloc(nQueens * nQueens, sizeof(int)),
-            *permArr = makePerm(nQueens, false, -1, 0), i = 0, j = 0;
+int *setQueensSol(size_t populationLen, size_t chromosomeLen) {
+    int *queensArr = (int *) calloc(populationLen * chromosomeLen, sizeof(int)), *permArr = NULL, i = -1, j = 0;
 
-    while (i < nQueens) {
-        if (j == nQueens) {
+    do {
+        // Rows
+        if (i == -1 || j == chromosomeLen) {
+            permArr = makePerm(chromosomeLen, false, -1, 0);
 
-            // ! ! ! Per each row creation, start making new permutation array ! ! !
-            permArr = makePerm(nQueens, false, -1, 0);
-
-            i++;
             j = 0;
+            i++;
         }
 
-        // add each element to each sol
-        queensArr[i * nQueens + j] = permArr[j];
-
+        // Add each chromosome to population array
+        queensArr[(i * chromosomeLen) + j] = permArr[j];
         j++;
-    }
+    } while (i < populationLen);
 
     return queensArr;
 }

@@ -4,56 +4,57 @@
 #include "../../headers/crossover.h"
 
 void queensMain() {
-    int queensNum, *queensMatrix = NULL, *evaluatedArr = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
+    int chromosomeLen, populationLen, *population = NULL, *evaluatedArr = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
             crossoverType;
 
     // Get initial values
-    queensNum = intInput("Enter the number of queens: ");
+    chromosomeLen = intInput("Enter the length of a chromosome: ");
+    populationLen = intInput("Enter the length of population: ");
     crossoverType = crossoverMenu();
 
-    if (queensNum < 4) {
+    if (chromosomeLen < 4) {
         printf("\nMinimum queens must be 4 or upper\n");
         return;
     }
 
     // make initial population
-    queensMatrix = setQueensSol(queensNum);
+    population = setQueensSol(populationLen, chromosomeLen);
 
     // evaluating made population
-    evaluatedArr = evalQueens(queensMatrix, queensNum);
+    evaluatedArr = evalQueens(population, chromosomeLen);
 
     // The best parent selection
-    bestParentsIdx = parentSelection(evaluatedArr, queensNum, false);
+    bestParentsIdx = parentSelection(evaluatedArr, chromosomeLen, false);
 
     // Re-allocate memory to children based on population size
-    firstChild = calloc(queensNum, sizeof(int));
-    secondChild = calloc(queensNum, sizeof(int));
+    firstChild = calloc(chromosomeLen, sizeof(int));
+    secondChild = calloc(chromosomeLen, sizeof(int));
 
     if (crossoverType == 1) {
         // Crossover based on two breaking points
         crossover2P(
-                &queensMatrix[bestParentsIdx[0] * queensNum],
-                &queensMatrix[bestParentsIdx[1] * queensNum],
-                queensNum,
+                &population[bestParentsIdx[0] * chromosomeLen],
+                &population[bestParentsIdx[1] * chromosomeLen],
+                chromosomeLen,
                 false,
                 firstChild,
                 secondChild
         );
     } else {
         crossoverUni(
-                &queensMatrix[bestParentsIdx[0] * queensNum],
-                &queensMatrix[bestParentsIdx[1] * queensNum],
-                queensNum,
+                &population[bestParentsIdx[0] * chromosomeLen],
+                &population[bestParentsIdx[1] * chromosomeLen],
+                chromosomeLen,
                 false,
                 firstChild,
                 secondChild
         );
     }
 
-    printArray(queensNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(queensNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
+    printArray(chromosomeLen, firstChild, "First Child: ", ANSI_COLOR_RESET);
+    printArray(chromosomeLen, secondChild, "Second Child: ", ANSI_COLOR_RESET);
 
-    printMatrix(queensNum, queensMatrix, true);
+    printCustomMatrix(populationLen, chromosomeLen, population, true);
 
-    printArray(queensNum, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
+    printArray(chromosomeLen, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 }

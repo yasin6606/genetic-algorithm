@@ -30,7 +30,7 @@ int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, i
 
 int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *oneParent, int *anotherParent);
 
-void *c(size_t tasks, size_t populationNum, int *population, int eliteNum, int *evalSortedIdx, int *evalArr, bool type,
+void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx, int *evalArr, bool type,
         bool ignorePerm, int crossoverType);
 
 int *childG(size_t populationNum, int *breakPoints, int *p1, int *p2);
