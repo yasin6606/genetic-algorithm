@@ -1,6 +1,6 @@
 #include "../headers/sharedLib.h"
 
-int *childGenerator2P(size_t populationNum, int *breakPoints, bool ignorePerm, int *oneParent, int *anotherParent) {
+int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, int *oneParent, int *anotherParent) {
     int i, j = 0, k = 0, temp, breakFirst = breakPoints[0], breakLast = breakPoints[1],
             *child = (int *) calloc(populationNum, sizeof(int)),
             *flag = (int *) calloc(populationNum, sizeof(int)),

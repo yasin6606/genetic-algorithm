@@ -1,5 +1,6 @@
 #include "../headers/sharedLib.h"
 #include "../headers/makers.h"
+#include "../headers/printing.h"
 
 /*
  * crossover2P generates two new different chromosomes based on two breaking points which the first point always should be smaller
@@ -16,12 +17,12 @@ void crossover2P(int *firstParent, int *secondParent, size_t populationNum, bool
     printArray(PARENTS_NUM, breakPoints, "Breaking points: ", ANSI_COLOR_RED);
 
     // Generate first child (chromosome)
-    temp = childGenerator2P(populationNum, breakPoints, ignorePerm, firstParent, secondParent);
+    temp = childGenerator2P(populationNum, ignorePerm, breakPoints, firstParent, secondParent);
     for (int i = 0; i < populationNum; i++)
         firstChild[i] = temp[i];
 
     // Generate second child (chromosome)
-    temp = childGenerator2P(populationNum, breakPoints, ignorePerm, secondParent, firstParent);
+    temp = childGenerator2P(populationNum, ignorePerm, breakPoints, secondParent, firstParent);
     for (int i = 0; i < populationNum; i++)
         secondChild[i] = temp[i];
 }

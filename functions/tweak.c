@@ -1,9 +1,19 @@
 #include "../headers/assistant.h"
 #include "../headers/makers.h"
 
-// Make a mutation
-void tweak(int *sol, size_t size) {
-    int *rands = makePerm(size, false, 2, 0);
+void tweak(int *population, size_t populationNum, size_t populationLen) {
+    int mutationPercent, *r = NULL, *rands = NULL;
 
-    swap(sol, rands[0], rands[1]);
+    mutationPercent = ceil(populationLen * MUTATION_PERCENT);
+
+    r = makePerm(populationLen, false, mutationPercent, 0);
+
+    for (int i = 0; i < mutationPercent; i++) {
+        rands = makePerm(populationNum, false, 2, 0);
+
+        swap(&population[r[i] * populationNum], rands[0], rands[1]);
+    }
+
+    free(r);
+    free(rands);
 }

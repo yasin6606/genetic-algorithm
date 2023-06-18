@@ -6,9 +6,10 @@
 #define GENETIC_ALGORITHM_SHAREDMACROS_H
 
 #define SERVICES_LEN 4
-#define K 3
+#define K_COMPETITION 3
 #define PARENTS_NUM 2
 #define CROSSOVER_TYPE_LEN 2
+#define MUTATION_PERCENT 0.3
 
 // String colors
 #define ANSI_COLOR_RED     "\x1b[31m"
