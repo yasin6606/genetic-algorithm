@@ -6,7 +6,7 @@ void printArray(size_t size, const int *arr, char *text, char *color) {
     printf("%s%s", color, text);
 
     for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
+        printf("%d, ", arr[i]);
 
     printf("\n\n%s", ANSI_COLOR_RESET);
 }

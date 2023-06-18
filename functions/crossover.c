@@ -1,45 +1,47 @@
 #include "../headers/sharedLib.h"
 #include "../headers/makers.h"
-#include "../headers/printing.h"
 
-/*
- * crossover2P generates two new different chromosomes based on two breaking points which the first point always should be smaller
- * that the second one and the difference between points must be greater than 1. Moreover, this function give an argument that is called
- * ignorePerm which define new chromosomes should be permutation or not.
- * */
-void crossover2P(int *firstParent, int *secondParent, size_t populationNum, bool ignorePerm, int *firstChild,
-                 int *secondChild) {
-    int *breakPoints = NULL, *temp = NULL;
+void *crossover(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx,
+                int *evalArr, bool type, bool ignorePerm, int crossoverType) {
+    int *newPopulation = (int *) calloc(populationLen * chromosomeLen, sizeof(int)), *p1 = NULL, *p2 = NULL,
+            *bestParents = NULL, *newChild = NULL, *breakPoints = NULL, *mask = NULL;
 
-    // Get break points
-    breakPoints = breakPointGenerator(populationNum);
+    for (int i = 0; i < populationLen; i++) {
 
-    printArray(PARENTS_NUM, breakPoints, "Breaking points: ", ANSI_COLOR_RED);
+        //// Directly move elites to new population
+        if (i < eliteNum) {
+            for (int j = 0; j < chromosomeLen; j++)
+                newPopulation[(i * chromosomeLen) + j] = population[(evalSortedIdx[i] * chromosomeLen) + j];
 
-    // Generate first child (chromosome)
-    temp = childGenerator2P(populationNum, ignorePerm, breakPoints, firstParent, secondParent);
-    for (int i = 0; i < populationNum; i++)
-        firstChild[i] = temp[i];
+            continue;
+        }
 
-    // Generate second child (chromosome)
-    temp = childGenerator2P(populationNum, ignorePerm, breakPoints, secondParent, firstParent);
-    for (int i = 0; i < populationNum; i++)
-        secondChild[i] = temp[i];
-}
+        //// Produce the rest of new population
 
-void crossoverUni(int *firstParent, int *secondParent, size_t populationNum, bool ignorePerm, int *firstChild,
-                  int *secondChild) {
-    int *temp = NULL, *mask = makeBin(populationNum);
+        bestParents = parentSelection(evalArr, chromosomeLen, type);
+        p1 = &population[bestParents[0] * chromosomeLen];
+        p2 = &population[bestParents[1] * chromosomeLen];
 
-    printArray(populationNum, mask, "Mask: ", ANSI_COLOR_MAGENTA);
+        if (crossoverType == 1) { // Two breaking points
+            breakPoints = breakPointGenerator(chromosomeLen);
 
-    // Generate first child (chromosome)
-    temp = childGeneratorUni(populationNum, ignorePerm, mask, firstParent, secondParent);
-    for (int i = 0; i < populationNum; i++)
-        firstChild[i] = temp[i];
+            newChild = childGenerator2P(chromosomeLen, ignorePerm, breakPoints, p1, p2);
 
-    // Generate second child (chromosome)
-    temp = childGeneratorUni(populationNum, ignorePerm, mask, secondParent, firstParent);
-    for (int i = 0; i < populationNum; i++)
-        secondChild[i] = temp[i];
+            free(breakPoints);
+        } else { // Uniform
+            mask = makeBin(chromosomeLen);
+
+            newChild = childGeneratorUni(chromosomeLen, ignorePerm, mask, p1, p2);
+
+            free(mask);
+        }
+
+        // Add the new child to new population
+        for (int j = 0; j < chromosomeLen; j++)
+            newPopulation[(i * chromosomeLen) + j] = newChild[j];
+
+        free(newChild);
+    }
+
+    return newPopulation;
 }

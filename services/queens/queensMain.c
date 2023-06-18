@@ -1,60 +1,81 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
 #include "../../headers/sharedMenu.h"
-#include "../../headers/crossover.h"
+#include "../../headers/printing.h"
+#include "../../plot/plot.h"
 
 void queensMain() {
-    int chromosomeLen, populationLen, *population = NULL, *evaluatedArr = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
-            crossoverType;
+    int chromosomeLen, populationLen, stop, eliteNum, *population = NULL, *evaluatedArr = NULL, crossoverType, *evalSortedIdx = NULL,
+            *newPop = NULL, plotLen, *bestSolves = NULL;
 
     // Get initial values
     chromosomeLen = intInput("Enter the length of a chromosome: ");
-    populationLen = intInput("Enter the length of population: ");
-    crossoverType = crossoverMenu();
 
     if (chromosomeLen < 4) {
-        printf("\nMinimum queens must be 4 or upper\n");
+        SHOW_WARNING("Minimum queens must be 4 or upper!");
         return;
     }
 
-    // make initial population
+    populationLen = intInput("Enter the length of population: ");
+    stop = intInput("Enter the stop number: ");
+    crossoverType = crossoverMenu();
+
+    // Set default value for plot X axios
+    plotLen = stop;
+
+    // Best solutions array
+    bestSolves = (int *) calloc(stop, sizeof(int));
+
+    // Elites
+    eliteNum = ceil(populationLen * ELITE_PERCENT);
+
+    // Make initial population
     population = setQueensSol(populationLen, chromosomeLen);
 
-    // evaluating made population
-    evaluatedArr = evalQueens(population, chromosomeLen);
+    for (int i = 0; i < stop; i++) {
 
-    // The best parent selection
-    bestParentsIdx = parentSelection(evaluatedArr, chromosomeLen, false);
+        // Evaluation
+        evaluatedArr = evalQueens(population, populationLen, chromosomeLen);
 
-    // Re-allocate memory to children based on population size
-    firstChild = calloc(chromosomeLen, sizeof(int));
-    secondChild = calloc(chromosomeLen, sizeof(int));
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evaluatedArr, populationLen);
 
-    if (crossoverType == 1) {
-        // Crossover based on two breaking points
-        crossover2P(
-                &population[bestParentsIdx[0] * chromosomeLen],
-                &population[bestParentsIdx[1] * chromosomeLen],
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evaluatedArr[evalSortedIdx[0]];
+
+        // Stop Condition if zero collision found
+        if (bestSolves[i] == 0) {
+            plotLen = i;
+
+            // Print answer
+            printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+
+            break;
+        }
+
+        // Crossover (Re-Produce a new generation (population))
+        newPop = crossover(
+                populationLen,
                 chromosomeLen,
+                population,
+                eliteNum,
+                evalSortedIdx,
+                evaluatedArr,
                 false,
-                firstChild,
-                secondChild
-        );
-    } else {
-        crossoverUni(
-                &population[bestParentsIdx[0] * chromosomeLen],
-                &population[bestParentsIdx[1] * chromosomeLen],
-                chromosomeLen,
                 false,
-                firstChild,
-                secondChild
+                crossoverType
         );
+
+        // Mutation (Tweak)
+        tweak(newPop, populationLen, chromosomeLen);
+
+        // Re-Take new population
+        population = newPop;
     }
 
-    printArray(chromosomeLen, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(chromosomeLen, secondChild, "Second Child: ", ANSI_COLOR_RESET);
+//    printCustomMatrix(populationLen, chromosomeLen, population, true);
+//    printArray(populationLen, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 
-    printCustomMatrix(populationLen, chromosomeLen, population, true);
-
-    printArray(chromosomeLen, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
+    // Plot
+    plotPY(bestSolves, plotLen + 1);
 }

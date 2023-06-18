@@ -12,9 +12,7 @@
 #include "../functions/parentSelection.c"
 #include "../functions/breakPointGenerator.c"
 #include "../functions/childGenerator.c"
-
-#include "../functions/childG.c"
-#include "../functions/c.c"
+#include "../functions/crossover.c"
 
 int *makeBin(size_t n);
 
@@ -30,9 +28,7 @@ int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, i
 
 int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *oneParent, int *anotherParent);
 
-void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx, int *evalArr,
-        bool type, bool ignorePerm, int crossoverType);
-
-int *childG(size_t populationNum, int *breakPoints, int *p1, int *p2);
+void *crossover(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx,
+                int *evalArr, bool type, bool ignorePerm, int crossoverType);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H

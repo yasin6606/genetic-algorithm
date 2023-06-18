@@ -1,7 +1,7 @@
 #include "./initKnapsack.c"
 #include "./evalKnapsack.c"
 #include "../../headers/sharedMenu.h"
-#include "../../headers/crossover.h"
+#include "../../headers/printing.h"
 
 void knapsackMain() {
     struct KnapsackInitValues knapsackStruct;
@@ -26,32 +26,6 @@ void knapsackMain() {
 
     // The best parent selection
     bestParentsIdx = parentSelection(evalResults, productsNum, true);
-
-    // Re-allocate memory to children based on population size
-    firstChild = (int *) calloc(productsNum, sizeof(int));
-    secondChild = (int *) calloc(productsNum, sizeof(int));
-
-    if (crossoverType == 1) {
-        // Crossover based on two breaking point algorithm
-        crossover2P(
-                &matrixResult[bestParentsIdx[0] * productsNum],
-                &matrixResult[bestParentsIdx[1] * productsNum],
-                productsNum,
-                true,
-                firstChild,
-                secondChild
-        );
-    } else {
-        // Crossover based on uniform algorithm
-        crossoverUni(
-                &matrixResult[bestParentsIdx[0] * productsNum],
-                &matrixResult[bestParentsIdx[1] * productsNum],
-                productsNum,
-                true,
-                firstChild,
-                secondChild
-        );
-    }
 
     printArray(productsNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
     printArray(productsNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
