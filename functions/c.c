@@ -3,7 +3,7 @@
 
 void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx, int *evalArr, bool type,
         bool ignorePerm, int crossoverType) {
-    int *newPopulation = (int *) calloc(chromosomeLen * chromosomeLen, sizeof(int)), *p1 = NULL, *p2 = NULL,
+    int *newPopulation = (int *) calloc(populationLen * chromosomeLen, sizeof(int)), *p1 = NULL, *p2 = NULL,
             *bestParents = NULL, *newChild = NULL, *breakPoints = NULL, *mask = NULL;
 
     for (int i = 0; i < populationLen; i++) {
@@ -25,10 +25,7 @@ void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNu
         if (crossoverType == 1) { // Two breaking points
             breakPoints = breakPointGenerator(chromosomeLen);
 
-//            printf("P: %d, %d, -- B: %d, %d\n", bestParents[0], bestParents[1], breakPoints[0], breakPoints[1]);
-
-//            newChild = childGenerator2P(chromosomeLen, ignorePerm, breakPoints, p1, p2);
-            newChild = childG(chromosomeLen, breakPoints, p1, p2);
+            newChild = childGenerator2P(chromosomeLen, ignorePerm, breakPoints, p1, p2);
 
             free(breakPoints);
         } else { // Uniform

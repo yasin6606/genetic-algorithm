@@ -30,11 +30,11 @@ int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
 }
 
 // Find the best parent's indexes based on (Random K Competition Algorithm).
-void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
+void *parentSelection(void *evaluationArr, size_t populationLen, bool type) {
     int *parentIdx = (int *) calloc(PARENTS_NUM, sizeof(int)), *randIdxArr = NULL;
 
     for (int i = 0; i < PARENTS_NUM; i++) {
-        randIdxArr = makePerm(populationNum, false, K_COMPETITION, i, parentIdx[i - 1]);
+        randIdxArr = makePerm(populationLen, false, K_COMPETITION, i, parentIdx[i - 1]);
 
         // Save the row number of each parent.
         parentIdx[i] = selectionHandler(evaluationArr, type, randIdxArr);

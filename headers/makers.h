@@ -20,7 +20,7 @@ int *makeBin(size_t n);
 
 int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoredNumsCount, ...);
 
-void tweak(int *population, size_t populationNum, size_t populationLen);
+void tweak(int *population, size_t populationLen, size_t chromosomeLen);
 
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
 
@@ -30,8 +30,8 @@ int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, i
 
 int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *oneParent, int *anotherParent);
 
-void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx, int *evalArr, bool type,
-        bool ignorePerm, int crossoverType);
+void *c(size_t populationLen, size_t chromosomeLen, int *population, int eliteNum, int *evalSortedIdx, int *evalArr,
+        bool type, bool ignorePerm, int crossoverType);
 
 int *childG(size_t populationNum, int *breakPoints, int *p1, int *p2);
 
