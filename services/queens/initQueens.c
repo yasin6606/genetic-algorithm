@@ -12,9 +12,7 @@ void queensPopulationMaker(size_t populationNum, size_t childShare, int *sharedM
 
         // Add chromosome to shared memory
         for (int j = 0; j < populationNum; j++)
-            sharedMem[startIdx + j] = tempChromosome[j];
-
-        startIdx = startIdx + populationNum;
+            sharedMem[startIdx + (i * populationNum) + j] = tempChromosome[j];
 
         free(tempChromosome);
     }
