@@ -2,73 +2,104 @@
 #include "./evalKnapsack.c"
 #include "../../headers/printing.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
+#include "../../headers/sharedMacros.h"
 #include "../../headers/sharedMenu.h"
-#include "../../headers/crossover.h"
+#include "../../plot/plot.h"
 
 void knapsackMain() {
-    int productsNum, wMax, crossoverType, *wArr, *vArr, *population = NULL, *evalResults = NULL, *bestParentsIdx,
-            *firstChild, *secondChild;
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, wMax, *wArr, *vArr, *population = NULL,
+            *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, plotLen, *bestSolves = NULL;
+
+    SharedMenuType inputs;
 
     // Get initial values
-    productsNum = intInput("Enter the number of products: ");
     wMax = intInput("Enter the maximum weight of knapsack: ");
-    crossoverType = crossoverMenu();
+    inputs = sharedInitInputs();
+
+    chromosomeLen = inputs.chromosomeLen;
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
+
 
     // Fill wArr (Weight Array) randomly
-    wArr = chromosomeMaker(productsNum, false, false, productsNum, 1, 0);
+    wArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 1, 0);
 
     // Fill vArr (Value Array) randomly. To be more realistic, divide values.
-    vArr = chromosomeMaker(productsNum, false, false, productsNum, 0);
+    vArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 0);
 
-    // Produce population by multi processes for Knapsack
-    population = multiprocessor(productsNum, productsNum * productsNum, &knapsackPopulationMaker, 0);
+    // Set default value for plot X axios
+    plotLen = iteration;
 
-    // Evaluate generated population by multi processes for Knapsack
-    evalResults = multiprocessor(
-            productsNum,
-            productsNum,
-            &evalKnapsack,
-            4,
-            wMax,
-            wArr,
-            vArr,
-            population
+    // Best solutions array
+    bestSolves = (int *) calloc(iteration, sizeof(int));
+
+    // Get the number of chromosomes which must move to new population directly
+    eliteNum = ceil(populationLen * ELITE_PERCENT);
+
+    // Produce init population by multi processes for Knapsack
+    population = (int *) multiprocessor(
+            populationLen,
+            chromosomeLen,
+            populationLen * chromosomeLen,
+            &knapsackPopulationMaker,
+            0
     );
 
-    // Selection parents based on K-Competition algorithm
-    bestParentsIdx = parentSelection(evalResults, productsNum, true);
+    /* IMPORTANT => Stop condition of this problem is the number of loop (iteration) */
 
-    firstChild = (int *) calloc(productsNum, sizeof(int));
-    secondChild = (int *) calloc(productsNum, sizeof(int));
+    for (int i = 0; i < iteration; i++) {
 
-    // Crossover
-    if (crossoverType == 1) { // Two breaking points
-        crossover2P(
-                &population[bestParentsIdx[0] * productsNum],
-                &population[bestParentsIdx[1] * productsNum],
-                productsNum,
-                true,
-                firstChild,
-                secondChild
+        // Evaluation
+        evalResult = (int *) multiprocessor(
+                populationLen,
+                chromosomeLen,
+                populationLen,
+                &evalKnapsack,
+                4,
+                wMax,
+                wArr,
+                vArr,
+                population
         );
-    } else { // Uniform
-        crossoverUni(
-                &population[bestParentsIdx[0] * productsNum],
-                &population[bestParentsIdx[1] * productsNum],
-                productsNum,
+
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evalResult, populationLen);
+
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evalResult[evalSortedIdx[populationLen - 1]];
+
+        // Crossover
+        newPop = (int *) multiprocessor(
+                populationLen,
+                chromosomeLen,
+                populationLen * chromosomeLen,
+                &crossover,
+                7,
+                population,
+                evalResult,
+                evalSortedIdx,
                 true,
-                firstChild,
-                secondChild
+                true,
+                crossoverType,
+                eliteNum
         );
+
+        // Mutation (Tweak)
+        tweak(newPop, chromosomeLen, populationLen);
+
+        // Re-Take the new population
+        population = newPop;
     }
 
-    printArray(productsNum, wArr, "Weight: ", ANSI_COLOR_MAGENTA);
-    printArray(productsNum, vArr, "Value: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_MAGENTA);
 
-    printArray(productsNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(productsNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
+//    printCustomMatrix(populationLen, chromosomeLen, population, true);
+//    printArray(populationLen, evalResult, "Evaluation (Values): ", ANSI_COLOR_RESET);
 
-    printMatrix(productsNum, population, true);
+    printArray(iteration, bestSolves, "Best: ", ANSI_COLOR_RESET);
+//    reverseArray(bestSolves, iteration);
 
-    printArray(productsNum, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
+    plotPY(bestSolves, plotLen, "-", "m", "Knapsack Problem", "Value", "Iteration");
 }
