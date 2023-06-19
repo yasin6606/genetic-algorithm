@@ -1,5 +1,6 @@
 #include "../../services/tsp/initTSP.c"
 #include "./evalTSP.c"
+#include "../../types/GeneralTypes.h"
 #include "../../headers/printing.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
@@ -7,20 +8,23 @@
 #include "../../plot/plot.h"
 
 void tspMain() {
-    int chromosomeLen, populationLen, stop, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
             *evalSortedIdx = NULL, *newPop = NULL, plotLen, *bestSolves = NULL;
 
+    SharedMenuType inputs;
+
     // Get the number of cities
-    chromosomeLen = intInput("Enter the number of Cities (Each chromosome's gens): ");
-    populationLen = intInput("Enter the length of population: ");
-    stop = intInput("Enter the number of loops: ");
-    crossoverType = crossoverMenu();
+    inputs = sharedInitInputs();
+    chromosomeLen = inputs.chromosomeLen;
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
 
     // Set default value for plot X axios
-    plotLen = stop;
+    plotLen = iteration;
 
     // Best solutions array
-    bestSolves = (int *) calloc(stop, sizeof(int));
+    bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Get the number of chromosomes which must move to new population directly
     eliteNum = ceil(populationLen * ELITE_PERCENT);
@@ -43,9 +47,9 @@ void tspMain() {
             0
     );
 
-    /* IMPORTANT => Stop condition of this problem is the number of loop (stop) */
+    /* IMPORTANT => Stop condition of this problem is the number of loop (iteration) */
 
-    for (int i = 0; i < stop; i++) {
+    for (int i = 0; i < iteration; i++) {
 
         // Evaluation
         evalResult = (int *) multiprocessor(
@@ -92,5 +96,5 @@ void tspMain() {
 
 //    printArray(populationLen, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
 
-    plotPY(bestSolves, plotLen);
+    plotPY(bestSolves, plotLen, "-", "r", "TSP Problem", "Cost", "Iteration");
 }

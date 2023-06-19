@@ -1,5 +1,6 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
+#include "../../types/GeneralTypes.h"
 #include "../../headers/printing.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
@@ -7,11 +8,17 @@
 #include "../../plot/plot.h"
 
 void queensMain() {
-    int chromosomeLen, populationLen, stop, crossoverType, eliteNum, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
+    SharedMenuType inputs;
+
     // Get the number of queens
-    chromosomeLen = intInput("Enter the number of Queens (Each chromosome's gens): ");
+    inputs = sharedInitInputs();
+    chromosomeLen = inputs.chromosomeLen;
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
 
     if (chromosomeLen < 4) {
         SHOW_WARNING("Minimum queens must be 4 or upper");
@@ -19,15 +26,11 @@ void queensMain() {
         return;
     }
 
-    populationLen = intInput("Enter the length of population: ");
-    stop = intInput("Enter the number of loops: ");
-    crossoverType = crossoverMenu();
-
     // Set default value for plot X axios
-    plotLen = stop;
+    plotLen = iteration;
 
     // Best solutions array
-    bestSolves = (int *) calloc(stop, sizeof(int));
+    bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Get the number of chromosomes which must move to new population directly
     eliteNum = ceil(populationLen * ELITE_PERCENT);
@@ -41,7 +44,7 @@ void queensMain() {
             0
     );
 
-    for (int i = 0; i < stop; i++) {
+    for (int i = 0; i < iteration; i++) {
 
         // Evaluation
         evalResult = (int *) multiprocessor(
@@ -96,5 +99,5 @@ void queensMain() {
 //    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 //    printArray(populationLen, evalSortedIdx, "Evaluation Sorted Indexes (Collisions are counted): ", ANSI_COLOR_RESET);
 
-    plotPY(bestSolves, plotLen + 1);
+    plotPY(bestSolves, plotLen + 1, "-", "b", "N-Queens Problem", "Collision", "Iteration");
 }
