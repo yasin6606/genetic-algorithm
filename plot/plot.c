@@ -4,7 +4,6 @@
 #include "../headers/sharedMacros.h"
 
 void plot(char *title, double *xs, size_t xsLen, double *ys, size_t ysLen) {
-    SHOW_NUM(2007)
     _Bool success;
     StringReference *errorMessage;
 

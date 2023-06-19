@@ -1,6 +1,6 @@
 #include "../headers/sharedLib.h"
 
-void plotPY(void *arr, size_t len) {
+void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
     int *array = (int *) arr;
 
@@ -13,6 +13,9 @@ void plotPY(void *arr, size_t len) {
         return;
     }
 
+    // Styles
+    int titleFontsize = 27, yFontsize = 20, xFontsize = 20;
+
     fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\n");
 
     fprintf(fd, "ypoints = np.array([");
@@ -21,7 +24,18 @@ void plotPY(void *arr, size_t len) {
     }
     fprintf(fd, "])\n");
 
-    fprintf(fd, "plt.plot(ypoints, color='r')\nplt.show()\n");
+    fprintf(
+            fd,
+            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.show()\n",
+            format,
+            color,
+            title,
+            titleFontsize,
+            yLabel,
+            yFontsize,
+            xLabel,
+            xFontsize
+    );
 
     fclose(fd);
 
