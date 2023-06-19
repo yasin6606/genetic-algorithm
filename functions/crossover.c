@@ -12,8 +12,8 @@
  * */
 
 void crossover(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
-    int row, *bestParentsIdx = NULL, *breakPoints = NULL, *mask = NULL, *newChild = NULL, *population = NULL,
-            *evalResult = NULL, *evalSortedIdx = NULL, ignorePerm, crossoverType, elitesNum, *parent1 = NULL, *parent2 = NULL;
+    int row, *bestParentsIdx = NULL, *breakPoints = NULL, *mask = NULL, *newChild = NULL, *population = NULL, *evalResult = NULL,
+            *evalSortedIdx = NULL, ignorePerm, type, crossoverType, elitesNum, *parent1 = NULL, *parent2 = NULL;
 
     // Last population
     population = va_arg(args,
@@ -29,6 +29,10 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
 
     // Controller to ignore permutation or not
     ignorePerm = va_arg(args,
+    int);
+
+    // Define the problem type, Maximum or Minimum type
+    type = va_arg(args,
     int);
 
     // Controller so as to generate new children based on crossover type
@@ -51,7 +55,7 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
         }
 
         // Selection parents based on K-Competition algorithm
-        bestParentsIdx = parentSelection(evalResult, populationNum, false);
+        bestParentsIdx = parentSelection(evalResult, populationNum, type);
 
         // Parents
         parent1 = &population[bestParentsIdx[0] * populationNum];
