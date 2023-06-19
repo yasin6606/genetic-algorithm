@@ -3,56 +3,94 @@
 #include "../../headers/printing.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
-#include "../../headers/crossover.h"
+#include "../../headers/sharedMacros.h"
+#include "../../plot/plot.h"
 
 void tspMain() {
-    int citiesSize, crossoverType, *population = NULL, *disMatrix = NULL, *evalResult = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL;
+    int chromosomeLen, populationLen, stop, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
+            *evalSortedIdx = NULL, *newPop = NULL, plotLen, *bestSolves = NULL;
 
     // Get the number of cities
-    citiesSize = intInput("Enter the number of Cities: ");
+    chromosomeLen = intInput("Enter the number of Cities (Each chromosome's gens): ");
+    populationLen = intInput("Enter the length of population: ");
+    stop = intInput("Enter the number of loops: ");
     crossoverType = crossoverMenu();
 
-    // Produce population by multi processes for TSP
-    population = multiprocessor(citiesSize, citiesSize * citiesSize, &tspPopulationMaker, 0);
+    // Set default value for plot X axios
+    plotLen = stop;
+
+    // Best solutions array
+    bestSolves = (int *) calloc(stop, sizeof(int));
+
+    // Get the number of chromosomes which must move to new population directly
+    eliteNum = ceil(populationLen * ELITE_PERCENT);
+
+    // Produce init population by multi processes for TSP
+    population = (int *) multiprocessor(
+            populationLen,
+            chromosomeLen,
+            populationLen * chromosomeLen,
+            &tspPopulationMaker,
+            0
+    );
 
     // Produce DIS (Distance matrix) by multi processes
-    disMatrix = multiprocessor(citiesSize, citiesSize * citiesSize, &tspDisMaker, 0);
+    disMatrix = (int *) multiprocessor(
+            chromosomeLen,
+            chromosomeLen,
+            chromosomeLen * chromosomeLen,
+            &tspDisMaker,
+            0
+    );
 
-    // Evaluation by multi processes
-    evalResult = multiprocessor(citiesSize, citiesSize, &evalTSPPopulation, 2, population, disMatrix);
+    /* IMPORTANT => Stop condition of this problem is the number of loop (stop) */
 
-    // Selection parents based on K-Competition algorithm
-    bestParentsIdx = parentSelection(evalResult, citiesSize, true);
+    for (int i = 0; i < stop; i++) {
 
-    firstChild = (int *) calloc(citiesSize, sizeof(int));
-    secondChild = (int *) calloc(citiesSize, sizeof(int));
-
-    // Crossover
-    if (crossoverType == 1) { // Two breaking points
-        crossover2P(
-                &disMatrix[bestParentsIdx[0] * citiesSize],
-                &disMatrix[bestParentsIdx[1] * citiesSize],
-                citiesSize,
-                false,
-                firstChild,
-                secondChild
+        // Evaluation
+        evalResult = (int *) multiprocessor(
+                populationLen,
+                chromosomeLen,
+                populationLen,
+                &evalTSPPopulation,
+                2,
+                population,
+                disMatrix
         );
-    } else { // Uniform
-        crossoverUni(
-                &disMatrix[bestParentsIdx[0] * citiesSize],
-                &disMatrix[bestParentsIdx[1] * citiesSize],
-                citiesSize,
+
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evalResult, populationLen);
+
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evalResult[evalSortedIdx[0]];
+
+        // Crossover
+        newPop = (int *) multiprocessor(
+                populationLen,
+                chromosomeLen,
+                populationLen * chromosomeLen,
+                &crossover,
+                7,
+                population,
+                evalResult,
+                evalSortedIdx,
                 false,
-                firstChild,
-                secondChild
+                false,
+                crossoverType,
+                eliteNum
         );
+
+        // Mutation (Tweak)
+        tweak(newPop, chromosomeLen, populationLen);
+
+        // Re-Take the new population
+        population = newPop;
     }
 
-    printArray(citiesSize, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(citiesSize, secondChild, "Second Child: ", ANSI_COLOR_RESET);
+//    printCustomMatrix(populationLen, chromosomeLen, population, true);
+//    printMatrix(chromosomeLen, disMatrix, true);
 
-    printMatrix(citiesSize, disMatrix, true);
-    printMatrix(citiesSize, population, true);
+//    printArray(populationLen, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
 
-    printArray(citiesSize, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
+    plotPY(bestSolves, plotLen);
 }
