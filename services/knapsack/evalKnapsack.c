@@ -7,9 +7,9 @@ void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int s
 int evalSolKnapsack(const int *sol, size_t populationNum, size_t wMax, int *wArr, int *vArr);
 
 void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
-    int wMax, *wArr, *vArr, *populationMatrix;
+    int wMax, *wArr = NULL, *vArr = NULL, *population = NULL;
 
-    // ! ! ! (Attention) The order of getting data from variadic is highly IMPORTANT. The order MUST BE same as sending.
+    // ! ! ! (Attention) The order of getting data from variadic is highly IMPORTANT. The order MUST BE exactly same as sending.
 
     // Get maximum weight of knapsack
     wMax = va_arg(args,
@@ -25,12 +25,12 @@ void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int s
     int*);
 
     // Get array of product's values
-    populationMatrix = va_arg(args,
+    population = va_arg(args,
     int*);
 
     for (int i = 0; i < childShare; i++)
         sharedMem[i + (startIdx / populationNum)] = evalSolKnapsack(
-                &populationMatrix[startIdx + (i * populationNum)],
+                &population[startIdx + (i * populationNum)],
                 populationNum,
                 wMax,
                 wArr,
@@ -41,7 +41,7 @@ void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int s
 int evalSolKnapsack(const int *sol, size_t populationNum, size_t wMax, int *wArr, int *vArr) {
     int tempWeight = 0, tempValue = 0;
 
-    // Find elements that are 1 and mask it on each sol array
+    // Find elements which are 1 and mask it, on each sol array
     for (int i = 0; i < populationNum; i++) {
         if (sol[i] == 0) continue;
 
