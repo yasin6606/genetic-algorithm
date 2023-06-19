@@ -4,7 +4,7 @@
 #include "../../headers/sharedMacros.h"
 
 void *
-multiprocessor(size_t tasks, size_t populationNum, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...) {
+multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...) {
     void *sharedMem = arraySharedMemory(sharedMemLen, sizeof(void *));
     int cores = get_nprocs(), childShare = floor(tasks / cores), remained = tasks % cores,
             *defineStartIdx = (int *) calloc(cores, sizeof(int));
@@ -25,9 +25,9 @@ multiprocessor(size_t tasks, size_t populationNum, size_t sharedMemLen, sub_proc
     // Define an array which contain the number of start index of each process on shared memory to save produced chromosomes.
     for (int i = 1; i < cores; i++)
         if (i <= remained)
-            defineStartIdx[i] = ((childShare + 1) * populationNum) + defineStartIdx[i - 1];
+            defineStartIdx[i] = ((childShare + 1) * chromosomeLen) + defineStartIdx[i - 1];
         else
-            defineStartIdx[i] = (childShare * populationNum) + defineStartIdx[i - 1];
+            defineStartIdx[i] = (childShare * chromosomeLen) + defineStartIdx[i - 1];
 
     for (int i = 0; i < cores; i++) {
 
@@ -43,9 +43,9 @@ multiprocessor(size_t tasks, size_t populationNum, size_t sharedMemLen, sub_proc
 
             // Current child process
             if (i < remained)
-                (*subProcess)(populationNum, childShare + 1, sharedMem, defineStartIdx[i], argsNum, args);
+                (*subProcess)(chromosomeLen, childShare + 1, sharedMem, defineStartIdx[i], argsNum, args);
             else // Current child's parent process
-                (*subProcess)(populationNum, childShare, sharedMem, defineStartIdx[i], argsNum, args);
+                (*subProcess)(chromosomeLen, childShare, sharedMem, defineStartIdx[i], argsNum, args);
 
             // Exit each child process which finished their task
             exit(0);

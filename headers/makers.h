@@ -14,7 +14,7 @@
 
 int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumsCount, ...);
 
-void tweak(int *population, size_t populationNum, size_t populationLen);
+void tweak(int *population, size_t chromosomeLen, size_t populationLen);
 
 int *breakPointGenerator(size_t populationNum);
 

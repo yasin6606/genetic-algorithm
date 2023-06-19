@@ -33,7 +33,7 @@ void queensMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for N-Queens
-    population = multiprocessor(
+    population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
             populationLen * chromosomeLen,
@@ -44,7 +44,14 @@ void queensMain() {
     for (int i = 0; i < stop; i++) {
 
         // Evaluation
-        evalResult = (int *) multiprocessor(populationLen, chromosomeLen, chromosomeLen, &evalQueens, 1, population);
+        evalResult = (int *) multiprocessor(
+                populationLen,
+                chromosomeLen,
+                populationLen,
+                &evalQueens,
+                1,
+                population
+        );
 
         // Sort evaluated array and return indexes
         evalSortedIdx = sortChromosomes(evalResult, populationLen);
@@ -68,10 +75,11 @@ void queensMain() {
                 chromosomeLen,
                 populationLen * chromosomeLen,
                 &crossover,
-                6,
+                7,
                 population,
                 evalResult,
                 evalSortedIdx,
+                false,
                 false,
                 crossoverType,
                 eliteNum

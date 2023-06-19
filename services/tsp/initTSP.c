@@ -1,20 +1,19 @@
 #include "../../headers/sharedLib.h"
 #include "../../headers/makers.h"
+#include "../../headers/printing.h"
 
-void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
+void tspPopulationMaker(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                         va_list args) {
-    int *tempChromosome;
+    int *tempChromosome = NULL;
 
     for (int i = 0; i < childShare; i++) {
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(populationNum, false, true, -1, 0);
+        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0);
 
         // Add chromosome to shared memory
-        for (int j = 0; j < populationNum; j++)
-            sharedMem[startIdx + j] = tempChromosome[j];
-
-        startIdx = startIdx + populationNum;
+        for (int j = 0; j < chromosomeLen; j++)
+            sharedMem[startIdx + (i * chromosomeLen) + j] = tempChromosome[j];
 
         free(tempChromosome);
     }
@@ -22,22 +21,21 @@ void tspPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem,
     va_end(args);
 }
 
-void tspDisMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
+void tspDisMaker(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                  va_list args) {
-    int *tempChromosome, elemIdx;
+    int *tempChromosome = NULL, elemIdx;
 
     for (int i = 0; i < childShare; i++) {
 
         // Find the element on main diameter on each chromosome.
-        elemIdx = startIdx / populationNum;
+        elemIdx = (startIdx / chromosomeLen) + i;
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(populationNum, false, true, -1, 0);
+        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0);
 
         // make main diameter zero (moving non-zero elements on main diameter to zero element)
-        for (int j = 0; j < populationNum; j++) {
+        for (int j = 0; j < chromosomeLen; j++) {
             if (tempChromosome[elemIdx] == 0) continue;
-
 
             // tempChromosome[elemIdx] == element on main diameter | tempChromosome[j] == zero element
             if (tempChromosome[j] == 0)
@@ -45,10 +43,8 @@ void tspDisMaker(size_t populationNum, size_t childShare, int *sharedMem, int st
         }
 
         // Add chromosome to shared memory
-        for (int j = 0; j < populationNum; j++)
-            sharedMem[startIdx + j] = tempChromosome[j];
-
-        startIdx = startIdx + populationNum;
+        for (int j = 0; j < chromosomeLen; j++)
+            sharedMem[startIdx + (i * chromosomeLen) + j] = tempChromosome[j];
 
         free(tempChromosome);
     }
