@@ -46,7 +46,7 @@ void knapsackMain() {
             0
     );
 
-    /* IMPORTANT => Stop condition of this problem is the number of loop (iteration) */
+    /* IMPORTANT => Stop condition of this problem is the number of iteration */
 
     for (int i = 0; i < iteration; i++) {
 
@@ -66,8 +66,13 @@ void knapsackMain() {
         // Sort evaluated array and return indexes
         evalSortedIdx = sortChromosomes(evalResult, populationLen);
 
+        /* (Attention !) Based on this problem which needs a maximum solution, it is the most important to reverse the
+         * sorted evaluation array to move the elites directly from top of the sorted evaluated array.
+         */
+        reverseArray(evalSortedIdx, populationLen);
+
         // Add each loop's best solve result to best array
-        bestSolves[i] = evalResult[evalSortedIdx[populationLen - 1]];
+        bestSolves[i] = evalResult[evalSortedIdx[0]];
 
         // Crossover
         newPop = (int *) multiprocessor(
