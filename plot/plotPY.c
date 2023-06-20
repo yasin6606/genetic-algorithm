@@ -4,7 +4,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     FILE *fd;
     int *array = (int *) arr;
 
-    system("rm -f ./plot/plotData.py");
+    system("rm -f ./plot/plotData.py | del ./plot/plotData.py");
 
     fd = fopen("./plot/plotData.py", "w+");
 
@@ -39,5 +39,5 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     fclose(fd);
 
-    system("python3 ./plot/plotData.py");
+    system("python3 ./plot/plotData.py | python ./plot/plotData.py");
 }

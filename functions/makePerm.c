@@ -7,7 +7,7 @@ int *makePerm(size_t n, bool ignorePerm, size_t limitLen, size_t ignoreNumsCount
 
     if (limitLen != -1) {
         len = limitLen;
-        arr = (int *) reallocarray(arr, limitLen, sizeof(int));
+        arr = (int *) realloc(arr, limitLen * sizeof(int));
     }
 
     // Attention ! Using this condition in order to avoid reading this scope of code when ignoredNumsCount is zero.

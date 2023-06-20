@@ -28,10 +28,10 @@ void knapsackMain() {
     eliteNum = ceil(iteration * ELITE_PERCENT);
 
     // Fill wArr (Weight Array) randomly
-    wArr = makePerm(wMax / 2, true, chromosomeLen, 1, 0);
+    wArr = makePerm(chromosomeLen, true, chromosomeLen, 1, 0);
 
     // Fill vArr (Value Array) randomly. To be more realistic, divide values.
-    vArr = makePerm(wMax / 2, true, chromosomeLen, 0);
+    vArr = makePerm(chromosomeLen, true, chromosomeLen, 0);
 
     // Produce init population
     population = makeKnapsackPopulation(populationLen, chromosomeLen);
@@ -39,15 +39,20 @@ void knapsackMain() {
     for (int i = 0; i < iteration; i++) {
         // Evaluate
         evalResult = evalKnapsack(population, populationLen, chromosomeLen, wMax, wArr, vArr);
+        printArray(populationLen, evalResult, "Eval: ", ANSI_COLOR_RESET);
 
         // Sort evaluated array and return indexes
         evalSortedIdx = sortChromosomes(evalResult, populationLen);
 
+        SHOW_NUM(3)
+        printArray(populationLen, evalSortedIdx, "B: ", ANSI_COLOR_RESET);
         // Reverse evaluated indexes array since Knapsack problem is a maximum type problem
         reverseArray(evalSortedIdx, populationLen);
+        printArray(populationLen, evalSortedIdx, "A: ", ANSI_COLOR_RESET);
 
         // Add each loop's best solve result to best array
         bestSolves[i] = evalResult[evalSortedIdx[0]];
+        printArray(iteration, bestSolves, "", ANSI_COLOR_RESET);
 
         // Crossover (Re-Produce a new generation (population))
         newPop = crossover(
