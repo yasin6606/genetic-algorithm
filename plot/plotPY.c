@@ -1,35 +1,43 @@
 #include "../headers/sharedLib.h"
 
-void plotPY(void *arr, size_t len) {
+void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
     int *array = (int *) arr;
 
-    // Remove existed data file
     system("rm -f ./plot/plotData.py");
 
-    // Open a file
     fd = fopen("./plot/plotData.py", "w+");
 
-    // Checking errors
     if (fd == NULL) {
         printf("File Error\n");
         return;
     }
 
-    // Start writing on the file
+    // Styles
+    int titleFontsize = 27, yFontsize = 20, xFontsize = 20;
+
     fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\n");
 
-    // Add array
     fprintf(fd, "ypoints = np.array([");
     for (int i = 0; i < len; i++) {
         fprintf(fd, "%d, ", array[i]);
     }
     fprintf(fd, "])\n");
 
-    fprintf(fd, "plt.plot(ypoints, color='r')\nplt.show()\n");
+    fprintf(
+            fd,
+            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.show()\n",
+            format,
+            color,
+            title,
+            titleFontsize,
+            yLabel,
+            yFontsize,
+            xLabel,
+            xFontsize
+    );
 
     fclose(fd);
 
-    // Run Python file so as to plot the chart
     system("python3 ./plot/plotData.py");
 }

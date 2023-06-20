@@ -1,33 +1,65 @@
 #include "./initTSP.c"
 #include "./evalTSP.c"
+#include "../../types/GeneralTypes.h"
 #include "../../headers/sharedMenu.h"
-#include "../../headers/printing.h"
+#include "../../plot/plot.h"
 
 void tspMain() {
-    int citiesSize, *population = NULL, *disMatrix = NULL, *evalDisMatrix = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
-            crossoverType;
+    int chromosomeLen, populationLen, iteration, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
+            *bestSolves = NULL, *evalSortedIdx = NULL, crossoverType, *newPop = NULL;
+
+    SharedMenuType inputs;
 
     // Get initial values
-    citiesSize = intInput("Enter the number of cities: ");
-    crossoverType = crossoverMenu();
+    inputs = sharedInitInputs();
 
-    // Produce population
-    population = tspPopulationMaker(citiesSize);
+    chromosomeLen = inputs.chromosomeLen;
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
 
-    // Produce DIS matrix
-    disMatrix = tspDisMaker(citiesSize);
+    // Best solutions array
+    bestSolves = (int *) calloc(iteration, sizeof(int));
 
-    // Evaluate population produced
-    evalDisMatrix = evalTSPPopulation(citiesSize, disMatrix, population);
+    // Elites
+    eliteNum = ceil(populationLen * ELITE_PERCENT);
 
-    // The best parents selection so as to crossover
-    bestParentsIdx = parentSelection(evalDisMatrix, citiesSize, false);
+    // Produce init population
+    population = tspPopulationMaker(populationLen, chromosomeLen);
 
-    printArray(citiesSize, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(citiesSize, secondChild, "Second  Child: ", ANSI_COLOR_RESET);
+    // Produce Distances matrix
+    disMatrix = tspDisMaker(chromosomeLen);
 
-    printMatrix(citiesSize, disMatrix, true);
-    printMatrix(citiesSize, population, true);
+    for (int i = 0; i < iteration; i++) {
 
-    printArray(citiesSize, evalDisMatrix, "Evaluation (Distances): ", ANSI_COLOR_RESET);
+        // Evaluate
+        evalResult = evalTSPPopulation(populationLen, chromosomeLen, disMatrix, population);
+
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evalResult, populationLen);
+
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evalResult[evalSortedIdx[0]];
+
+        // Crossover (Re-Produce a new generation (population))
+        newPop = crossover(
+                populationLen,
+                chromosomeLen,
+                population,
+                eliteNum,
+                evalSortedIdx,
+                evalResult,
+                false,
+                false,
+                crossoverType
+        );
+
+        // Mutation (Tweak)
+        tweak(newPop, populationLen, chromosomeLen);
+
+        // Re-Take new population
+        population = newPop;
+    }
+
+    plotPY(bestSolves, iteration, "-", "r", "Traveler Salesman Problem", "Cost", "Iteration");
 }

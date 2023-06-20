@@ -6,6 +6,13 @@
 #define GENETIC_ALGORITHM_GENERALTYPES_H
 
 typedef struct {
+    int chromosomeLen;
+    int populationLen;
+    int iteration;
+    int crossoverType;
+} SharedMenuType;
+
+typedef struct {
     int idx;
     int value;
 } EvalType;

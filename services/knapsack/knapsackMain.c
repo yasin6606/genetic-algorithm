@@ -1,36 +1,78 @@
 #include "./initKnapsack.c"
 #include "./evalKnapsack.c"
+#include "../../types/GeneralTypes.h"
 #include "../../headers/sharedMenu.h"
+#include "../../plot/plot.h"
 #include "../../headers/printing.h"
 
 void knapsackMain() {
-    struct KnapsackInitValues knapsackStruct;
-    int productsNum, wMax, *matrixResult = NULL, *evalResults = NULL, *bestParentsIdx = NULL, *firstChild = NULL, *secondChild = NULL,
-            crossoverType;
+    int chromosomeLen, populationLen, iteration, crossoverType, wMax, *wArr = NULL, *vArr = NULL, eliteNum, *population = NULL,
+            *evalResult = NULL, *evalSortedIdx = NULL, *bestSolves = NULL, *newPop = NULL;
+
+    SharedMenuType inputs;
 
     // Get initial values
-    productsNum = intInput("Enter the number of products: ");
     wMax = intInput("Enter the maximum weight of backpack (KG): ");
-    knapsackStruct = getKnapsackStructInfo(productsNum, wMax);
-    crossoverType = crossoverMenu();
 
-    // Produce population
-    matrixResult = setKnapsackSol(productsNum);
+    inputs = sharedInitInputs();
 
-    // Evaluate population produced
-    evalResults = evalKnapsack(matrixResult, knapsackStruct);
+    chromosomeLen = inputs.chromosomeLen;
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
+
+    // Best solutions array
+    bestSolves = (int *) calloc(iteration, sizeof(int));
+
+    // Elites
+    eliteNum = ceil(iteration * ELITE_PERCENT);
+
+    // Fill wArr (Weight Array) randomly
+    wArr = makePerm(wMax / 2, true, chromosomeLen, 1, 0);
+
+    // Fill vArr (Value Array) randomly. To be more realistic, divide values.
+    vArr = makePerm(wMax / 2, true, chromosomeLen, 0);
+
+    // Produce init population
+    population = makeKnapsackPopulation(populationLen, chromosomeLen);
+
+    for (int i = 0; i < iteration; i++) {
+        // Evaluate
+        evalResult = evalKnapsack(population, populationLen, chromosomeLen, wMax, wArr, vArr);
+
+        // Sort evaluated array and return indexes
+        evalSortedIdx = sortChromosomes(evalResult, populationLen);
+
+        // Reverse evaluated indexes array since Knapsack problem is a maximum type problem
+        reverseArray(evalSortedIdx, populationLen);
+
+        // Add each loop's best solve result to best array
+        bestSolves[i] = evalResult[evalSortedIdx[0]];
+
+        // Crossover (Re-Produce a new generation (population))
+        newPop = crossover(
+                populationLen,
+                chromosomeLen,
+                population,
+                eliteNum,
+                evalSortedIdx,
+                evalResult,
+                true,
+                true,
+                crossoverType
+        );
+
+        // Mutation (Tweak)
+        tweak(newPop, populationLen, chromosomeLen);
+
+        // Re-Take new population
+        population = newPop;
+    }
 
     // Print valid Weights and Values array
-    printArray(productsNum, knapsackStruct.wArr, "Weight: ", ANSI_COLOR_YELLOW);
-    printArray(productsNum, knapsackStruct.vArr, "Value: ", ANSI_COLOR_YELLOW);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_MAGENTA);
 
-    // The best parent selection
-    bestParentsIdx = parentSelection(evalResults, productsNum, true);
-
-    printArray(productsNum, firstChild, "First Child: ", ANSI_COLOR_RESET);
-    printArray(productsNum, secondChild, "Second Child: ", ANSI_COLOR_RESET);
-
-    printMatrix(productsNum, matrixResult, true);
-
-    printArray(productsNum, evalResults, "Evaluation (Values): ", ANSI_COLOR_RESET);
+    // Plot
+    plotPY(bestSolves, iteration, "-", "m", "Knapsack Problem", "Value", "Iteration");
 }

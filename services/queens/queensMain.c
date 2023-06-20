@@ -1,38 +1,43 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
+#include "../../types/GeneralTypes.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/printing.h"
 #include "../../plot/plot.h"
 
 void queensMain() {
-    int chromosomeLen, populationLen, stop, eliteNum, *population = NULL, *evaluatedArr = NULL, crossoverType, *evalSortedIdx = NULL,
+    int chromosomeLen, populationLen, iteration, eliteNum, *population = NULL, *evaluatedArr = NULL, crossoverType, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
+    SharedMenuType inputs;
+
     // Get initial values
-    chromosomeLen = intInput("Enter the length of a chromosome: ");
+    inputs = sharedInitInputs();
+
+    chromosomeLen = inputs.chromosomeLen;
 
     if (chromosomeLen < 4) {
         SHOW_WARNING("Minimum queens must be 4 or upper!");
         return;
     }
 
-    populationLen = intInput("Enter the length of population: ");
-    stop = intInput("Enter the stop number: ");
-    crossoverType = crossoverMenu();
+    populationLen = inputs.populationLen;
+    iteration = inputs.iteration;
+    crossoverType = inputs.crossoverType;
 
     // Set default value for plot X axios
-    plotLen = stop;
+    plotLen = iteration;
 
     // Best solutions array
-    bestSolves = (int *) calloc(stop, sizeof(int));
+    bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Elites
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
-    // Make initial population
+    // Produce init population
     population = setQueensSol(populationLen, chromosomeLen);
 
-    for (int i = 0; i < stop; i++) {
+    for (int i = 0; i < iteration; i++) {
 
         // Evaluation
         evaluatedArr = evalQueens(population, populationLen, chromosomeLen);
@@ -73,9 +78,6 @@ void queensMain() {
         population = newPop;
     }
 
-//    printCustomMatrix(populationLen, chromosomeLen, population, true);
-//    printArray(populationLen, evaluatedArr, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
-
     // Plot
-    plotPY(bestSolves, plotLen + 1);
+    plotPY(bestSolves, plotLen + 1, "-", "b", "N-Queens Problem", "Collision", "Iteration");
 }
