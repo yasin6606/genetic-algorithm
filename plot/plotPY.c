@@ -3,6 +3,7 @@
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
     int *array = (int *) arr;
+    char charDir[50], *chartName = "chart.png";
 
     system("rm -f ./plot/plotData.py | del ./plot/plotData.py");
 
@@ -16,7 +17,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     // Styles
     int titleFontsize = 27, yFontsize = 20, xFontsize = 20;
 
-    fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\n");
+    fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\nplot = plt.figure()\n");
 
     fprintf(fd, "ypoints = np.array([");
     for (int i = 0; i < len; i++) {
@@ -24,9 +25,11 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     }
     fprintf(fd, "])\n");
 
+    sprintf(chartDir, "/home/%s/%s/%s", getenv("PROJECT_NAME"), getenv("CHART_DIR"), chartName);
+
     fprintf(
             fd,
-            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.show()\n",
+            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.savefig('%s')\nplt.show()\n",
             format,
             color,
             title,
@@ -34,7 +37,8 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
             yLabel,
             yFontsize,
             xLabel,
-            xFontsize
+            xFontsize,
+            charDir
     );
 
     fclose(fd);
