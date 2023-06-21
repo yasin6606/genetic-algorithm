@@ -9,9 +9,11 @@ RUN apk add build-base
 RUN apk add vim
 RUN apk add --no-cache openssh
 RUN apk add feh
+RUN apk add xauth
 WORKDIR /home/
 RUN git clone https://github.com/yasin6606/${PROJECT_NAME}.git
 WORKDIR /home/${PROJECT_NAME}
 RUN git checkout ${BRANCH_NAME}
 RUN gcc main.c -o runner
+CMD /bin/sh
 #ENTRYPOINT ./runner
