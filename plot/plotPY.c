@@ -3,7 +3,7 @@
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
     int *array = (int *) arr;
-    char charDir[50], *chartName = "chart.png";
+    char chartDir[50], *chartName = "chart.png";
 
     system("rm -f ./plot/plotData.py | del ./plot/plotData.py");
 
@@ -38,7 +38,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
             yFontsize,
             xLabel,
             xFontsize,
-            charDir
+            chartDir
     );
 
     fclose(fd);
