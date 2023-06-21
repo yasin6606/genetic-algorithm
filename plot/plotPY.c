@@ -3,7 +3,7 @@
 
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
-    int *array = (int *) arr;
+    int *array = (int *) arr, figDPI = 1024;
     char chartDir[50], *chartName = "chart.png";
 
     system("rm -f ./plot/plotData.py");
@@ -18,7 +18,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     // Styles
     int titleFontsize = 27, yFontsize = 20, xFontsize = 20;
 
-    fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\nplot = plt.figure()\n");
+    fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\nplot = plt.figure()\nplot.dpi = %d\n", figDPI);
 
     fprintf(fd, "ypoints = np.array([");
     for (int i = 0; i < len; i++) {
