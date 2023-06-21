@@ -26,7 +26,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     }
     fprintf(fd, "])\n");
 
-    sprintf(chartDir, "%s/%s", getenv("CHART_DIR"), chartName);
+    sprintf(chartDir, "/home/%s/%s/%s", getenv("PROJECT_NAME"), getenv("CHART_DIR"), chartName);
 
     fprintf(
             fd,

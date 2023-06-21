@@ -7,3 +7,4 @@ runner
 *.exe
 *.o
 *.s
+*.png

@@ -1,10 +1,10 @@
 FROM czentye/matplotlib-minimal:latest
 
-ARG PROJECT_NAME=genetic-algorithm
-ARG BRANCH_NAME=multiprocess
-
+ENV PROJECT_NAME=genetic-algorithm
 ENV USER_HOME=$HOME
 ENV CHART_DIR=genetic_result
+
+ARG BRANCH_NAME=multiprocess
 
 RUN apk add htop
 RUN apk add git

@@ -1,5 +1,7 @@
 #! /bin/bash
 
+clear
+
 chmod 777 run_linux.sh
 
 projectName=genetic-algorithm
