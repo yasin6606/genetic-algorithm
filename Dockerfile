@@ -4,7 +4,7 @@ ENV PROJECT_NAME=genetic-algorithm
 ENV USER_HOME=$HOME
 ENV CHART_DIR=genetic_result
 
-ARG BRANCH_NAME=multiprocess
+ARG BRANCH_NAME=master
 
 RUN apk add htop
 RUN apk add git
