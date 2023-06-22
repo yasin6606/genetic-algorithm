@@ -1,9 +1,8 @@
 #include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
 
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
     FILE *fd;
-    int *array = (int *) arr, figDPI = 1024;
+    int *array = (int *) arr, figDPI;
     char chartDir[50], *chartName = "chart.png";
 
     system("rm -f ./plot/plotData.py");
@@ -18,7 +17,16 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     // Styles
     int titleFontsize = 27, yFontsize = 20, xFontsize = 20;
 
-    fprintf(fd, "import matplotlib.pyplot as plt\nimport numpy as np\nplot = plt.figure()\nplot.dpi = %d\n", figDPI);
+    if (getenv("CHART_DIR"))
+        figDPI = 1024;
+    else
+        figDPI = 100;
+
+    fprintf(
+            fd,
+            "import matplotlib.pyplot as plt\nimport numpy as np\nplot = plt.figure()\nplot.dpi = %d\n",
+            figDPI
+    );
 
     fprintf(fd, "ypoints = np.array([");
     for (int i = 0; i < len; i++) {
@@ -30,7 +38,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     fprintf(
             fd,
-            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.savefig('%s')\nplt.show()\n",
+            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.show()\nplt.savefig('%s')\n",
             format,
             color,
             title,
