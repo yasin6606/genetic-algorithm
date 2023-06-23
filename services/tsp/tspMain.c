@@ -8,6 +8,8 @@ void tspMain() {
     int chromosomeLen, populationLen, iteration, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
             *bestSolves = NULL, *evalSortedIdx = NULL, crossoverType, *newPop = NULL;
 
+    char answerLabel[SPRINTF_STRING_LEN];
+
     SharedMenuType inputs;
 
     // Get initial values
@@ -64,7 +66,21 @@ void tspMain() {
     // Hide constant part of the answer
     hideSameValue(bestSolves, &iteration);
 
-    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
+    sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM,
+            bestSolves[iteration - MORE_SAME_RESULT_NUM]);
 
-    plotPY(bestSolves, iteration, "-", "r", "Traveler Salesman Problem", "Cost", "Iteration");
+    // Print answer
+    if (evalSortedIdx)
+        printArray(chromosomeLen, &population[evalSortedIdx[0]], "Answer: ", ANSI_COLOR_MAGENTA);
+
+    plotPY(
+            bestSolves,
+            iteration,
+            "-",
+            "r",
+            "Traveler Salesman Problem",
+            "Cost",
+            "Iteration",
+            answerLabel
+    );
 }

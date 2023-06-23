@@ -9,6 +9,7 @@
 
 //void plot();
 
-void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel);
+void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel,
+            char *answerLabel);
 
 #endif //GENETIC_ALGORITHM_PLOT_H

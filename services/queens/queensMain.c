@@ -9,6 +9,8 @@ void queensMain() {
     int chromosomeLen, populationLen, iteration, eliteNum, *population = NULL, *evaluatedArr = NULL, crossoverType, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
+    char answerLabel[SPRINTF_STRING_LEN];
+
     SharedMenuType inputs;
 
     // Get initial values
@@ -78,6 +80,17 @@ void queensMain() {
         population = newPop;
     }
 
+    sprintf(answerLabel, "Solved: (%d, %d)", plotLen, 0);
+
     // Plot
-    plotPY(bestSolves, plotLen + 1, "-", "b", "N-Queens Problem", "Collision", "Iteration");
+    plotPY(
+            bestSolves,
+            plotLen + 1,
+            "-",
+            "b",
+            "N-Queens Problem",
+            "Collision",
+            "Iteration",
+            answerLabel
+    );
 }

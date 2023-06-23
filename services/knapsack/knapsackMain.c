@@ -9,6 +9,8 @@ void knapsackMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, wMax, *wArr = NULL, *vArr = NULL, eliteNum, *population = NULL,
             *evalResult = NULL, *evalSortedIdx = NULL, *bestSolves = NULL, *newPop = NULL;
 
+    char answerLabel[SPRINTF_STRING_LEN];
+
     SharedMenuType inputs;
 
     // Get initial values
@@ -77,8 +79,22 @@ void knapsackMain() {
     // Hide constant part of the answer
     hideSameValue(bestSolves, &iteration);
 
-    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
+    sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM,
+            bestSolves[iteration - MORE_SAME_RESULT_NUM]);
+
+    // Print answer
+    if (evalSortedIdx)
+        printArray(chromosomeLen, &population[evalSortedIdx[0]], "Answer: ", ANSI_COLOR_MAGENTA);
 
     // Plot
-    plotPY(bestSolves, iteration, "-", "m", "Knapsack Problem", "Value", "Iteration");
+    plotPY(
+            bestSolves,
+            iteration,
+            "-",
+            "m",
+            "Knapsack Problem",
+            "Value",
+            "Iteration",
+            answerLabel
+    );
 }
