@@ -12,6 +12,7 @@
 #define ELITE_PERCENT 0.04
 #define MUTATION_PERCENT 0.3
 #define MORE_SAME_RESULT_NUM 3
+#define SPRINTF_STRING_LEN 50
 
 // String colors
 #define ANSI_COLOR_RED     "\x1b[31m"
