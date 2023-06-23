@@ -29,6 +29,7 @@ void tspMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for TSP
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
@@ -36,8 +37,10 @@ void tspMain() {
             &tspPopulationMaker,
             0
     );
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     // Produce DIS (Distance matrix) by multi processes
+    livePrinter("Please Wait ==> Destination Matrix is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     disMatrix = (int *) multiprocessor(
             chromosomeLen,
             chromosomeLen,
@@ -45,10 +48,13 @@ void tspMain() {
             &tspDisMaker,
             0
     );
+    livePrinter("Destination Matrix successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     /* IMPORTANT => Stop condition of this problem is the number of loop (iteration) */
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluation
         evalResult = (int *) multiprocessor(

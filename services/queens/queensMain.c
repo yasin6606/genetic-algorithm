@@ -38,6 +38,7 @@ void queensMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for N-Queens
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
@@ -45,8 +46,11 @@ void queensMain() {
             &queensPopulationMaker,
             0
     );
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluation
         evalResult = (int *) multiprocessor(

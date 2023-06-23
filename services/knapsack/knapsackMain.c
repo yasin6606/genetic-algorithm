@@ -36,6 +36,7 @@ void knapsackMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for Knapsack
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
@@ -43,10 +44,13 @@ void knapsackMain() {
             &knapsackPopulationMaker,
             0
     );
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     /* IMPORTANT => Stop condition of this problem is the number of iteration */
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluation
         evalResult = (int *) multiprocessor(
@@ -95,8 +99,8 @@ void knapsackMain() {
         population = newPop;
     }
 
-    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_GREEN);
-    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_GREEN);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_BLUE);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_BLUE);
 
 //    printCustomMatrix(populationLen, chromosomeLen, population, true);
 //    printArray(populationLen, evalResult, "Evaluation (Values): ", ANSI_COLOR_RESET);
@@ -104,7 +108,8 @@ void knapsackMain() {
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);
 
-    sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM, bestSolves[iteration - MORE_SAME_RESULT_NUM]);
+    sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM,
+            bestSolves[iteration - MORE_SAME_RESULT_NUM]);
 
     // Print answer
     if (evalSortedIdx)
