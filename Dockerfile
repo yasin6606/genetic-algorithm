@@ -17,5 +17,6 @@ WORKDIR /home/
 RUN git clone https://github.com/yasin6606/${PROJECT_NAME}.git
 WORKDIR /home/${PROJECT_NAME}
 RUN git checkout ${BRANCH_NAME}
+RUN git pull origin $BRANCH_NAME
 RUN gcc main.c -o runner
 #ENTRYPOINT ./runner
