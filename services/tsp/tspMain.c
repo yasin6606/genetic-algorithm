@@ -93,8 +93,9 @@ void tspMain() {
 
 //    printCustomMatrix(populationLen, chromosomeLen, population, true);
 //    printMatrix(chromosomeLen, disMatrix, true);
-
 //    printArray(populationLen, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
+
+    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
     plotPY(bestSolves, plotLen, "-", "r", "TSP Problem", "Cost", "Iteration");
 }

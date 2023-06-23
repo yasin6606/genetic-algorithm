@@ -103,8 +103,7 @@ void knapsackMain() {
 //    printCustomMatrix(populationLen, chromosomeLen, population, true);
 //    printArray(populationLen, evalResult, "Evaluation (Values): ", ANSI_COLOR_RESET);
 
-    printArray(iteration, bestSolves, "Best: ", ANSI_COLOR_RESET);
-//    reverseArray(bestSolves, iteration);
+    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
     plotPY(bestSolves, plotLen, "-", "m", "Knapsack Problem", "Value", "Iteration");
 }
