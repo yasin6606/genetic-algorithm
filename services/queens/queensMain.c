@@ -37,9 +37,13 @@ void queensMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = setQueensSol(populationLen, chromosomeLen);
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluation
         evaluatedArr = evalQueens(population, populationLen, chromosomeLen);
@@ -55,7 +59,7 @@ void queensMain() {
             plotLen = i;
 
             // Print answer
-            printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+            printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "\nAnswer: ", ANSI_COLOR_MAGENTA);
 
             break;
         }

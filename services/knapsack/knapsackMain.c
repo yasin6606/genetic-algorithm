@@ -36,9 +36,13 @@ void knapsackMain() {
     vArr = makePerm(chromosomeLen, true, chromosomeLen, 0);
 
     // Produce init population
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = makeKnapsackPopulation(populationLen, chromosomeLen);
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluate
         evalResult = evalKnapsack(population, populationLen, chromosomeLen, wMax, wArr, vArr);
@@ -73,8 +77,8 @@ void knapsackMain() {
     }
 
     // Print valid Weights and Values array
-    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_GREEN);
-    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_GREEN);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_BLUE);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_BLUE);
 
     // Hide constant part of the answer
     hideSameValue(bestSolves, &iteration);

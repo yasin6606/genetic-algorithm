@@ -27,12 +27,18 @@ void tspMain() {
     eliteNum = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population
+    livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     population = tspPopulationMaker(populationLen, chromosomeLen);
+    livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     // Produce Distances matrix
+    livePrinter("Please Wait ==> Destination Matrix is creating...", -1, ANSI_COLOR_GREEN, NULL, false);
     disMatrix = tspDisMaker(chromosomeLen);
+    livePrinter("Destination Matrix successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     for (int i = 0; i < iteration; i++) {
+
+        livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
         // Evaluate
         evalResult = evalTSPPopulation(populationLen, chromosomeLen, disMatrix, population);

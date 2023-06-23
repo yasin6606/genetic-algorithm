@@ -26,8 +26,10 @@
 #define FONT_COL_CUSTOM(R, G, B)   "\e[38;2;" #R ";" #G ";" #B "m"
 #define BG_COL_CUSTOM(R, G, B)   "\e[48;2;" #G ";" #G ";" #B "m"
 
+// Cursor
 #define GO_FIRST_OF_CURRENT_LINE "\r"
-#define RM_CURRENT_LINE "\33[2K\r"
+#define RM_CURRENT_LINE "\33[2K"
+#define MOVE_ONE_LINE_UP "\033[A"
 
 // Lines
 #define DASHED_LINE puts("\n---------------------------------------------------------------------");
