@@ -9,7 +9,7 @@
 
 void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
-            *evalSortedIdx = NULL, *newPop = NULL, plotLen, *bestSolves = NULL;
+            *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL;
 
     SharedMenuType inputs;
 
@@ -19,9 +19,6 @@ void tspMain() {
     populationLen = inputs.populationLen;
     iteration = inputs.iteration;
     crossoverType = inputs.crossoverType;
-
-    // Set default value for plot X axios
-    plotLen = iteration;
 
     // Best solutions array
     bestSolves = (int *) calloc(iteration, sizeof(int));
@@ -95,7 +92,10 @@ void tspMain() {
 //    printMatrix(chromosomeLen, disMatrix, true);
 //    printArray(populationLen, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
 
+    // Hide same values on answer array
+    hideSameValue(bestSolves, &iteration);
+
     printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
-    plotPY(bestSolves, plotLen, "-", "r", "TSP Problem", "Cost", "Iteration");
+    plotPY(bestSolves, iteration, "-", "r", "Traveler Salesman Problem", "Cost", "Iteration");
 }

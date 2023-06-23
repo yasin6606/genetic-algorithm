@@ -8,7 +8,7 @@
 
 void knapsackMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, wMax, *wArr, *vArr, *population = NULL,
-            *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, plotLen, *bestSolves = NULL;
+            *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL;
 
     SharedMenuType inputs;
 
@@ -21,15 +21,11 @@ void knapsackMain() {
     iteration = inputs.iteration;
     crossoverType = inputs.crossoverType;
 
-
     // Fill wArr (Weight Array) randomly
     wArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 1, 0);
 
     // Fill vArr (Value Array) randomly. To be more realistic, divide values.
     vArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 0);
-
-    // Set default value for plot X axios
-    plotLen = iteration;
 
     // Best solutions array
     bestSolves = (int *) calloc(iteration, sizeof(int));
@@ -97,13 +93,16 @@ void knapsackMain() {
         population = newPop;
     }
 
-    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_MAGENTA);
-    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_GREEN);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_GREEN);
 
 //    printCustomMatrix(populationLen, chromosomeLen, population, true);
 //    printArray(populationLen, evalResult, "Evaluation (Values): ", ANSI_COLOR_RESET);
 
+    // Hide same values on answer array
+    hideSameValue(bestSolves, &iteration);
+
     printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
-    plotPY(bestSolves, plotLen, "-", "m", "Knapsack Problem", "Value", "Iteration");
+    plotPY(bestSolves, iteration, "-", "m", "Knapsack Problem", "Value", "Iteration");
 }
