@@ -74,6 +74,9 @@ void knapsackMain() {
     printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_GREEN);
     printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_GREEN);
 
+    // Hide constant part of the answer
+    hideSameValue(bestSolves, &iteration);
+
     printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
     // Plot
