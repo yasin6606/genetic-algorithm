@@ -1,9 +1,11 @@
 #include "../headers/sharedLib.h"
+#include "../headers/sharedMacros.h"
 
-void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel) {
+void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel,
+            char *answerLabel) {
     FILE *fd;
     int *array = (int *) arr, figDPI;
-    char chartDir[50], *chartName = "chart.png";
+    char chartDir[SPRINTF_STRING_LEN], *chartName = "chart.png";
 
     system("rm -f ./plot/plotData.py");
 
@@ -38,9 +40,10 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     fprintf(
             fd,
-            "plt.plot(ypoints, '%s', color='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.show()\nplt.savefig('%s')\n",
+            "plt.plot(ypoints, '%s', color='%s', label='%s')\nplt.title(label='%s', fontsize=%d)\nplt.ylabel('%s', fontsize=%d)\nplt.xlabel('%s', fontsize=%d)\nplt.legend()\nplt.show()\nplt.savefig('%s')\n",
             format,
             color,
+            answerLabel,
             title,
             titleFontsize,
             yLabel,

@@ -11,6 +11,8 @@ void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
             *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL;
 
+    char answerLabel[SPRINTF_STRING_LEN];
+
     SharedMenuType inputs;
 
     // Get the number of cities
@@ -95,7 +97,20 @@ void tspMain() {
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);
 
-    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
+    sprintf(answerLabel, "(%d, %d)", iteration - MORE_SAME_RESULT_NUM, bestSolves[iteration - MORE_SAME_RESULT_NUM]);
 
-    plotPY(bestSolves, iteration, "-", "r", "Traveler Salesman Problem", "Cost", "Iteration");
+    // Print answer
+    if (evalSortedIdx)
+        printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+
+    plotPY(
+            bestSolves,
+            iteration,
+            "-",
+            "r",
+            "Traveler Salesman Problem",
+            "Cost",
+            "Iteration",
+            answerLabel
+    );
 }

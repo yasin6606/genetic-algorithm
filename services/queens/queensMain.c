@@ -11,6 +11,8 @@ void queensMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
+    char answerLabel[SPRINTF_STRING_LEN];
+
     SharedMenuType inputs;
 
     // Get the number of queens
@@ -99,5 +101,16 @@ void queensMain() {
 //    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 //    printArray(populationLen, evalSortedIdx, "Evaluation Sorted Indexes (Collisions are counted): ", ANSI_COLOR_RESET);
 
-    plotPY(bestSolves, plotLen + 1, "-", "b", "N-Queens Problem", "Collision", "Iteration");
+    sprintf(answerLabel, "(%d, %d)", plotLen, 0);
+
+    plotPY(
+            bestSolves,
+            plotLen + 1,
+            "-",
+            "b",
+            "N-Queens Problem",
+            "Collision",
+            "Iteration",
+            answerLabel
+    );
 }
