@@ -11,6 +11,7 @@
 #define CROSSOVER_TYPE_LEN 2
 #define ELITE_PERCENT 0.04
 #define MUTATION_PERCENT 0.3
+#define MORE_SAME_RESULT_NUM 3
 
 #define N_TIMES(X, Y) (X * Y)
 
