@@ -12,7 +12,7 @@ void knapsackMain() {
     SharedMenuType inputs;
 
     // Get initial values
-    wMax = intInput("Enter the maximum weight of backpack (KG): ");
+    wMax = intInput("Enter the maximum weight of knapsack: ");
 
     inputs = sharedInitInputs();
 
@@ -71,8 +71,10 @@ void knapsackMain() {
     }
 
     // Print valid Weights and Values array
-    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_MAGENTA);
-    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_GREEN);
+    printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_GREEN);
+
+    printArray(iteration, bestSolves, "Answer: ", ANSI_COLOR_MAGENTA);
 
     // Plot
     plotPY(bestSolves, iteration, "-", "m", "Knapsack Problem", "Value", "Iteration");

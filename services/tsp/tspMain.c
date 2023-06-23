@@ -61,5 +61,7 @@ void tspMain() {
         population = newPop;
     }
 
+    printArray(iteration,bestSolves,"Answer: ",ANSI_COLOR_MAGENTA);
+
     plotPY(bestSolves, iteration, "-", "r", "Traveler Salesman Problem", "Cost", "Iteration");
 }
