@@ -9,6 +9,8 @@ int *breakPointGenerator(size_t populationNum) {
         breakPoints = chromosomeMaker(populationNum, false, true, 2, 2, 0, populationNum - 1);
 
         if (abs(breakPoints[0] - breakPoints[1]) > 1) break;
+
+        free(breakPoints);
     }
 
     // Swap break points if first point is greater that second one.

@@ -97,17 +97,26 @@ void queensMain() {
         // Tweak (Mutation)
         tweak(newPop, chromosomeLen, populationLen);
 
+        free(evalSortedIdx);
+
+        if (munmap(evalResult, populationLen) == -1) {
+            perror("freeing evalResult error!");
+            exit(EXIT_FAILURE);
+        }
+        if (munmap(population, populationLen * chromosomeLen) == -1) {
+            perror("freeing last unused population error!");
+            exit(EXIT_FAILURE);
+        }
+
         // Re-Take the new population
         population = newPop;
-
-        free(evalSortedIdx);
     }
 
 //    printCustomMatrix(populationLen, chromosomeLen, population, false);
 //    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
 //    printArray(populationLen, evalSortedIdx, "Evaluation Sorted Indexes (Collisions are counted): ", ANSI_COLOR_RESET);
 
-    sprintf(answerLabel, "(%d, %d)", plotLen, 0);
+    sprintf(answerLabel, "Solved: (%d, %d)", plotLen, 0);
 
     plotPY(
             bestSolves,

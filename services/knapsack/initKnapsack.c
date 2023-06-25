@@ -3,7 +3,7 @@
 
 void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                              va_list args) {
-    int *tempChromosome;
+    int *tempChromosome = NULL;
 
     for (int i = 0; i < childShare; i++) {
 

@@ -9,7 +9,7 @@
 
 void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
-            *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL;
+            *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx;
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -92,6 +92,20 @@ void tspMain() {
         // Mutation (Tweak)
         tweak(newPop, chromosomeLen, populationLen);
 
+        // Save the best answer
+        bestEvalIdx = evalSortedIdx[0];
+
+        free(evalSortedIdx);
+
+        if (munmap(evalResult, populationLen) == -1) {
+            perror("freeing evalResult error!");
+            exit(EXIT_FAILURE);
+        }
+        if (munmap(population, populationLen * chromosomeLen) == -1) {
+            perror("freeing last unused population error!");
+            exit(EXIT_FAILURE);
+        }
+
         // Re-Take the new population
         population = newPop;
     }
@@ -103,11 +117,11 @@ void tspMain() {
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);
 
-    sprintf(answerLabel, "(%d, %d)", iteration - MORE_SAME_RESULT_NUM, bestSolves[iteration - MORE_SAME_RESULT_NUM]);
+    sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM,
+            bestSolves[iteration - MORE_SAME_RESULT_NUM]);
 
     // Print answer
-    if (evalSortedIdx)
-        printArray(chromosomeLen, &population[evalSortedIdx[0] * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+    printArray(chromosomeLen, &population[bestEvalIdx * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
 
     plotPY(
             bestSolves,
@@ -119,4 +133,6 @@ void tspMain() {
             "Iteration",
             answerLabel
     );
+
+    free(bestSolves);
 }
