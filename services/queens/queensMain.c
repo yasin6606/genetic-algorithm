@@ -99,6 +99,8 @@ void queensMain() {
 
         // Re-Take the new population
         population = newPop;
+
+        free(evalSortedIdx);
     }
 
 //    printCustomMatrix(populationLen, chromosomeLen, population, false);
@@ -117,4 +119,6 @@ void queensMain() {
             "Iteration",
             answerLabel
     );
+
+    free(bestSolves);
 }

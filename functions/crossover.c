@@ -87,5 +87,6 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
             sharedMem[row + j] = newChild[j];
 
         free(newChild);
+        free(bestParentsIdx);
     }
 }

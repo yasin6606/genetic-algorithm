@@ -38,9 +38,9 @@ void *parentSelection(void *evaluationArr, size_t populationNum, bool type) {
 
         // Save the row number of each parent.
         parentIdx[i] = selectionHandler(evaluationArr, type, randIdxArr);
-    }
 
-    free(randIdxArr);
+        free(randIdxArr);
+    }
 
     return parentIdx;
 }

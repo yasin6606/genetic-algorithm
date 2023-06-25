@@ -60,6 +60,9 @@ int *childGenerator2P(size_t populationNum, bool ignorePerm, int *breakPoints, i
             j++;
         }
 
+    free(flag);
+    free(permEmptyIdx);
+
     return child;
 }
 
@@ -123,6 +126,9 @@ int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *on
             flag[temp] = 1;
         }
     }
+
+    free(flag);
+    free(permEmptyIdx);
 
     return child;
 }
