@@ -2,7 +2,7 @@
 #include "../headers/assets.h"
 #include "../types/GeneralTypes.h"
 
-EvalType *bubbleSort(EvalType *arr, size_t len) {
+void bubbleSort(EvalType *arr, size_t len) {
     EvalType t;
 
     for (int i = 0; i < len; i++)
@@ -12,8 +12,6 @@ EvalType *bubbleSort(EvalType *arr, size_t len) {
                 arr[j] = arr[j - 1];
                 arr[j - 1] = t;
             }
-
-    return arr;
 }
 
 void *sortChromosomes(int *evalArr, size_t len) {
@@ -26,10 +24,12 @@ void *sortChromosomes(int *evalArr, size_t len) {
     }
 
     // Sorting
-    eval = bubbleSort(eval, len);
+    bubbleSort(eval, len);
 
     for (int i = 0; i < len; i++)
         evalSorted[i] = eval[i].idx;
+
+    free(eval);
 
     return evalSorted;
 }

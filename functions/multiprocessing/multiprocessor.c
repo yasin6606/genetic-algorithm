@@ -60,5 +60,6 @@ multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, sub_proc
 
     va_end(args);
 
+    free(defineStartIdx);
     return sharedMem;
 }

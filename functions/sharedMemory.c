@@ -6,6 +6,11 @@ void *arraySharedMemory(size_t nSize, size_t size) {
 
     mem = mmap(NULL, nSize * size, protection, visibility, -1, 0);
 
+    if (mem == MAP_FAILED) {
+        perror("mmap Error!");
+        exit(1);
+    }
+
     // make default values -1. When each value is -1, so it means this element of array is not modified (is empty)
 //    for (int i = 0; i < nSize; i++)
 //        mem[i] = -1;

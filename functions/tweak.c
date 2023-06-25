@@ -12,8 +12,9 @@ void tweak(int *population, size_t chromosomeLen, size_t populationLen) {
         rands = chromosomeMaker(chromosomeLen, false, true, 2, 0);
 
         swap(&population[r[i] * chromosomeLen], rands[0], rands[1]);
+
+        free(rands);
     }
 
     free(r);
-    free(rands);
 }

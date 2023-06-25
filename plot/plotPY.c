@@ -55,5 +55,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     fclose(fd);
 
+    free(array);
+
     system("python3 ./plot/plotData.py");
 }
