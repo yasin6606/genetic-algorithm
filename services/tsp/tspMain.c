@@ -1,6 +1,6 @@
 #include "../../services/tsp/initTSP.c"
 #include "./evalTSP.c"
-#include "../../types/GeneralTypes.h"
+#include "../../types/generalTypes.h"
 #include "../../headers/printing.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
@@ -40,7 +40,7 @@ void tspMain() {
     livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     // Produce DIS (Distance matrix) by multi processes
-    livePrinter("Please Wait ==> Destination Matrix is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
+    livePrinter("Please Wait ==> Distances Matrix is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
     disMatrix = (int *) multiprocessor(
             chromosomeLen,
             chromosomeLen,
@@ -48,7 +48,7 @@ void tspMain() {
             &tspDisMaker,
             0
     );
-    livePrinter("Destination Matrix successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
+    livePrinter("Distances Matrix successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
     /* IMPORTANT => Stop condition of this problem is the number of loop (iteration) */
 

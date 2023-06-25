@@ -1,6 +1,6 @@
 #include "./initQueens.c"
 #include "./evalQueens.c"
-#include "../../types/GeneralTypes.h"
+#include "../../types/generalTypes.h"
 #include "../../headers/printing.h"
 #include "../../headers/sharedMenu.h"
 #include "../../headers/multiproseccing/multiprocessor.h"
