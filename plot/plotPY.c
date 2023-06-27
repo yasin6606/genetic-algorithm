@@ -55,7 +55,7 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     fclose(fd);
 
-    printf("\nThe result chart is saved as \"%s\" in %s/%s\n\n", chartName, getenv("USER_HOME"), getenv("CHART_DIR"));
+    printf("\nThe result chart is saved as \"%s\" in %s/Desktop/%s\n\n", chartName, getenv("USER_HOME"), getenv("CHART_DIR"));
 
     free(array);
 
