@@ -128,6 +128,4 @@ void queensMain() {
             "Iteration",
             answerLabel
     );
-
-    free(bestSolves);
 }

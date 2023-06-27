@@ -133,6 +133,4 @@ void tspMain() {
             "Iteration",
             answerLabel
     );
-
-    free(bestSolves);
 }

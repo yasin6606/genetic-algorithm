@@ -138,6 +138,4 @@ void knapsackMain() {
             "Iteration",
             answerLabel
     );
-
-    free(bestSolves);
 }
