@@ -7,8 +7,9 @@
 #include "../../plot/plot.h"
 
 void knapsackMain() {
-    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, wMax, *wArr, *vArr, *population = NULL,
-            *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx;
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, wMax, *wArr, *vArr, *population = NULL,
+            *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx,
+            ignoredArr[ONE_LEN] = {0};
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -24,16 +25,16 @@ void knapsackMain() {
     crossoverType = inputs.crossoverType;
 
     // Fill wArr (Weight Array) randomly
-    wArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 1, 0);
+    wArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, ONE_LEN, ignoredArr);
 
     // Fill vArr (Value Array) randomly. To be more realistic, divide values.
-    vArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 0);
+    vArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 0, NULL);
 
     // Best solutions array
     bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Get the number of chromosomes which must move to new population directly
-    eliteNum = ceil(populationLen * ELITE_PERCENT);
+    eliteLen = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for Knapsack
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -89,11 +90,11 @@ void knapsackMain() {
                 true,
                 true,
                 crossoverType,
-                eliteNum
+                eliteLen
         );
 
         // Mutation (Tweak)
-        tweak(newPop, chromosomeLen, populationLen);
+        tweak(newPop, chromosomeLen, populationLen, eliteLen);
 
         // Save the best answer
         bestEvalIdx = evalSortedIdx[0];
@@ -104,6 +105,7 @@ void knapsackMain() {
             perror("freeing evalResult error!");
             exit(EXIT_FAILURE);
         }
+
         if (munmap(population, populationLen * chromosomeLen) == -1) {
             perror("freeing last unused population error!");
             exit(EXIT_FAILURE);
@@ -115,9 +117,6 @@ void knapsackMain() {
 
     printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_BLUE);
     printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_BLUE);
-
-//    printCustomMatrix(populationLen, chromosomeLen, population, true);
-//    printArray(populationLen, evalResult, "Evaluation (Values): ", ANSI_COLOR_RESET);
 
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);

@@ -8,7 +8,7 @@ void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *share
     for (int i = 0; i < childShare; i++) {
 
         // Produce a BINARY chromosome
-        tempChromosome = chromosomeMaker(populationNum, true, false, -1, 0);
+        tempChromosome = chromosomeMaker(populationNum, true, false, -1, 0, NULL);
 
         // Add chromosome to shared memory
         for (int j = 0; j < populationNum; j++)

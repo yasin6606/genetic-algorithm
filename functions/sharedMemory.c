@@ -1,4 +1,5 @@
 #include "../headers/sharedLib.h"
+#include "../headers/printing.h"
 
 void *arraySharedMemory(size_t nSize, size_t size) {
     void *mem = NULL;
@@ -10,6 +11,8 @@ void *arraySharedMemory(size_t nSize, size_t size) {
         perror("mmap Error!");
         exit(EXIT_FAILURE);
     }
+
+//    printArray(nSize, mem, "mem: ", ANSI_COLOR_RESET);
 
     return mem;
 }

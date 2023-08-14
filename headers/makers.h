@@ -12,9 +12,10 @@
 #include "../functions/parentSelection.c"
 #include "../functions/crossover.c"
 
-int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumsCount, ...);
+int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumbersLen,
+                     int *ignoreNumbersArr);
 
-void tweak(int *population, size_t chromosomeLen, size_t populationLen);
+void tweak(int *population, size_t chromosomeLen, size_t populationLen, size_t eliteLen);
 
 int *breakPointGenerator(size_t populationNum);
 
@@ -24,6 +25,6 @@ int *childGeneratorUni(size_t populationNum, bool ignorePerm, int *mask, int *on
 
 void *parentSelection(void *evaluationArr, size_t populationNum, bool type);
 
-void crossover(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args);
+void crossover(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args);
 
 #endif //GENETIC_ALGORITHM_MAKERS_H

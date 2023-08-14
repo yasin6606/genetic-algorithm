@@ -1,6 +1,5 @@
 #include "../../headers/sharedLib.h"
 #include "../../headers/makers.h"
-#include "../../headers/printing.h"
 
 void tspPopulationMaker(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                         va_list args) {
@@ -9,7 +8,7 @@ void tspPopulationMaker(size_t chromosomeLen, size_t childShare, int *sharedMem,
     for (int i = 0; i < childShare; i++) {
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0);
+        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0, NULL);
 
         // Add chromosome to shared memory
         for (int j = 0; j < chromosomeLen; j++)
@@ -31,7 +30,7 @@ void tspDisMaker(size_t chromosomeLen, size_t childShare, int *sharedMem, int st
         elemIdx = (startIdx / chromosomeLen) + i;
 
         // Produce a chromosome
-        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0);
+        tempChromosome = chromosomeMaker(chromosomeLen, false, true, -1, 0, NULL);
 
         // make main diameter zero (moving non-zero elements on main diameter to zero element)
         for (int j = 0; j < chromosomeLen; j++) {

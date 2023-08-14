@@ -1,5 +1,6 @@
 #include "../headers/sharedLib.h"
 #include "../headers/makers.h"
+#include "../headers/printing.h"
 
 /*
  * Two breaking points VS Uniform:
@@ -11,8 +12,8 @@
  * checking code so as to produce a permutation child based on ignorePerm's value.
  * */
 
-void crossover(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
-    int row, *bestParentsIdx = NULL, *breakPoints = NULL, *mask = NULL, *newChild = NULL, *population = NULL, *evalResult = NULL,
+void crossover(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
+    int realRow, logicalRow, *bestParentsIdx = NULL, *breakPoints = NULL, *mask = NULL, *newChild = NULL, *population = NULL, *evalResult = NULL,
             *evalSortedIdx = NULL, ignorePerm, type, crossoverType, elitesNum, *parent1 = NULL, *parent2 = NULL;
 
     // Last population
@@ -43,48 +44,58 @@ void crossover(size_t populationNum, size_t childShare, int *sharedMem, int star
     elitesNum = va_arg(args,
     int);
 
-    for (int i = 0; i < childShare; i++) {
-        row = startIdx + (i * populationNum);
+//    printCustomMatrix(chromosomeLen * 30, chromosomeLen, sharedMem, true);
 
-        // Add those chromosomes which must directly move to new population.
-        if ((row / populationNum) < elitesNum) {
-            for (int j = 0; j < populationNum; j++)
-                sharedMem[row + j] = population[(evalSortedIdx[i] * populationNum) + j];
+//    printf("\nstart idx: %d, pn: %lu\n", startIdx, chromosomeLen);
+    for (int i = 0; i < childShare; i++) {
+        realRow = startIdx + (i * chromosomeLen);
+        logicalRow = realRow / chromosomeLen;
+
+//        printf("\na: %d\n", realRow);
+
+//        printf("\nstart: %d\n", startIdx);
+//        DASHED_LINE
+
+        // Add those chromosomes which must directly move to the new population.
+        if (logicalRow < elitesNum) {
+//            printf("realRow: %d\n", logicalRow);
+            for (int j = 0; j < chromosomeLen; j++)
+                sharedMem[realRow + j] = population[(evalSortedIdx[i] * chromosomeLen) + j];
 
             continue;
         }
 
         // Selection parents based on K-Competition algorithm
-        bestParentsIdx = parentSelection(evalResult, populationNum, type);
+        bestParentsIdx = parentSelection(evalResult, chromosomeLen, type);
 
         // Parents
-        parent1 = &population[bestParentsIdx[0] * populationNum];
-        parent2 = &population[bestParentsIdx[1] * populationNum];
+        parent1 = &population[bestParentsIdx[0] * chromosomeLen];
+        parent2 = &population[bestParentsIdx[1] * chromosomeLen];
 
         // Crossover
         if (crossoverType == 1) { // Two breaking points
 
             // Get break points
-            breakPoints = breakPointGenerator(populationNum);
+            breakPoints = breakPointGenerator(chromosomeLen);
 
             // Generate a new child (chromosome)
-            newChild = childGenerator2P(populationNum, ignorePerm, breakPoints, parent1, parent2);
+            newChild = childGenerator2P(chromosomeLen, ignorePerm, breakPoints, parent1, parent2);
 
             free(breakPoints);
         } else { // Uniform
 
             // Generate a mask array so as to produce a new child
-            mask = chromosomeMaker(populationNum, true, false, -1, 0);
+            mask = chromosomeMaker(chromosomeLen, true, false, -1, 0, NULL);
 
             // Generate a new child (chromosome)
-            newChild = childGeneratorUni(populationNum, ignorePerm, mask, parent1, parent2);
+            newChild = childGeneratorUni(chromosomeLen, ignorePerm, mask, parent1, parent2);
 
             free(mask);
         }
 
         // Add a new generated child to new population
-        for (int j = 0; j < populationNum; j++)
-            sharedMem[row + j] = newChild[j];
+        for (int j = 0; j < chromosomeLen; j++)
+            sharedMem[realRow + j] = newChild[j];
 
         free(newChild);
         free(bestParentsIdx);

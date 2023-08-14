@@ -8,7 +8,7 @@
 #include "../../plot/plot.h"
 
 void tspMain() {
-    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
             *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx;
 
     char answerLabel[SPRINTF_STRING_LEN];
@@ -26,7 +26,8 @@ void tspMain() {
     bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Get the number of chromosomes which must move to new population directly
-    eliteNum = ceil(populationLen * ELITE_PERCENT);
+    eliteLen = ceil(populationLen * ELITE_PERCENT);
+    printf("el: %d\n", eliteLen);
 
     // Produce init population by multi processes for TSP
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -86,11 +87,11 @@ void tspMain() {
                 false,
                 false,
                 crossoverType,
-                eliteNum
+                eliteLen
         );
 
         // Mutation (Tweak)
-        tweak(newPop, chromosomeLen, populationLen);
+        tweak(newPop, chromosomeLen, populationLen, eliteLen);
 
         // Save the best answer
         bestEvalIdx = evalSortedIdx[0];
@@ -101,7 +102,8 @@ void tspMain() {
             perror("freeing evalResult error!");
             exit(EXIT_FAILURE);
         }
-        if (munmap(population, populationLen * chromosomeLen) == -1) {
+
+        if (munmap(population, (populationLen * chromosomeLen)) == -1) {
             perror("freeing last unused population error!");
             exit(EXIT_FAILURE);
         }
@@ -109,10 +111,6 @@ void tspMain() {
         // Re-Take the new population
         population = newPop;
     }
-
-//    printCustomMatrix(populationLen, chromosomeLen, population, true);
-//    printMatrix(chromosomeLen, disMatrix, true);
-//    printArray(populationLen, evalResult, "Evaluation (Distances): ", ANSI_COLOR_RESET);
 
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);

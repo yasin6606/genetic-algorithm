@@ -14,6 +14,11 @@
 #define MORE_SAME_RESULT_NUM 3
 #define SPRINTF_STRING_LEN 50
 
+// Const numbers
+#define ONE_LEN 1
+#define TWO_LEN 2
+#define THREE_LEN 3
+
 #define N_TIMES(X, Y) (X * Y)
 
 // String colors

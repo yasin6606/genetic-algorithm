@@ -3,10 +3,10 @@
 
 // Find two break points so as to crossover on selected parents.
 int *breakPointGenerator(size_t populationNum) {
-    int *breakPoints = NULL;
+    int *breakPoints = NULL, ignoreArr[TWO_LEN] = {0, populationNum - 1};
 
     while (1) {
-        breakPoints = chromosomeMaker(populationNum, false, true, 2, 2, 0, populationNum - 1);
+        breakPoints = chromosomeMaker(populationNum, false, true, TWO_LEN, TWO_LEN, ignoreArr);
 
         if (abs(breakPoints[0] - breakPoints[1]) > 1) break;
 

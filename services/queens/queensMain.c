@@ -8,7 +8,7 @@
 #include "../../plot/plot.h"
 
 void queensMain() {
-    int chromosomeLen, populationLen, iteration, crossoverType, eliteNum, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
+    int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
     char answerLabel[SPRINTF_STRING_LEN];
@@ -35,7 +35,7 @@ void queensMain() {
     bestSolves = (int *) calloc(iteration, sizeof(int));
 
     // Get the number of chromosomes which must move to new population directly
-    eliteNum = ceil(populationLen * ELITE_PERCENT);
+    eliteLen = ceil(populationLen * ELITE_PERCENT);
 
     // Produce init population by multi processes for N-Queens
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -91,11 +91,11 @@ void queensMain() {
                 false,
                 false,
                 crossoverType,
-                eliteNum
+                eliteLen
         );
 
         // Tweak (Mutation)
-        tweak(newPop, chromosomeLen, populationLen);
+        tweak(newPop, chromosomeLen, populationLen, eliteLen);
 
         free(evalSortedIdx);
 
@@ -103,6 +103,7 @@ void queensMain() {
             perror("freeing evalResult error!");
             exit(EXIT_FAILURE);
         }
+
         if (munmap(population, populationLen * chromosomeLen) == -1) {
             perror("freeing last unused population error!");
             exit(EXIT_FAILURE);
@@ -111,10 +112,6 @@ void queensMain() {
         // Re-Take the new population
         population = newPop;
     }
-
-//    printCustomMatrix(populationLen, chromosomeLen, population, false);
-//    printArray(populationLen, evalResult, "Evaluation (Collisions are counted): ", ANSI_COLOR_RESET);
-//    printArray(populationLen, evalSortedIdx, "Evaluation Sorted Indexes (Collisions are counted): ", ANSI_COLOR_RESET);
 
     sprintf(answerLabel, "Solved: (%d, %d)", plotLen, 0);
 
