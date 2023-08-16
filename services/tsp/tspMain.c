@@ -27,7 +27,6 @@ void tspMain() {
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
-    printf("el: %d\n", eliteLen);
 
     // Produce init population by multi processes for TSP
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);

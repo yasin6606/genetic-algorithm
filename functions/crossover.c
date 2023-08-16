@@ -1,6 +1,5 @@
 #include "../headers/sharedLib.h"
 #include "../headers/makers.h"
-#include "../headers/printing.h"
 
 /*
  * Two breaking points VS Uniform:
@@ -44,21 +43,12 @@ void crossover(size_t chromosomeLen, size_t childShare, int *sharedMem, int star
     elitesNum = va_arg(args,
     int);
 
-//    printCustomMatrix(chromosomeLen * 30, chromosomeLen, sharedMem, true);
-
-//    printf("\nstart idx: %d, pn: %lu\n", startIdx, chromosomeLen);
     for (int i = 0; i < childShare; i++) {
         realRow = startIdx + (i * chromosomeLen);
         logicalRow = realRow / chromosomeLen;
 
-//        printf("\na: %d\n", realRow);
-
-//        printf("\nstart: %d\n", startIdx);
-//        DASHED_LINE
-
         // Add those chromosomes which must directly move to the new population.
         if (logicalRow < elitesNum) {
-//            printf("realRow: %d\n", logicalRow);
             for (int j = 0; j < chromosomeLen; j++)
                 sharedMem[realRow + j] = population[(evalSortedIdx[i] * chromosomeLen) + j];
 
