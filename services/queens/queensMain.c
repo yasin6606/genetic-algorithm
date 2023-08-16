@@ -8,7 +8,7 @@
 #include "../../plot/plot.h"
 
 void queensMain() {
-    int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
+    int i, chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL;
 
     char answerLabel[SPRINTF_STRING_LEN];
@@ -48,7 +48,7 @@ void queensMain() {
     );
     livePrinter("Initial population successfully created", -1, ANSI_COLOR_GREEN, NULL, true);
 
-    for (int i = 0; i < iteration; i++) {
+    for (i = 0; i < iteration; i++) {
 
         livePrinter("Crossover live counter", i, ANSI_COLOR_RESET, ANSI_COLOR_GREEN, false);
 
@@ -113,11 +113,11 @@ void queensMain() {
         population = newPop;
     }
 
-    sprintf(answerLabel, "Solved: (%d, %d)", plotLen, 0);
+    sprintf(answerLabel, "Solved: (%d, %d)", plotLen, bestSolves[iteration - 1]);
 
     plotPY(
             bestSolves,
-            plotLen + 1,
+            bestSolves[iteration - 1] == 0 ? plotLen + 1 : i,
             "-",
             "b",
             "N-Queens Problem",
