@@ -34,6 +34,7 @@ void tspMain() {
             populationLen,
             chromosomeLen,
             populationLen * chromosomeLen,
+            sizeof(int),
             &tspPopulationMaker,
             0
     );
@@ -45,6 +46,7 @@ void tspMain() {
             chromosomeLen,
             chromosomeLen,
             chromosomeLen * chromosomeLen,
+            sizeof(int),
             &tspDisMaker,
             0
     );
@@ -61,6 +63,7 @@ void tspMain() {
                 populationLen,
                 chromosomeLen,
                 populationLen,
+                sizeof(int),
                 &evalTSPPopulation,
                 2,
                 population,
@@ -78,6 +81,7 @@ void tspMain() {
                 populationLen,
                 chromosomeLen,
                 populationLen * chromosomeLen,
+                sizeof(int),
                 &crossover,
                 7,
                 population,
@@ -97,15 +101,8 @@ void tspMain() {
 
         free(evalSortedIdx);
 
-        if (munmap(evalResult, populationLen) == -1) {
-            perror("freeing evalResult error!");
-            exit(EXIT_FAILURE);
-        }
-
-        if (munmap(population, (populationLen * chromosomeLen)) == -1) {
-            perror("freeing last unused population error!");
-            exit(EXIT_FAILURE);
-        }
+        memoryUnmap(evalResult, populationLen, sizeof(int));
+        memoryUnmap(population, populationLen * chromosomeLen, sizeof(int));
 
         // Re-Take the new population
         population = newPop;

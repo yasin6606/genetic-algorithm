@@ -43,6 +43,7 @@ void queensMain() {
             populationLen,
             chromosomeLen,
             populationLen * chromosomeLen,
+            sizeof(int),
             &queensPopulationMaker,
             0
     );
@@ -57,6 +58,7 @@ void queensMain() {
                 populationLen,
                 chromosomeLen,
                 populationLen,
+                sizeof(int),
                 &evalQueens,
                 1,
                 population
@@ -82,6 +84,7 @@ void queensMain() {
         newPop = (int *) multiprocessor(
                 populationLen,
                 chromosomeLen,
+                sizeof(int),
                 populationLen * chromosomeLen,
                 &crossover,
                 7,
@@ -99,15 +102,8 @@ void queensMain() {
 
         free(evalSortedIdx);
 
-        if (munmap(evalResult, populationLen) == -1) {
-            perror("freeing evalResult error!");
-            exit(EXIT_FAILURE);
-        }
-
-        if (munmap(population, populationLen * chromosomeLen) == -1) {
-            perror("freeing last unused population error!");
-            exit(EXIT_FAILURE);
-        }
+        memoryUnmap(evalResult, populationLen, sizeof(int));
+        memoryUnmap(population, populationLen * chromosomeLen, sizeof(int));
 
         // Re-Take the new population
         population = newPop;

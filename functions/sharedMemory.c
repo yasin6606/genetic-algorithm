@@ -27,3 +27,10 @@ void *varSharedMemory(size_t size) {
 
     return mem;
 }
+
+void memoryUnmap(void *address, size_t len, size_t sizeType) {
+    if (munmap(address, len * sizeType) == -1) {
+        perror("freeing last unused mapped memory (virtual memory) has Error!");
+        exit(EXIT_FAILURE);
+    }
+}

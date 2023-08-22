@@ -41,6 +41,7 @@ void knapsackMain() {
     population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
+            sizeof(int),
             populationLen * chromosomeLen,
             &knapsackPopulationMaker,
             0
@@ -57,6 +58,7 @@ void knapsackMain() {
         evalResult = (int *) multiprocessor(
                 populationLen,
                 chromosomeLen,
+                sizeof(int),
                 populationLen,
                 &evalKnapsack,
                 4,
@@ -81,6 +83,7 @@ void knapsackMain() {
         newPop = (int *) multiprocessor(
                 populationLen,
                 chromosomeLen,
+                sizeof(int),
                 populationLen * chromosomeLen,
                 &crossover,
                 7,
@@ -101,15 +104,8 @@ void knapsackMain() {
 
         free(evalSortedIdx);
 
-        if (munmap(evalResult, populationLen) == -1) {
-            perror("freeing evalResult error!");
-            exit(EXIT_FAILURE);
-        }
-
-        if (munmap(population, populationLen * chromosomeLen) == -1) {
-            perror("freeing last unused population error!");
-            exit(EXIT_FAILURE);
-        }
+        memoryUnmap(evalResult, populationLen, sizeof(int));
+        memoryUnmap(population, populationLen * chromosomeLen, sizeof(int));
 
         // Re-Take the new population
         population = newPop;

@@ -4,8 +4,8 @@
 #include "../../headers/sharedMacros.h"
 
 void *
-multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...) {
-    void *sharedMem = arraySharedMemory(sharedMemLen, sizeof(void *));
+multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, size_t memSizeType, sub_process_t subProcess, size_t argsNum, ...) {
+    void *sharedMem = arraySharedMemory(sharedMemLen, memSizeType);
     int cores = get_nprocs(), childShare = floor(tasks / cores), remained = tasks % cores,
             *defineStartIdx = (int *) calloc(cores, sizeof(int));
     pid_t pid;

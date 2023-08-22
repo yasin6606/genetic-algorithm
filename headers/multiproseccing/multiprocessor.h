@@ -9,6 +9,8 @@
 #include "../../types/functionTypedef.h"
 #include "../../functions/multiprocessing/multiprocessor.c"
 
-void *multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, sub_process_t subProcess, size_t argsNum, ...);
+void *
+multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, size_t memSizeType, sub_process_t subProcess,
+               size_t argsNum, ...);
 
 #endif //GENETIC_ALGORITHM_MULTIPROCESSOR_H
