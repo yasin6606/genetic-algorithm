@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
 
 void hideSameValue(int *arr, int *len) {
     for (int i = *len - 1; i > 0; i--)

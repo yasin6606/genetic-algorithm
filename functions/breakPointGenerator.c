@@ -1,5 +1,7 @@
-#include "../headers/sharedLib.h"
-#include "../headers/makers.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
+#include "../includes/makers.h"
+#include "../includes/assets.h"
 
 // Find two break points so as to crossover on selected parents.
 int *breakPointGenerator(size_t populationNum) {

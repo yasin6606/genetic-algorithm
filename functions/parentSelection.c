@@ -1,6 +1,6 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
-#include "../headers/makers.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
+#include "../includes/makers.h"
 
 int selectionHandler(int *evaluationArr, bool type, int *randIdxArr) {
     int temp, bestParent = evaluationArr[randIdxArr[0]], bestParentIdx = randIdxArr[0];

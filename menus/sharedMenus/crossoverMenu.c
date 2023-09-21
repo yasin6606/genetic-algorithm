@@ -1,5 +1,5 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/sharedMacros.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/sharedMacros.h"
 
 size_t crossoverMenu() {
     size_t temp;

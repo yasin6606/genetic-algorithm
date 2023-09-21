@@ -1,5 +1,6 @@
-#include "../headers/assets.h"
-#include "../headers/makers.h"
+#include "../includes/assets.h"
+#include "../includes/sharedMacros.h"
+#include "../includes/makers.h"
 
 void tweak(int *population, size_t chromosomeLen, size_t populationLen, size_t eliteLen) {
     int mutationPercent, *r = NULL, *rands = NULL, *ignoreElitesArr = NULL;

@@ -1,7 +1,7 @@
-#include "../../headers/sharedLib.h"
-#include "../../services/tsp/tspMain.c"
-#include "../../services/knapsack/knapsackMain.c"
-#include "../../services/queens/queensMain.c"
+#include "../../includes/sharedLib.h"
+#include "../../includes/services/tsp.h"
+#include "../../includes/services/knapsack.h"
+#include "../../includes/services/queens.h"
 
 void setService(size_t serviceNum) {
     switch (serviceNum) {

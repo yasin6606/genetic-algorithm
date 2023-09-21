@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
 
 void livePrinter(char *text, int start, char *textColor, char *digitColor, bool keepLine) {
     printf(RM_CURRENT_LINE);

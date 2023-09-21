@@ -1,4 +1,4 @@
-#include "../headers/sharedLib.h"
+#include "../includes/sharedLib.h"
 
 void *arraySharedMemory(size_t nSize, size_t size) {
     void *mem = NULL;

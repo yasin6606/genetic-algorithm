@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
 
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel,
             char *answerLabel) {
@@ -7,12 +7,12 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
     int *array = (int *) arr, figDPI;
     char chartDir[SPRINTF_STRING_LEN], *chartName = "chart.png";
 
-    system("rm -f ./plot/plotData.py");
+    system("rm -f plotData.py");
 
-    fd = fopen("./plot/plotData.py", "w+");
+    fd = fopen("plotData.py", "w+");
 
     if (fd == NULL) {
-        printf("File Error\n");
+        printf("File Error in plotPY.c\n");
         return;
     }
 
@@ -59,5 +59,5 @@ void plotPY(void *arr, size_t len, char *format, char *color, char *title, char 
 
     free(array);
 
-    system("python3 ./plot/plotData.py");
+    system("python3 plotData.py");
 }

@@ -1,7 +1,7 @@
-#include "../../headers/sharedLib.h"
-#include "../../types/functionTypedef.h"
-#include "../../headers/sharedMemory.h"
-#include "../../headers/sharedMacros.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/types/functionTypedef.h"
+#include "../../includes/sharedMemory.h"
+#include "../../includes/sharedMacros.h"
 
 void *
 multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, size_t memSizeType, sub_process_t subProcess, size_t argsNum, ...) {

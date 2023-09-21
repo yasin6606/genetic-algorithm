@@ -1,10 +1,5 @@
-#include "../../headers/sharedLib.h"
-
-// make array of evaluation of Sol matrix
-void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args);
-
-// evaluate each Sol
-int evalSolKnapsack(const int *sol, size_t populationNum, size_t wMax, int *wArr, int *vArr);
+#include "../../includes/sharedLib.h"
+#include "../../includes/services/knapsack.h"
 
 void evalKnapsack(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
     int wMax, *wArr = NULL, *vArr = NULL, *population = NULL;

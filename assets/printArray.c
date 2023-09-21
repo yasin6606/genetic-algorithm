@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
 
 void printArray(size_t size, const int *arr, char *text, char *color) {
     puts("");

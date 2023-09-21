@@ -1,5 +1,5 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/makers.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/makers.h"
 
 void knapsackPopulationMaker(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                              va_list args) {

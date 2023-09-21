@@ -5,9 +5,7 @@
 #ifndef GENETIC_ALGORITHM_MULTIPROCESSOR_H
 #define GENETIC_ALGORITHM_MULTIPROCESSOR_H
 
-#include "../../headers/sharedLib.h"
-#include "../../types/functionTypedef.h"
-#include "../../functions/multiprocessing/multiprocessor.c"
+#include "./../types/functionTypedef.h"
 
 void *
 multiprocessor(size_t tasks, size_t chromosomeLen, size_t sharedMemLen, size_t memSizeType, sub_process_t subProcess,

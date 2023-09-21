@@ -5,13 +5,6 @@
 #ifndef GENETIC_ALGORITHM_MAKERS_H
 #define GENETIC_ALGORITHM_MAKERS_H
 
-#include "../functions/chromosomeMaker.c"
-#include "../functions/tweak.c"
-#include "../functions/breakPointGenerator.c"
-#include "../functions/childGenerator.c"
-#include "../functions/parentSelection.c"
-#include "../functions/crossover.c"
-
 int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumbersLen,
                      int *ignoreNumbersArr);
 

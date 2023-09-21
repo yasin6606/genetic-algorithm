@@ -5,9 +5,9 @@
 #ifndef GENETIC_ALGORITHM_MAINMENU_H
 #define GENETIC_ALGORITHM_MAINMENU_H
 
-#include "../menus/mainMenus/showServices.c"
-#include "../menus/mainMenus/getService.c"
-#include "../menus/mainMenus/setService.c"
+//#include "../menus/mainMenus/showServices.c"
+//#include "../menus/mainMenus/getService.c"
+//#include "../menus/mainMenus/setService.c"
 
 void showServices();
 

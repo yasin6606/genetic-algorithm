@@ -1,6 +1,6 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/sharedMenu.h"
-#include "../../types/generalTypes.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/sharedMenu.h"
+#include "../../includes/types/generalTypes.h"
 
 SharedMenuType sharedInitInputs() {
     SharedMenuType temp;

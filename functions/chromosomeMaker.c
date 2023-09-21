@@ -1,4 +1,4 @@
-#include "../headers/sharedLib.h"
+#include "../includes/sharedLib.h"
 
 int *chromosomeMaker(size_t maxGenNum, bool isBin, bool isPerm, int limitLen, size_t ignoreNumbersLen,
                      int *ignoreNumbersArr) {

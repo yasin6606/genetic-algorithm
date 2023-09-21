@@ -1,5 +1,5 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/sharedMacros.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/sharedMacros.h"
 
 void showServices() {
     char servicesName[SERVICES_LEN][10] = {"TSP", "Knapsack", "N-Queens", "Exit"};

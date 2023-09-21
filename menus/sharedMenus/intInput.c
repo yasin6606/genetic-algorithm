@@ -1,5 +1,5 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/sharedMacros.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/sharedMacros.h"
 
 int intInput(char *text) {
     int temp;

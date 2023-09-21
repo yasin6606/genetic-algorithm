@@ -1,8 +1,5 @@
-#include "../../headers/sharedLib.h"
-
-void evalQueens(size_t populationNum, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args);
-
-int evalSolQueen(const int *sol, size_t size);
+#include "../../includes/sharedLib.h"
+#include "../../includes/services/queens.h"
 
 /*
  * To find diagonal collisions, just find differences between each queen's location (row, col) with other queens; If

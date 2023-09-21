@@ -1,6 +1,6 @@
-#include "../headers/sharedLib.h"
-#include "../headers/assets.h"
-#include "../types/generalTypes.h"
+#include "../includes/sharedLib.h"
+#include "../includes/assets.h"
+#include "../includes/types/generalTypes.h"
 
 void bubbleSort(EvalType *arr, size_t len) {
     EvalType t;

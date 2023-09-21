@@ -1,4 +1,4 @@
-#include "../headers/sharedLib.h"
+#include "../includes/sharedLib.h"
 
 int max(const int *arr, size_t size) {
     int temp = arr[0];

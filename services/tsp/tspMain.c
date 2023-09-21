@@ -1,11 +1,14 @@
-#include "../../services/tsp/initTSP.c"
-#include "./evalTSP.c"
-#include "../../types/generalTypes.h"
-#include "../../headers/printing.h"
-#include "../../headers/sharedMenu.h"
-#include "../../headers/multiproseccing/multiprocessor.h"
-#include "../../headers/sharedMacros.h"
-#include "../../plot/plot.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/services/tsp.h"
+#include "../../includes/types/generalTypes.h"
+#include "../../includes/assets.h"
+#include "../../includes/makers.h"
+#include "../../includes/sharedMenu.h"
+#include "../../includes/sharedMemory.h"
+#include "../../includes/multiproseccing/multiprocessor.h"
+#include "../../includes/sharedMacros.h"
+#include "../../plot/plotPY.h"
+#include "../../includes/printing.h"
 
 void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *disMatrix = NULL, *evalResult = NULL,

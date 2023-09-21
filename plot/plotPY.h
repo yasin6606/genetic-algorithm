@@ -5,8 +5,6 @@
 #ifndef GENETIC_ALGORITHM_PLOT_H
 #define GENETIC_ALGORITHM_PLOT_H
 
-#include "plotPY.c"
-
 void plotPY(void *arr, size_t len, char *format, char *color, char *title, char *yLabel, char *xLabel,
             char *answerLabel);
 

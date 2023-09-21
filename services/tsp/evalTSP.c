@@ -1,6 +1,5 @@
-#include "../../headers/sharedLib.h"
+#include "../../includes/sharedLib.h"
 
-// Make array of evaluation of population
 void
 evalTSPPopulation(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum, va_list args) {
     int *population = NULL, *dis = NULL, sum, currentChromosomeStartIdx, currentPosition, currentGen, nextGen;

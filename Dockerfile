@@ -8,6 +8,7 @@ ARG BRANCH_NAME=multiprocess
 
 RUN apk add htop
 RUN apk add git
+RUN apk add cmake
 RUN apk add build-base
 RUN apk add vim
 RUN apk add --no-cache openssh
@@ -18,4 +19,4 @@ RUN git clone https://github.com/yasin6606/${PROJECT_NAME}.git
 WORKDIR /home/${PROJECT_NAME}
 RUN git checkout ${BRANCH_NAME}
 RUN git pull origin $BRANCH_NAME
-RUN gcc main.c -lm -o runner
+RUN ./cmake_runner.sh

@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/sharedMacros.h"
+#include "../includes/sharedLib.h"
+#include "../includes/sharedMacros.h"
 
 
 void printCustomMatrix(size_t row, size_t col, int *matrix, bool showRowIdx) {

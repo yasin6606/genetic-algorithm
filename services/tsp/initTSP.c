@@ -1,5 +1,6 @@
-#include "../../headers/sharedLib.h"
-#include "../../headers/makers.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/makers.h"
+#include "../../includes/assets.h"
 
 void tspPopulationMaker(size_t chromosomeLen, size_t childShare, int *sharedMem, int startIdx, size_t argsNum,
                         va_list args) {

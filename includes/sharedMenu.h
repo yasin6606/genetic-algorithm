@@ -5,9 +5,7 @@
 #ifndef GENETIC_ALGORITHM_SHAREDMENU_H
 #define GENETIC_ALGORITHM_SHAREDMENU_H
 
-#include "../menus/sharedMenus/crossoverMenu.c"
-#include "../menus/sharedMenus/intInput.c"
-#include "../menus/sharedMenus/sharedInitInputs.c"
+#include "./types/generalTypes.h"
 
 size_t crossoverMenu();
 

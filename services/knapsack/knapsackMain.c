@@ -1,10 +1,13 @@
-#include "./initKnapsack.c"
-#include "./evalKnapsack.c"
-#include "../../headers/printing.h"
-#include "../../headers/multiproseccing/multiprocessor.h"
-#include "../../headers/sharedMacros.h"
-#include "../../headers/sharedMenu.h"
-#include "../../plot/plot.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/assets.h"
+#include "../../includes/services/knapsack.h"
+#include "../../includes/makers.h"
+#include "../../includes/sharedMemory.h"
+#include "../../includes/multiproseccing/multiprocessor.h"
+#include "../../includes/sharedMacros.h"
+#include "../../includes/sharedMenu.h"
+#include "../../plot/plotPY.h"
+#include "../../includes/printing.h"
 
 void knapsackMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, wMax, *wArr, *vArr, *population = NULL,

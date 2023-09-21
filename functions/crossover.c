@@ -1,5 +1,5 @@
-#include "../headers/sharedLib.h"
-#include "../headers/makers.h"
+#include "../includes/sharedLib.h"
+#include "../includes/makers.h"
 
 /*
  * Two breaking points VS Uniform:

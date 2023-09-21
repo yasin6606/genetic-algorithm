@@ -1,11 +1,14 @@
-#include "./initQueens.c"
-#include "./evalQueens.c"
-#include "../../types/generalTypes.h"
-#include "../../headers/printing.h"
-#include "../../headers/sharedMenu.h"
-#include "../../headers/multiproseccing/multiprocessor.h"
-#include "../../headers/sharedMacros.h"
-#include "../../plot/plot.h"
+#include "../../includes/sharedLib.h"
+#include "../../includes/types/generalTypes.h"
+#include "../../includes/services/queens.h"
+#include "../../includes/assets.h"
+#include "../../includes/makers.h"
+#include "../../includes/sharedMemory.h"
+#include "../../includes/sharedMenu.h"
+#include "../../includes/multiproseccing/multiprocessor.h"
+#include "../../includes/sharedMacros.h"
+#include "../../plot/plotPY.h"
+#include "../../includes/printing.h"
 
 void queensMain() {
     int i, chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
@@ -23,7 +26,7 @@ void queensMain() {
     crossoverType = inputs.crossoverType;
 
     if (chromosomeLen < 4) {
-        SHOW_WARNING("Minimum queens must be 4 or upper");
+        SHOW_WARNING("Minimum queens must be 4 or upper")
 
         return;
     }

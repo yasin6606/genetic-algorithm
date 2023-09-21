@@ -5,12 +5,7 @@
 #ifndef GENETIC_ALGORITHM_ASSETS_H
 #define GENETIC_ALGORITHM_ASSETS_H
 
-#include "./../assets/max.c"
-#include "./../assets/swap.c"
-#include "./../assets/sortChromosomes.c"
-#include "./../assets/reverseArray.c"
-#include "./../assets/hideSameValue.c"
-#include "./../assets/livePrinter.c"
+#include "sharedLib.h"
 
 int max(const int *arr, size_t size);
 

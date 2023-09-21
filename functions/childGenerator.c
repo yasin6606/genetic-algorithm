@@ -1,4 +1,4 @@
-#include "../headers/sharedLib.h"
+#include "../includes/sharedLib.h"
 
 void sideFilling2P(size_t start, size_t end, bool ignorePerm, int *parent, int *flag, int *permEmptyIdx, int *k,
                    int *child) {
