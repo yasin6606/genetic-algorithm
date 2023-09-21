@@ -2,7 +2,6 @@
 
 clear
 
-projectName="genetic-algorithm"
 fileName="build"
 
 if [ -d "$fileName" ]; then
@@ -16,5 +15,3 @@ cd "$fileName" || return
 cmake -S .. -B .
 
 make
-
-./"$projectName"
