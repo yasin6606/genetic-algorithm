@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.0)
+project(genetic-algorithm C)
+add_compile_options(-Wall)
+add_executable(
+        genetic-algorithm
+        main.c
+        assets/hideSameValue.c
+        assets/livePrinter.c
+        assets/max.c
+        assets/printArray.c
+        assets/printMatrix.c
+        assets/reverseArray.c
+        assets/sortChromosomes.c
+        assets/swap.c
+        functions/multiprocessing/multiprocessor.c
+        functions/breakPointGenerator.c
+        functions/childGenerator.c
+        functions/chromosomeMaker.c
+        functions/crossover.c
+        functions/parentSelection.c
+        functions/sharedMemory.c
+        functions/tweak.c
+        menus/mainMenus/getService.c
+        menus/mainMenus/setService.c
+        menus/mainMenus/showServices.c
+        menus/sharedMenus/crossoverMenu.c
+        menus/sharedMenus/intInput.c
+        menus/sharedMenus/sharedInitInputs.c
+        plot/plotPY.c
+        services/knapsack/evalKnapsack.c
+        services/knapsack/initKnapsack.c
+        services/knapsack/knapsackMain.c
+        services/queens/evalQueens.c
+        services/queens/initQueens.c
+        services/queens/queensMain.c
+        services/tsp/evalTSP.c
+        services/tsp/initTSP.c
+        services/tsp/tspMain.c
+        includes/types
+)
+target_link_libraries(genetic-algorithm m)
