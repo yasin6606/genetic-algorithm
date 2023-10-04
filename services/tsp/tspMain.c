@@ -12,7 +12,7 @@
 
 void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
-            *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx;
+            *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx, genTypeSize = sizeof(int);
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -26,7 +26,7 @@ void tspMain() {
     crossoverType = inputs.crossoverType;
 
     // Best solutions array
-    bestSolves = (int *) calloc(iteration, sizeof(int));
+    bestSolves = (int *) calloc(iteration, genTypeSize);
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
@@ -37,7 +37,7 @@ void tspMain() {
             populationLen,
             chromosomeLen,
             populationLen * chromosomeLen,
-            sizeof(int),
+            genTypeSize,
             &tspPopulationMaker,
             0
     );
@@ -49,7 +49,7 @@ void tspMain() {
             chromosomeLen,
             chromosomeLen,
             chromosomeLen * chromosomeLen,
-            sizeof(int),
+            genTypeSize,
             &tspDisMaker,
             0
     );
@@ -66,7 +66,7 @@ void tspMain() {
                 populationLen,
                 chromosomeLen,
                 populationLen,
-                sizeof(int),
+                genTypeSize,
                 &evalTSPPopulation,
                 2,
                 population,
@@ -84,7 +84,7 @@ void tspMain() {
                 populationLen,
                 chromosomeLen,
                 populationLen * chromosomeLen,
-                sizeof(int),
+                genTypeSize,
                 &crossover,
                 7,
                 population,
@@ -104,8 +104,8 @@ void tspMain() {
 
         free(evalSortedIdx);
 
-        memoryUnmap(evalResult, populationLen, sizeof(int));
-        memoryUnmap(population, populationLen * chromosomeLen, sizeof(int));
+        memoryUnmap(evalResult, populationLen, genTypeSize);
+        memoryUnmap(population, populationLen * chromosomeLen, genTypeSize);
 
         // Re-Take the new population
         population = newPop;

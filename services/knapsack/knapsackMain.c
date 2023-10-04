@@ -12,7 +12,7 @@
 void knapsackMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, wMax, *wArr, *vArr, *population = NULL,
             *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx,
-            ignoredArr[ONE_LEN] = {0};
+            ignoredArr[ONE_LEN] = {0}, genTypeSize = sizeof(int);
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -34,7 +34,7 @@ void knapsackMain() {
     vArr = chromosomeMaker(chromosomeLen, false, false, chromosomeLen, 0, NULL);
 
     // Best solutions array
-    bestSolves = (int *) calloc(iteration, sizeof(int));
+    bestSolves = (int *) calloc(iteration, genTypeSize);
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
@@ -44,7 +44,7 @@ void knapsackMain() {
     population = (int *) multiprocessor(
             populationLen,
             chromosomeLen,
-            sizeof(int),
+            genTypeSize,
             populationLen * chromosomeLen,
             &knapsackPopulationMaker,
             0
@@ -61,7 +61,7 @@ void knapsackMain() {
         evalResult = (int *) multiprocessor(
                 populationLen,
                 chromosomeLen,
-                sizeof(int),
+                genTypeSize,
                 populationLen,
                 &evalKnapsack,
                 4,
@@ -86,7 +86,7 @@ void knapsackMain() {
         newPop = (int *) multiprocessor(
                 populationLen,
                 chromosomeLen,
-                sizeof(int),
+                genTypeSize,
                 populationLen * chromosomeLen,
                 &crossover,
                 7,
@@ -107,8 +107,8 @@ void knapsackMain() {
 
         free(evalSortedIdx);
 
-        memoryUnmap(evalResult, populationLen, sizeof(int));
-        memoryUnmap(population, populationLen * chromosomeLen, sizeof(int));
+        memoryUnmap(evalResult, populationLen, genTypeSize);
+        memoryUnmap(population, populationLen * chromosomeLen, genTypeSize);
 
         // Re-Take the new population
         population = newPop;
