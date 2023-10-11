@@ -12,6 +12,7 @@ add_executable(
         assets/reverseArray.c
         assets/sortChromosomes.c
         assets/swap.c
+        assets/showTIme.c
         functions/multiprocessing/multiprocessor.c
         functions/breakPointGenerator.c
         functions/childGenerator.c

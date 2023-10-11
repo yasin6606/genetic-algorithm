@@ -13,6 +13,7 @@
 void queensMain() {
     int i, chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *evalResult = NULL, *evalSortedIdx = NULL,
             *newPop = NULL, plotLen, *bestSolves = NULL, genTypeSize = sizeof(int);
+    time_t start, end;
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -39,6 +40,8 @@ void queensMain() {
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
+
+    time(&start);
 
     // Produce init population by multi processes for N-Queens
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -112,7 +115,11 @@ void queensMain() {
         population = newPop;
     }
 
+    time(&end);
+
     sprintf(answerLabel, "Solved: (%d, %d)", plotLen, bestSolves[iteration - 1]);
+
+    showTime(end - start);
 
     plotPY(
             bestSolves,

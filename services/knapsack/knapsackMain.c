@@ -13,6 +13,7 @@ void knapsackMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, wMax, *wArr, *vArr, *population = NULL,
             *evalResult = NULL, *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx,
             ignoredArr[ONE_LEN] = {0}, genTypeSize = sizeof(int);
+    time_t start, end;
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -38,6 +39,8 @@ void knapsackMain() {
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
+
+    time(&start);
 
     // Produce init population by multi processes for Knapsack
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -114,6 +117,8 @@ void knapsackMain() {
         population = newPop;
     }
 
+    time(&end);
+
     printArray(chromosomeLen, wArr, "Weight: ", ANSI_COLOR_BLUE);
     printArray(chromosomeLen, vArr, "Value: ", ANSI_COLOR_BLUE);
 
@@ -123,8 +128,12 @@ void knapsackMain() {
     sprintf(answerLabel, "Solved: (%d, %d)", iteration - MORE_SAME_RESULT_NUM,
             bestSolves[iteration - MORE_SAME_RESULT_NUM]);
 
+    printf("\nSolving Time:  %zu seconds\n", end - start);
+
     // Print answer
     printArray(chromosomeLen, &population[bestEvalIdx * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+
+    showTime(end - start);
 
     plotPY(
             bestSolves,

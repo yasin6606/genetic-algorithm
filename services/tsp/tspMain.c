@@ -13,6 +13,7 @@
 void tspMain() {
     int chromosomeLen, populationLen, iteration, crossoverType, eliteLen, *population = NULL, *disMatrix = NULL, *evalResult = NULL,
             *evalSortedIdx = NULL, *newPop = NULL, *bestSolves = NULL, bestEvalIdx, genTypeSize = sizeof(int);
+    time_t start, end;
 
     char answerLabel[SPRINTF_STRING_LEN];
 
@@ -30,6 +31,8 @@ void tspMain() {
 
     // Get the number of chromosomes which must move to new population directly
     eliteLen = ceil(populationLen * ELITE_PERCENT);
+
+    time(&start);
 
     // Produce init population by multi processes for TSP
     livePrinter("Please Wait ==> Initial population is creating...", -1, ANSI_COLOR_BLUE, NULL, false);
@@ -111,6 +114,8 @@ void tspMain() {
         population = newPop;
     }
 
+    time(&end);
+
     // Hide same values on answer array
     hideSameValue(bestSolves, &iteration);
 
@@ -119,6 +124,8 @@ void tspMain() {
 
     // Print answer
     printArray(chromosomeLen, &population[bestEvalIdx * chromosomeLen], "Answer: ", ANSI_COLOR_MAGENTA);
+
+    showTime(end - start);
 
     plotPY(
             bestSolves,

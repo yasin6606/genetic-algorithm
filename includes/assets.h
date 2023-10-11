@@ -19,4 +19,6 @@ void hideSameValue(int *arr, int *len);
 
 void livePrinter(char *text, int start, char *textColor, char *digitColor, bool keepLine);
 
+void showTime(size_t seconds);
+
 #endif //GENETIC_ALGORITHM_ASSETS_H
