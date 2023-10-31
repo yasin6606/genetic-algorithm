@@ -2,10 +2,10 @@
 
 This project uses Genetic Algorithm in order to find solutions for TSP, Knapsack, and N-Queens problems.
 
-The project is Dockerized so there are two runner files:
+The project is Dockerized and there are steps in order to run the project:
 
-		run_linux.sh" for Linux OS
-		run_windows" for Windows OS
+		build: bash cmake_runner.sh
+		run: ./build/genetic-algorithm
 
 ## Attention:
 Do not forget to run runner files as administrator!
