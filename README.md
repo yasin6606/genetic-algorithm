@@ -4,8 +4,8 @@ This project uses Genetic Algorithm in order to find solutions for TSP, Knapsack
 
 The project is Dockerized and there are steps in order to run the project:
 
-		build: bash cmake_runner.sh
-		run: ./build/genetic-algorithm
+		On Linux or Mac OS: ./run_linux.sh
+  		On Windows: ./run_windows.bat
 
 ## Attention:
 Do not forget to run runner files as administrator!
@@ -17,6 +17,6 @@ Do not forget to run runner files as administrator!
 The program is developed in Multi-Process mode.
 
 ## Result
-The result chart is saved as a png file on your desktop in the "genetic_result" directory.
+The result chart is saved as a PNG file on your desktop in the "genetic_result" directory.
 
 Enjoy!
