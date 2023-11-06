@@ -20,4 +20,3 @@ WORKDIR /home/${PROJECT_NAME}
 RUN git checkout ${BRANCH_NAME}
 RUN git pull origin $BRANCH_NAME
 RUN chmod 777 ./cmake_runner.sh
-RUN /bin/sh "./cmake_runner.sh"
