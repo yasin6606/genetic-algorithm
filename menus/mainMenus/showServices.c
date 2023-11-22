@@ -7,9 +7,7 @@ void showServices() {
     printf("Hello\t%s\n\n", __DATE__);
 
     printf(
-            "This program is created by %sYasin Gourkani%s\tStudent ID: %s9974359%s\n\nUniversity: %sShiraz University%s\n\n",
-            ANSI_COLOR_BLUE,
-            ANSI_COLOR_RESET,
+            "This program is created by %sYasin Gourkani%s\n\nUniversity: %sShiraz University%s\n\n",
             ANSI_COLOR_BLUE,
             ANSI_COLOR_RESET,
             ANSI_COLOR_YELLOW,
